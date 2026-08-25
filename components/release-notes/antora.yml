@@ -1,4 +1,4 @@
-name: wiki
+name: release-notes
 title: Release Notes
 version: 'stable'
 start_page: index.adoc

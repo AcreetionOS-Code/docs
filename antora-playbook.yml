@@ -13,9 +13,30 @@ runtime:
     failure_level: warn
 content:
   sources:
-    - url: ./components
+    - url: .
       branches: HEAD
-      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/{path}
+      start_path: components/wiki
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/components/wiki/{path}
+    - url: .
+      branches: HEAD
+      start_path: components/install-guide
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/components/install-guide/{path}
+    - url: .
+      branches: HEAD
+      start_path: components/admin-guide
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/components/admin-guide/{path}
+    - url: .
+      branches: HEAD
+      start_path: components/release-notes
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/components/release-notes/{path}
+    - url: .
+      branches: HEAD
+      start_path: components/editions
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/components/editions/{path}
+    - url: .
+      branches: HEAD
+      start_path: components/contributor
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/components/contributor/{path}
 antora:
   extensions:
     - require: '@antora/lunr-extension'
