@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Getting Started with AcreetionOS :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/wiki/stable/getting-started.html">
+    <meta name="description" content="From zero to desktop: download the AcreetionOS ISO, write it to USB, install with Calamares, and log in to Cinnamon.">
+    <meta name="keywords" content="AcreetionOS install, Arch beginner guide, easy Arch Linux">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Getting Started with AcreetionOS">
+<meta property="og:description" content="From zero to desktop: download the AcreetionOS ISO, write it to USB, install with Calamares, and log in to Cinnamon.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/wiki/stable/getting-started.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wiki" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="welcome.html">AcreetionOS Wiki</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Start Here</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="welcome.html">Welcome</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="about-acreetionos.html">About AcreetionOS</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="post-installation.html">First Steps After Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="system-requirements.html">System Requirements</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Software</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="package-management.html">Package Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-cheatsheet.html">Pacman Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="aur-guide.html">AUR &amp; yay Guide</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="repositories-and-mirrors.html">Repositories &amp; Mirrors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installing-software.html">Installing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="removing-software.html">Removing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="updating-system.html">Updating the System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="flatpak.html">Flatpak &amp; Sandbox Apps</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wifi-setup.html">Wi-Fi Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bluetooth-setup.html">Bluetooth</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="printer-setup.html">Printers &amp; Scanners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nvidia-drivers.html">NVIDIA Drivers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amd-intel-gpu.html">AMD &amp; Intel Graphics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="audio-setup.html">Audio (PipeWire)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="laptop-power.html">Laptops &amp; Battery Life</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="virtualization.html">Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">System Care</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="timeshift-snapshots.html">Timeshift Snapshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-environment.html">Recovery Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="backup-strategies.html">Backup Strategies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cleaning-disk-space.html">Freeing Disk Space</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kernel-management.html">Kernel Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="performance-tuning.html">Performance Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="users-sudo.html">Users &amp; Sudo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Security &amp; Privacy</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewall-basics.html">Firewall Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disk-encryption.html">Disk Encryption</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-windows.html">Dual-Boot with Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Desktop &amp; Media</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wayland-x11.html">Wayland vs X11</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="gaming.html">Gaming on AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multimedia-codecs.html">Multimedia &amp; Codecs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="keyboard-language.html">Keyboard &amp; Language</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Troubleshooting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="troubleshooting-boot.html">Boot Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chroot-rescue.html">Chroot Rescue</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">AcreetionOS Wiki</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="welcome.html">AcreetionOS Wiki</a></li>
+    <li>Start Here</li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/wiki/modules/ROOT/pages/getting-started.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Getting Started with AcreetionOS</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This page takes you from nothing to a working AcreetionOS desktop in about 20 minutes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_check_your_hardware"><a class="anchor" href="#_1_check_your_hardware"></a>1. Check your hardware</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Minimum and recommended specs live in <a href="system-requirements.html" class="xref page">System Requirements</a>. Short version: 4 GB RAM, 25 GB disk, any x86_64 CPU from the last decade.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_download_the_iso"><a class="anchor" href="#_2_download_the_iso"></a>2. Download the ISO</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Grab the latest image from <a href="https://acreetionos.org/install.html">the download page</a>. Verify integrity if you want belt-and-braces certainty — instructions are on the same page and in <a href="../../install-guide/stable/download.html" class="xref page">Installation Guide → Downloading</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_write_it_to_a_usb_stick"><a class="anchor" href="#_3_write_it_to_a_usb_stick"></a>3. Write it to a USB stick</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use whatever you have handy:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Windows/macOS</strong>: Rufus, balenaEtcher, or <a href="https://acreetionos.org">Acreetion Media Writer</a></p>
+</li>
+<li>
+<p><strong>Linux</strong>: <code>dd</code>, Popsicle, or Acreetion Media Writer</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Full walkthrough (including Ventoy): <a href="../../install-guide/stable/bootable-usb.html" class="xref page">Creating Bootable USB Media</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_4_boot_it"><a class="anchor" href="#_4_boot_it"></a>4. Boot it</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Plug the stick in, reboot, open your firmware boot menu (usually F12/F11/Esc) and pick the USB. If the machine refuses, check <a href="../../install-guide/stable/bios-uefi.html" class="xref page">UEFI/BIOS settings</a>.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll land in the live session — a full desktop running entirely from the USB. Poke around as much as you like; nothing touches your disk until you click <strong>Install</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_install"><a class="anchor" href="#_5_install"></a>5. Install</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Launch the installer from the menu or desktop icon. Calamares will:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ask your language, timezone, and keyboard.</p>
+</li>
+<li>
+<p>Offer guided partitioning (<strong>Erase disk</strong>) or manual partitioning.</p>
+</li>
+<li>
+<p>Copy the system and set up GRUB.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Screens are explained step by step in <a href="../../install-guide/stable/installer-walkthrough.html" class="xref page">Installer Walkthrough</a>. Want encryption? Read <a href="../../install-guide/stable/encrypted-install.html" class="xref page">Encrypted Installation</a> first.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_first_boot"><a class="anchor" href="#_6_first_boot"></a>6. First boot</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After reboot you&#8217;ll see the login screen. Then follow <a href="post-installation.html" class="xref page">First Steps After Install</a> — five minutes that save hours later.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

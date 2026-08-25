@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Immutable Edition :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/editions/stable/immutable.html">
+    <meta name="description" content="AcreetionOS Immutable: system integrity through read-only root and atomic updates, ideal for shared machines and stability-critical setups.">
+    <meta name="keywords" content="immutable linux distro">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Immutable Edition">
+<meta property="og:description" content="AcreetionOS Immutable: system integrity through read-only root and atomic updates, ideal for shared machines and stability-critical setups.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/editions/stable/immutable.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="editions" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Editions</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Editions Overview</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cinnamon-standard.html">Standard (Cinnamon)</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="immutable.html">Immutable Edition</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openbox-lite.html">Lightweight / Openbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mobile.html">Mobile Edition</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="choosing.html">Choosing Your Edition</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Editions</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Editions</a></li>
+    <li><a href="index.html">Editions Overview</a></li>
+    <li><a href="immutable.html">Immutable Edition</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/editions/modules/ROOT/pages/immutable.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Immutable Edition</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The system presents itself as a fixed image; your experiments happen in layers around it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_model"><a class="anchor" href="#_model"></a>Model</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Layer</th>
+<th class="tableblock halign-left valign-top">Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root (/)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read-only at runtime; updated atomically as units, not package-by-package drift</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/home &amp; writable paths</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yours entirely — normal files, flatpaks, dotfiles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Applications beyond base</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../../wiki/stable/flatpak.html" class="xref page">Flatpak</a> first, containers second, layering last resort</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_people_choose_it"><a class="anchor" href="#_why_people_choose_it"></a>Why people choose it</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Machines shared with family/colleagues stop accumulating mystery breakage</p>
+</li>
+<li>
+<p>Kiosks/digital signage stay deterministic</p>
+</li>
+<li>
+<p>Rollback = boot previous deployment entry, not snapshot surgery</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_working_within_the_model"><a class="anchor" href="#_working_within_the_model"></a>Working within the model</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># typical software flow:
+flatpak install flathub org.mozilla.firefox
+# development: containers/toolbx-style environments rather than host installs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Host-level package additions are possible but deliberately frictionful — if everything needs layering, standard edition fits better.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_relationship_to_snapshots"><a class="anchor" href="#_relationship_to_snapshots"></a>Relationship to snapshots</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Timeshift-style rollback complements atomicity here; recovery tooling targets user data + bootloader layers consistent with the image approach (edition-specific notes ship in its README/docs bundle).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_honest_tradeoffs"><a class="anchor" href="#_honest_tradeoffs"></a>Honest tradeoffs</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Gain</th>
+<th class="tableblock halign-left valign-top">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Predictability, easy rollback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Less spontaneous tinkering surface</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Great Flatpak/container fit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deep-system customization awkward</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fewer partial-state failures</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Larger update downloads (image-sized)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Build source lives alongside standard edition in the org repos (acreetionos-immutable) — <a href="../../contributor/stable/index.html" class="xref page">contributors</a> welcome.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

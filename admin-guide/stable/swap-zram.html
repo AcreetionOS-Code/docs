@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Swap Strategy: Zram, Swapfiles &amp; Partitions :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/admin-guide/stable/swap-zram.html">
+    <meta name="description" content="Configure memory pressure handling on AcreetionOS: zram-generator tuning, swapfile creation rules per filesystem, swappiness values and hibernation interplay.">
+    <meta name="keywords" content="zram config, swapfile btrfs, swappiness">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Swap Strategy: Zram, Swapfiles &amp; Partitions">
+<meta property="og:description" content="Configure memory pressure handling on AcreetionOS: zram-generator tuning, swapfile creation rules per filesystem, swappiness values and hibernation interplay.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/admin-guide/stable/swap-zram.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="admin-guide" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Administration Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Administration Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Foundations</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="philosophy.html">System Philosophy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-advanced.html">Advanced Pacman</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-hooks.html">Pacman Hooks</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="acreetion-repos.html">AcreetionOS Repositories</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="makepkg-pkgbuild.html">makepkg &amp; PKGBUILDs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">systemd</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="systemd-units.html">Units &amp; Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="systemd-timers.html">Timers (cron replacement)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="journald.html">journald &amp; Logs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Network &amp; Security</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="network-manager-cli.html">NetworkManager CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openssh-server.html">OpenSSH Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewalld-ufw.html">Firewalls Compared</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disks-fstab.html">Disks, Mounts &amp; fstab</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="lvm-luks.html">LVM &amp; LUKS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="btrfs.html">Btrfs Management</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="swap-zram.html">Swap &amp; Zram</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Boot Chain</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bootloader-grub.html">GRUB Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mkinitcpio.html">mkinitcpio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="microcode.html">CPU Microcode</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tuning &amp; Recovery</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="sysctl-tuning.html">Sysctl &amp; Kernel Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-partition.html">Managing ACRECOVERY</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Administration Guide</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Administration Guide</a></li>
+    <li>Storage</li>
+    <li><a href="swap-zram.html">Swap &amp; Zram</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/admin-guide/modules/ROOT/pages/swap-zram.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Swap Strategy: Zram, Swapfiles &amp; Partitions</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Modern guidance: zram for speed, swapfile/partition only when hibernation demands it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_zram_recommended_default"><a class="anchor" href="#_zram_recommended_default"></a>Zram (recommended default)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini"># /etc/systemd/zram-generator.conf
+[zram0]
+zram-size = min(ram, 16384)        # cap 16G regardless of huge RAM
+compression-algorithm = zstd
+swap-priority = 100</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl daemon-reload &amp;&amp; sudo systemctl start systemd-zram-setup@zram0
+zramctl &amp;&amp; swapon --show           # verify</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Kernel then compresses cold pages instead of hitting disk — latency drops by orders of magnitude.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_swappiness_for_zram_world"><a class="anchor" href="#_swappiness_for_zram_world"></a>Swappiness for zram world</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Higher is CORRECT with zram (we WANT reclaim-to-compress):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo 'vm.swappiness=180' | sudo tee /etc/sysctl.d/90-zram.conf
+sysctl vm.page-cluster=0           # avoid oversized reads from compressed store</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Yes — opposite of the ancient "set it to 10" forum wisdom; that predates zram.)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_swapfile_when_hibernation_required"><a class="anchor" href="#_swapfile_when_hibernation_required"></a>Swapfile when hibernation required</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ext4 root:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo fallocate -l $(grep MemTotal /proc/meminfo | awk '{print $2}')k /swapfile \
+  || sudo dd if=/dev/zero of=/swapfile bs=1M count=16384 status=progress
+sudo chmod 600 /swapfile &amp;&amp; sudo mkswap /swapfile &amp;&amp; sudo swapon /swapfile
+printf '/swapfile none swap defaults 0 0\n' | sudo tee -a /etc/fstab</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>btrfs root extra steps: NOCOW file + no-compression + fs-uuid resume offset:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo btrfs filesystem mkswapfile --size 16g /swap/swapfile   # does it all
+resume=UUID=&lt;root-uuid&gt; resume_offset=$(sudo btrfs inspect-internal map-swapfile -r /swap)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wire <code>resume=</code> into cmdline + initramfs <code>resume</code> hook (<a href="bootloader-grub.html" class="xref page">GRUB Deep Dive</a>, <a href="mkinitcpio.html" class="xref page">mkinitcpio &amp; Initramfs Presets</a>), then TEST a full hibernate cycle before relying on it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_diagnosing_memory_pressure_honestly"><a class="anchor" href="#_diagnosing_memory_pressure_honestly"></a>Diagnosing memory pressure honestly</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">swapon --show ; free -h ; vmstat 2
+psi=/proc/pressure/memory : watch some avg300 lines   # kernel's own verdict</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

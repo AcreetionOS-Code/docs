@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Timeshift Snapshots on AcreetionOS :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/wiki/stable/timeshift-snapshots.html">
+    <meta name="description" content="AcreetionOS pre-configures Timeshift RSYNC snapshots — learn to create, browse and restore system snapshots to undo bad updates safely.">
+    <meta name="keywords" content="Timeshift, Linux snapshots, rollback updates">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Timeshift Snapshots on AcreetionOS">
+<meta property="og:description" content="AcreetionOS pre-configures Timeshift RSYNC snapshots — learn to create, browse and restore system snapshots to undo bad updates safely.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/wiki/stable/timeshift-snapshots.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wiki" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="welcome.html">AcreetionOS Wiki</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Start Here</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="welcome.html">Welcome</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="about-acreetionos.html">About AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="post-installation.html">First Steps After Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="system-requirements.html">System Requirements</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Software</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="package-management.html">Package Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-cheatsheet.html">Pacman Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="aur-guide.html">AUR &amp; yay Guide</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="repositories-and-mirrors.html">Repositories &amp; Mirrors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installing-software.html">Installing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="removing-software.html">Removing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="updating-system.html">Updating the System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="flatpak.html">Flatpak &amp; Sandbox Apps</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wifi-setup.html">Wi-Fi Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bluetooth-setup.html">Bluetooth</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="printer-setup.html">Printers &amp; Scanners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nvidia-drivers.html">NVIDIA Drivers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amd-intel-gpu.html">AMD &amp; Intel Graphics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="audio-setup.html">Audio (PipeWire)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="laptop-power.html">Laptops &amp; Battery Life</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="virtualization.html">Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">System Care</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="timeshift-snapshots.html">Timeshift Snapshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-environment.html">Recovery Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="backup-strategies.html">Backup Strategies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cleaning-disk-space.html">Freeing Disk Space</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kernel-management.html">Kernel Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="performance-tuning.html">Performance Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="users-sudo.html">Users &amp; Sudo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Security &amp; Privacy</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewall-basics.html">Firewall Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disk-encryption.html">Disk Encryption</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-windows.html">Dual-Boot with Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Desktop &amp; Media</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wayland-x11.html">Wayland vs X11</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="gaming.html">Gaming on AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multimedia-codecs.html">Multimedia &amp; Codecs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="keyboard-language.html">Keyboard &amp; Language</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Troubleshooting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="troubleshooting-boot.html">Boot Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chroot-rescue.html">Chroot Rescue</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">AcreetionOS Wiki</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="welcome.html">AcreetionOS Wiki</a></li>
+    <li>System Care</li>
+    <li><a href="timeshift-snapshots.html">Timeshift Snapshots</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/wiki/modules/ROOT/pages/timeshift-snapshots.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Timeshift Snapshots on AcreetionOS</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>AcreetionOS configures Timeshift during installation so that every machine has a parachute. Snapshots capture the <strong>system</strong> (/, excluding your personal files by design) so you can roll back updates, experiments or breakage in minutes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_check_your_setup"><a class="anchor" href="#_check_your_setup"></a>Check your setup</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo timeshift --list          # existing snapshots
+cat /etc/timeshift/timeshift.json 2&gt;/dev/null | grep -E 'mode|device'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Default mode is <strong>RSYNC</strong> with weekly+daily schedules. Keep at least ~15 GB free for snapshot storage.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_a_snapshot_manually"><a class="anchor" href="#_create_a_snapshot_manually"></a>Create a snapshot manually</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo timeshift --create --comments "before trying KDE themes"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Habit worth building: snapshot before big changes — updates, driver swaps, desktop experiments.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_restore"><a class="anchor" href="#_restore"></a>Restore</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_from_within_a_working_system"><a class="anchor" href="#_from_within_a_working_system"></a>From within a working system</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo timeshift --restore      # pick snapshot, confirm, reboot when asked</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_when_the_system_wont_boot"><a class="anchor" href="#_when_the_system_wont_boot"></a>When the system won&#8217;t boot</h3>
+<div class="paragraph">
+<p>Boot the AcreetionOS ISO → open the <a href="recovery-environment.html" class="xref page">Recovery Environment</a> → choose <strong>Timeshift restore</strong>. It auto-mounts and restores the right device.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_snapshots_do_not_cover"><a class="anchor" href="#_what_snapshots_do_not_cover"></a>What snapshots do NOT cover</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>/home</code> (your documents) is excluded by default — that&#8217;s what <a href="backup-strategies.html" class="xref page">Backups</a> are for.</p>
+</li>
+<li>
+<p>Other partitions/disks.</p>
+</li>
+<li>
+<p>GRUB itself (reinstallable via Recovery Environment).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_disk_space_management"><a class="anchor" href="#_disk_space_management"></a>Disk space management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RSYNC snapshots hard-link unchanged files — they&#8217;re cheap. Still:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo timeshift --delete --snapshot '2026-08-01_10-00-01'   # prune old ones</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or let the schedule&#8217;s automatic pruning handle it (default keeps 5 daily / weekly set).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_btrfs_users"><a class="anchor" href="#_btrfs_users"></a>Btrfs users</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you installed onto btrfs, switch Timeshift mode to <strong>BTRFS</strong> for instant copy-on-write snapshots — see <a href="../../admin-guide/stable/btrfs.html" class="xref page">Administration → Btrfs</a>.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

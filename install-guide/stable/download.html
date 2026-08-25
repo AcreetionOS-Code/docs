@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Downloading &amp; Verifying the ISO :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/install-guide/stable/download.html">
+    <meta name="description" content="Get the official AcreetionOS ISO from acreetionos.org and verify its checksum so you know your install media is authentic and uncorrupted.">
+    <meta name="keywords" content="download AcreetionOS ISO, checksum verification">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Downloading &amp; Verifying the ISO">
+<meta property="og:description" content="Get the official AcreetionOS ISO from acreetionos.org and verify its checksum so you know your install media is authentic and uncorrupted.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/install-guide/stable/download.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="install-guide" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Installation Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Installation Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Before You Start</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="requirements.html">Requirements</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="download.html">Download &amp; Verify ISO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bootable-usb.html">Bootable USB Media</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bios-uefi.html">Firmware (BIOS/UEFI)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Installing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="live-environment.html">The Live Session</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installer-walkthrough.html">Calamares Walkthrough</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="partitioning.html">Partitioning Options</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="encrypted-install.html">Encrypted Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-install.html">Dual-Boot Install</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">After</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="post-install.html">Post-Install Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="install-troubleshooting.html">Install Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Installation Guide</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Installation Guide</a></li>
+    <li>Before You Start</li>
+    <li><a href="download.html">Download &amp; Verify ISO</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/install-guide/modules/ROOT/pages/download.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Downloading &amp; Verifying the ISO</h1>
+<div class="sect1">
+<h2 id="_get_it"><a class="anchor" href="#_get_it"></a>Get it</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Official source: <a href="https://acreetionos.org/install.html" class="bare">https://acreetionos.org/install.html</a> <strong>only</strong>. Mirrors appear over time; anything else is untrusted until proven otherwise.</p>
+</div>
+<div class="paragraph">
+<p>Pick the edition matching your plan (<a href="../../editions/stable/index.html" class="xref page">Editions overview</a> helps choose) — standard Cinnamon build suits most people.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_verify"><a class="anchor" href="#_why_verify"></a>Why verify?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A corrupted download wastes an hour at the "installation failed" screen; a tampered one is worse. Checksums catch both.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verify_on_linuxmacos"><a class="anchor" href="#_verify_on_linuxmacos"></a>Verify on Linux/macOS</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sha256sum AcreetionOS-x86_64.iso        # macOS: shasum -a 256 ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Compare against the SHA256 published next to the download link. Match = good to write.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verify_on_windows_powershell"><a class="anchor" href="#_verify_on_windows_powershell"></a>Verify on Windows (PowerShell)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-powershell hljs" data-lang="powershell">Get-FileHash .\AcreetionOS-x86_64.iso -Algorithm SHA256</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optional_signature_check"><a class="anchor" href="#_optional_signature_check"></a>Optional: signature check</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you manage keys, signed checksum files let you verify authenticity rather than just integrity — import instructions ship alongside release announcements.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_size_sanity"><a class="anchor" href="#_size_sanity"></a>Size sanity</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Expect roughly 2–3 GB for the standard image. Wildly different sizes mean truncated download — re-fetch before blaming your USB stick.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

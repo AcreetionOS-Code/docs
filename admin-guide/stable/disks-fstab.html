@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Disks, Mounts &amp; fstab Discipline :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/admin-guide/stable/disks-fstab.html">
+    <meta name="description" content="Manage storage on AcreetionOS: lsblk/blkid identification, correct fstab entries with UUIDs, mount namespaces for users, and safe fstab validation.">
+    <meta name="keywords" content="fstab example, mount disk linux">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Disks, Mounts &amp; fstab Discipline">
+<meta property="og:description" content="Manage storage on AcreetionOS: lsblk/blkid identification, correct fstab entries with UUIDs, mount namespaces for users, and safe fstab validation.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/admin-guide/stable/disks-fstab.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="admin-guide" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Administration Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Administration Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Foundations</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="philosophy.html">System Philosophy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-advanced.html">Advanced Pacman</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-hooks.html">Pacman Hooks</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="acreetion-repos.html">AcreetionOS Repositories</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="makepkg-pkgbuild.html">makepkg &amp; PKGBUILDs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">systemd</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="systemd-units.html">Units &amp; Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="systemd-timers.html">Timers (cron replacement)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="journald.html">journald &amp; Logs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Network &amp; Security</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="network-manager-cli.html">NetworkManager CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openssh-server.html">OpenSSH Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewalld-ufw.html">Firewalls Compared</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="disks-fstab.html">Disks, Mounts &amp; fstab</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="lvm-luks.html">LVM &amp; LUKS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="btrfs.html">Btrfs Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="swap-zram.html">Swap &amp; Zram</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Boot Chain</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bootloader-grub.html">GRUB Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mkinitcpio.html">mkinitcpio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="microcode.html">CPU Microcode</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tuning &amp; Recovery</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="sysctl-tuning.html">Sysctl &amp; Kernel Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-partition.html">Managing ACRECOVERY</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Administration Guide</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Administration Guide</a></li>
+    <li>Storage</li>
+    <li><a href="disks-fstab.html">Disks, Mounts &amp; fstab</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/admin-guide/modules/ROOT/pages/disks-fstab.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Disks, Mounts &amp; fstab Discipline</h1>
+<div class="sect1">
+<h2 id="_identify_before_touching"><a class="anchor" href="#_identify_before_touching"></a>Identify before touching</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">lsblk -f                      # tree + filesystems + UUIDs
+sudo blkid                    # same data raw
+df -hT                        # what's mounted now</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Names (sda/sdb) shuffle between boots; <strong>UUIDs/LABELs don&#8217;t</strong> — fstab uses them.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fstab_anatomy"><a class="anchor" href="#_fstab_anatomy"></a>fstab anatomy</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">UUID=7d3c...  /          ext4   defaults,noatime       0 1
+UUID=A1B2-... /boot/efi  vfat   defaults,umask=0077    0 2
+LABEL=data    /srv/data  ext4   defaults,nofail        0 2
+tmpfs         /tmp       tmpfs  rw,noatime,size=4G     0 0
+//nas/share   /mnt/nas   cifs   credentials=/etc/cred,uid=1000,_netdev,nofail  0 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Field meanings: what · where · type · options · dump · fsck pass. Key options worth knowing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>noatime</code> — skip read-timestamp writes (SSD kindness)</p>
+</li>
+<li>
+<p><code>nofail</code> — boot continues if device absent (external/USB!)</p>
+</li>
+<li>
+<p><code>_netdev</code> — wait for network (NFS/CIFS)</p>
+</li>
+<li>
+<p><code>x-systemd.device-timeout=5</code> — fail fast instead of hanging boot</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_without_rebooting_the_pro_move"><a class="anchor" href="#_test_without_rebooting_the_pro_move"></a>Test WITHOUT rebooting (the pro move)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo findmnt --verify --verbose     # syntax + logic check
+sudo systemctl daemon-reload
+sudo mount -a -v                    # actually mounts everything new</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>fstab typos that pass this test are rare; reboots to fix them unnecessary.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_a_new_disk_end_to_end"><a class="anchor" href="#_adding_a_new_disk_end_to_end"></a>Adding a new disk end-to-end</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo parted /dev/sdb mklabel gpt mkpart primary ext4 1MiB 100%
+sudo mkfs.ext4 -L data /dev/sdb1
+sudo systemd-repart --dry-run=no 2&gt;/dev/null || true   # optional modern helper
+printf 'LABEL=data /srv/data ext4 defaults,noatime,nofail 0 2\n' | sudo tee -a /etc/fstab
+sudo mkdir -p /srv/data &amp;&amp; sudo mount -a</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_swapfile_on_btrfsext4"><a class="anchor" href="#_swapfile_on_btrfsext4"></a>Swapfile on btrfs/ext4</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="swap-zram.html" class="xref page">Swap Strategy: Zram, Swapfiles &amp; Partitions</a> — swapfiles need careful handling on CoW filesystems.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_emergency_bad_fstab_at_boot"><a class="anchor" href="#_emergency_bad_fstab_at_boot"></a>Emergency: bad fstab at boot</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Emergency shell offers you a writable root after password: edit <code>/etc/fstab</code>, remove offender, <code>systemctl reboot</code>. Prevention: the <code>--verify</code> habit above.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

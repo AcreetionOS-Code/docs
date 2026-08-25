@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Building the AcreetionOS ISO :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/contributor/stable/building-the-iso.html">
+    <meta name="description" content="Build your own AcreetionOS ISO from source on an Arch-based system: dependencies, build.sh workflow, output verification and testing loops.">
+    <meta name="keywords" content="build arch iso, archiso tutorial">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Building the AcreetionOS ISO">
+<meta property="og:description" content="Build your own AcreetionOS ISO from source on an Arch-based system: dependencies, build.sh workflow, output verification and testing loops.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/contributor/stable/building-the-iso.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="contributor" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Contributing</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Contributing to AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Involved</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="report-bugs.html">Reporting Bugs Well</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="testing.html">Testing &amp; QA</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="docs-style.html">Writing Documentation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="translations.html">Translations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Building &amp; Packaging</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="repo-layout.html">Repository Layout</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="building-the-iso.html">Building the ISO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="packaging.html">Packaging Guidelines</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Project</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="governance.html">Governance &amp; Teams</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="support-donate.html">Support &amp; Donations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Contributing</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Contributing</a></li>
+    <li>Building &amp; Packaging</li>
+    <li><a href="building-the-iso.html">Building the ISO</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/contributor/modules/ROOT/pages/building-the-iso.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Building the AcreetionOS ISO</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Reproduce the official image or fork it — the builder is ordinary tooling.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Arch-family host (AcreetionOS itself ideal; x86_64)</p>
+</li>
+<li>
+<p>~20 GB free disk, some patience for package downloads</p>
+</li>
+<li>
+<p>Root-capable account</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo pacman -S --needed git base-devel archiso grub squashfs-tools
+git clone https://github.com/AcreetionOS-Code/acreetionos.git
+cd acreetionos</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_build_loop"><a class="anchor" href="#_the_build_loop"></a>The build loop</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./build.sh                    # orchestrates everything; read it first — it's short
+# outputs land per script convention (work/out style dir)
+ls -lh out/*.iso
+sha256sum out/*.iso           # compare against your own build log</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What happens inside: packages resolve from repo-main per <code>packages.x86_64</code> → airootfs overlay applied → squashfs (XZ) compression → ISO hybrid with GRUB/SYSLINUX + recovery entries → optional build-info stamping (<code>generate-build-info.sh</code>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customizing_safely"><a class="anchor" href="#_customizing_safely"></a>Customizing safely</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Want to change</th>
+<th class="tableblock halign-left valign-top">Touch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package set</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">packages.x86_64 (commented sections guide placement)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Live defaults/services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">airootfs/ overlay paths mirror target system layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bootloader branding/menus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grub/, syslinux/</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Install-time behavior</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">installer/calamares config + postinstall hooks</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Keep Changes.md entries coming with PRs — that log IS institutional memory.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing_your_artifact"><a class="anchor" href="#_testing_your_artifact"></a>Testing your artifact</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>VM boot first (<a href="../../wiki/stable/virtualization.html" class="xref page">Virtual Machines on AcreetionOS</a>) — UEFI AND BIOS profiles both</p>
+</li>
+<li>
+<p>Installer run to completion in VM before touching real media</p>
+</li>
+<li>
+<p>USB write test via <a href="../../install-guide/stable/bootable-usb.html" class="xref page">Creating Bootable USB Media</a> patterns</p>
+</li>
+<li>
+<p>Recovery Environment entry boots? (easy to break during airootfs edits)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_build_failures"><a class="anchor" href="#_common_build_failures"></a>Common build failures</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Stale host keyring → update host fully first (rolling discipline)</p>
+</li>
+<li>
+<p>Disk exhaustion mid-squashfs → the 20 GB guidance exists</p>
+</li>
+<li>
+<p>Package conflict surprises → your packages.x86_64 edit vs repo state; resolve versions explicitly</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap>
+<loc>https://docs.acreetionos.org/sitemap-admin-guide.xml</loc>
+</sitemap>
+<sitemap>
+<loc>https://docs.acreetionos.org/sitemap-contributor.xml</loc>
+</sitemap>
+<sitemap>
+<loc>https://docs.acreetionos.org/sitemap-editions.xml</loc>
+</sitemap>
+<sitemap>
+<loc>https://docs.acreetionos.org/sitemap-install-guide.xml</loc>
+</sitemap>
+<sitemap>
+<loc>https://docs.acreetionos.org/sitemap-release-notes.xml</loc>
+</sitemap>
+<sitemap>
+<loc>https://docs.acreetionos.org/sitemap-wiki.xml</loc>
+</sitemap>
+</sitemapindex>

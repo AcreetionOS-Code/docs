@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Post-Installation Setup :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/install-guide/stable/post-install.html">
+    <meta name="description" content="Final setup after installing AcreetionOS: first update, snapshot baseline, drivers, firewall and personalization checklist.">
+    <meta name="keywords" content="after installing linux checklist">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Post-Installation Setup">
+<meta property="og:description" content="Final setup after installing AcreetionOS: first update, snapshot baseline, drivers, firewall and personalization checklist.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/install-guide/stable/post-install.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="install-guide" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Installation Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Installation Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Before You Start</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="requirements.html">Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="download.html">Download &amp; Verify ISO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bootable-usb.html">Bootable USB Media</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bios-uefi.html">Firmware (BIOS/UEFI)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Installing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="live-environment.html">The Live Session</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installer-walkthrough.html">Calamares Walkthrough</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="partitioning.html">Partitioning Options</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="encrypted-install.html">Encrypted Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-install.html">Dual-Boot Install</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">After</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="post-install.html">Post-Install Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="install-troubleshooting.html">Install Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Installation Guide</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Installation Guide</a></li>
+    <li>After</li>
+    <li><a href="post-install.html">Post-Install Setup</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/install-guide/modules/ROOT/pages/post-install.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Post-Installation Setup</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>You rebooted into Cinnamon. Fifteen focused minutes finish the job.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_full_update"><a class="anchor" href="#_1_full_update"></a>1. Full update</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo pacman -Syu</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Why even fresh ISOs update: rolling repo moved since build day — <a href="../../wiki/stable/updating-system.html" class="xref page">Updating AcreetionOS Safely</a>.)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_baseline_snapshot"><a class="anchor" href="#_2_baseline_snapshot"></a>2. Baseline snapshot</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo timeshift --create --comments "clean install baseline"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Confirm schedule exists too — <a href="../../wiki/stable/timeshift-snapshots.html" class="xref page">Timeshift Snapshots on AcreetionOS</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_hardware_specific_passes"><a class="anchor" href="#_3_hardware_specific_passes"></a>3. Hardware-specific passes</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Machine has</th>
+<th class="tableblock halign-left valign-top">Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA GPU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../../wiki/stable/nvidia-drivers.html" class="xref page">NVIDIA Drivers</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wi-Fi flaky</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../../wiki/stable/wifi-setup.html" class="xref page">Wi-Fi guide</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Printer/scanner</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../../wiki/stable/printer-setup.html" class="xref page">Printers &amp; Scanners</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Laptop</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../../wiki/stable/laptop-power.html" class="xref page">power setup</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dual-boot Windows</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify menu per <a href="dual-boot-install.html" class="xref page">Installing Alongside Windows</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_4_security_quick_pass"><a class="anchor" href="#_4_security_quick_pass"></a>4. Security quick-pass</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo pacman -S ufw &amp;&amp; sudo ufw enable        # firewall</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Consider encryption retrofit planning (needs reinstall usually): <a href="../../wiki/stable/disk-encryption.html" class="xref page">Disk Encryption on AcreetionOS</a>. Review who has sudo: <a href="../../wiki/stable/users-sudo.html" class="xref page">Users, Groups &amp; Sudo</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_make_it_yours"><a class="anchor" href="#_5_make_it_yours"></a>5. Make it yours</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Themes/wallpapers: System Settings (brand palette lives in our site theme too)</p>
+</li>
+<li>
+<p>Startup apps: trim early — faster logins forever</p>
+</li>
+<li>
+<p>Software round-up: browser, editor, media player — patterns in <a href="../../wiki/stable/installing-software.html" class="xref page">Installing Software</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_know_your_escape_hatch"><a class="anchor" href="#_6_know_your_escape_hatch"></a>6. Know your escape hatch</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bookmark <a href="../../wiki/stable/recovery-environment.html" class="xref page">Recovery Environment</a> — F9/failover entry, Timeshift restore, package repair. Reading it BEFORE disaster is a superpower.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_done"><a class="anchor" href="#_done"></a>Done!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to AcreetionOS. When ready to go deeper: <a href="../../wiki/stable/getting-started.html" class="xref page">Getting Started</a> links onward, and the community doors on <a href="https://acreetionos.org">the main site</a> are open.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

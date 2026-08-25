@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Backup Strategies :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/wiki/stable/backup-strategies.html">
+    <meta name="description" content="Protect your data on AcreetionOS: what Timeshift does and doesn't cover, rsync/borg/restic recipes, and the 3-2-1 rule made practical.">
+    <meta name="keywords" content="Linux backups, rsync, borg, restic, 3-2-1 rule">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Backup Strategies">
+<meta property="og:description" content="Protect your data on AcreetionOS: what Timeshift does and doesn't cover, rsync/borg/restic recipes, and the 3-2-1 rule made practical.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/wiki/stable/backup-strategies.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wiki" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="welcome.html">AcreetionOS Wiki</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Start Here</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="welcome.html">Welcome</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="about-acreetionos.html">About AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="post-installation.html">First Steps After Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="system-requirements.html">System Requirements</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Software</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="package-management.html">Package Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-cheatsheet.html">Pacman Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="aur-guide.html">AUR &amp; yay Guide</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="repositories-and-mirrors.html">Repositories &amp; Mirrors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installing-software.html">Installing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="removing-software.html">Removing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="updating-system.html">Updating the System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="flatpak.html">Flatpak &amp; Sandbox Apps</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wifi-setup.html">Wi-Fi Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bluetooth-setup.html">Bluetooth</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="printer-setup.html">Printers &amp; Scanners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nvidia-drivers.html">NVIDIA Drivers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amd-intel-gpu.html">AMD &amp; Intel Graphics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="audio-setup.html">Audio (PipeWire)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="laptop-power.html">Laptops &amp; Battery Life</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="virtualization.html">Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">System Care</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="timeshift-snapshots.html">Timeshift Snapshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-environment.html">Recovery Environment</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="backup-strategies.html">Backup Strategies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cleaning-disk-space.html">Freeing Disk Space</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kernel-management.html">Kernel Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="performance-tuning.html">Performance Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="users-sudo.html">Users &amp; Sudo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Security &amp; Privacy</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewall-basics.html">Firewall Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disk-encryption.html">Disk Encryption</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-windows.html">Dual-Boot with Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Desktop &amp; Media</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wayland-x11.html">Wayland vs X11</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="gaming.html">Gaming on AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multimedia-codecs.html">Multimedia &amp; Codecs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="keyboard-language.html">Keyboard &amp; Language</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Troubleshooting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="troubleshooting-boot.html">Boot Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chroot-rescue.html">Chroot Rescue</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">AcreetionOS Wiki</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="welcome.html">AcreetionOS Wiki</a></li>
+    <li>System Care</li>
+    <li><a href="backup-strategies.html">Backup Strategies</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/wiki/modules/ROOT/pages/backup-strategies.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Backup Strategies</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Snapshots (<a href="timeshift-snapshots.html" class="xref page">Timeshift</a>) protect the <strong>system</strong>. Backups protect <strong>you</strong>. Different jobs, both needed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_mental_model"><a class="anchor" href="#_the_mental_model"></a>The mental model</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Protects against</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timeshift snapshots</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bad updates, config mistakes — system-level undo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File backups (rsync/borg/restic)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dead disks, ransomware, theft, "I deleted my thesis"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Offsite/cloud copy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fire, flood, house-level disasters</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practical_plan_3_2_1"><a class="anchor" href="#_practical_plan_3_2_1"></a>Practical plan: 3-2-1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>3</strong> copies of data · <strong>2</strong> different devices · <strong>1</strong> offsite.</p>
+</div>
+<div class="paragraph">
+<p>For most humans that translates to: internal disk + external USB drive + cloud folder.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recipe_simple_mirror_with_rsync"><a class="anchor" href="#_recipe_simple_mirror_with_rsync"></a>Recipe: simple mirror with rsync</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rsync -aAXHv --delete \
+  --exclude={"/dev/*,/proc/*,/sys/*,/tmp/*,/run/*,/mnt/*,/media/*,/lost+found"} \
+  /home/you/ /run/media/you/BACKUP/home-mirror/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run before coffee every Sunday, or cron it — <a href="../../admin-guide/stable/systemd-timers.html" class="xref page">timers</a> make scheduling clean.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recipe_versioned_encrypted_with_borg"><a class="anchor" href="#_recipe_versioned_encrypted_with_borg"></a>Recipe: versioned + encrypted with borg</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo pacman -S borg
+borg init --encryption=repokey /run/media/you/BACKUP/borg-repo
+borg create --progress /run/media/you/BACKUP/borg-repo::{now} ~/Documents ~/Pictures
+borg list /run/media/you/BACKUP/borg-repo       # browse history
+borg mount ... /mnt/old                          # open an old state as a folder</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Deduplicated, so nightly snapshots cost megabytes, not gigabytes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recipe_restic_to_cloudb2s3"><a class="anchor" href="#_recipe_restic_to_cloudb2s3"></a>Recipe: restic to cloud/B2/S3</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">restic -r rclone:b2:mybucket/docs backup ~/Documents
+restic snapshots</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Encrypted client-side; the provider sees noise.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_restores_not_just_backups"><a class="anchor" href="#_test_restores_not_just_backups"></a>Test restores, not just backups</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once a quarter: pull one random file from last month&#8217;s backup and open it. Untested backups are hope, not plans.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

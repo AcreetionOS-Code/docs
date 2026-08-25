@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>journald &amp; Log Management :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/admin-guide/stable/journald.html">
+    <meta name="description" content="Query and manage logs on AcreetionOS with journalctl: filtering by boot/unit/priority, persistent journals, size limits and forwarding syslog.">
+    <meta name="keywords" content="journalctl tutorial, linux logs">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="journald &amp; Log Management">
+<meta property="og:description" content="Query and manage logs on AcreetionOS with journalctl: filtering by boot/unit/priority, persistent journals, size limits and forwarding syslog.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/admin-guide/stable/journald.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="admin-guide" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Administration Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Administration Guide</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Foundations</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="philosophy.html">System Philosophy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-advanced.html">Advanced Pacman</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-hooks.html">Pacman Hooks</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="acreetion-repos.html">AcreetionOS Repositories</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="makepkg-pkgbuild.html">makepkg &amp; PKGBUILDs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">systemd</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="systemd-units.html">Units &amp; Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="systemd-timers.html">Timers (cron replacement)</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="journald.html">journald &amp; Logs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Network &amp; Security</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="network-manager-cli.html">NetworkManager CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openssh-server.html">OpenSSH Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewalld-ufw.html">Firewalls Compared</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disks-fstab.html">Disks, Mounts &amp; fstab</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="lvm-luks.html">LVM &amp; LUKS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="btrfs.html">Btrfs Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="swap-zram.html">Swap &amp; Zram</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Boot Chain</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bootloader-grub.html">GRUB Deep Dive</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mkinitcpio.html">mkinitcpio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="microcode.html">CPU Microcode</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tuning &amp; Recovery</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="sysctl-tuning.html">Sysctl &amp; Kernel Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-partition.html">Managing ACRECOVERY</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Administration Guide</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../wiki/stable/welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../wiki/stable/welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../wiki/stable/welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Administration Guide</a></li>
+    <li>systemd</li>
+    <li><a href="journald.html">journald &amp; Logs</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/admin-guide/modules/ROOT/pages/journald.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">journald &amp; Log Management</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The journal indexes everything systemd touches — structured, fast, binary-backed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_queries_youll_actually_run"><a class="anchor" href="#_queries_youll_actually_run"></a>Queries you&#8217;ll actually run</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">journalctl -b                    # this boot
+journalctl -b -1                 # previous boot (post-crash goldmine)
+journalctl -p err -b             # errors+ this boot
+journalctl -u NetworkManager -f  # follow one unit
+journalctl --since "2026-08-01" --until "2026-08-02"
+journalctl _COMM=pacman | tail   # who installed what, when
+journalctl -k                    # kernel ring
+journalctl --disk-usage
+sudo journalctl --vacuum-size=200M --vacuum-time=30d</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tab-completion works on field values (<code>_PID=&lt;TAB&gt;</code>); combine fields freely.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_make_it_survive_reboots"><a class="anchor" href="#_make_it_survive_reboots"></a>Make it survive reboots</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default volatile (/run). Persist:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo mkdir -p /etc/systemd/journald.conf.d
+printf '[Journal]\nStorage=persistent\n' | sudo tee /etc/systemd/journald.conf.d/persist.conf
+sudo systemctl restart systemd-journald</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_size_discipline"><a class="anchor" href="#_size_discipline"></a>Size discipline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Defaults cap at 10% fs / 4GB. Tighter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini"># journald.conf.d/size.conf
+[Journal]
+SystemMaxUse=500M
+MaxRetentionSec=90day</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then <code>--vacuum-size</code> once to shrink existing.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_classic_syslog_files"><a class="anchor" href="#_classic_syslog_files"></a>Classic syslog files?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some daemons still write /var/log files themselves (nginx, samba&#8230;&#8203;). Forwarding bridge exists if tooling expects syslog format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini">[Journal]
+ForwardToSyslog=yes     # with a syslog-ng/rsyslog installed</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ship_logs_elsewhere_small_scale"><a class="anchor" href="#_ship_logs_elsewhere_small_scale"></a>Ship logs elsewhere (small scale)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>journalctl -o short-precise -f | nc host port</code> for quick-and-dirty; proper: systemd-journal-remote packages, or vector/promtail reading journalctl output.</p>
+</div>
+<div class="paragraph">
+<p>Related: <a href="journald.html" class="xref page">user-level patterns</a> · size trimming recipes: <a href="../../wiki/stable/cleaning-disk-space.html" class="xref page">Freeing Disk Space Safely</a>.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Freeing Disk Space Safely :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/wiki/stable/cleaning-disk-space.html">
+    <meta name="description" content="Reclaim disk space on AcreetionOS: pacman cache trimming, orphan removal, journal limits, Flatpak runtimes and finding what eats your SSD.">
+    <meta name="keywords" content="free disk space linux, paccache, disk cleanup">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Freeing Disk Space Safely">
+<meta property="og:description" content="Reclaim disk space on AcreetionOS: pacman cache trimming, orphan removal, journal limits, Flatpak runtimes and finding what eats your SSD.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/wiki/stable/cleaning-disk-space.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wiki" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="welcome.html">AcreetionOS Wiki</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Start Here</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="welcome.html">Welcome</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="about-acreetionos.html">About AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="post-installation.html">First Steps After Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="system-requirements.html">System Requirements</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Software</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="package-management.html">Package Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-cheatsheet.html">Pacman Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="aur-guide.html">AUR &amp; yay Guide</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="repositories-and-mirrors.html">Repositories &amp; Mirrors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installing-software.html">Installing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="removing-software.html">Removing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="updating-system.html">Updating the System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="flatpak.html">Flatpak &amp; Sandbox Apps</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wifi-setup.html">Wi-Fi Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bluetooth-setup.html">Bluetooth</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="printer-setup.html">Printers &amp; Scanners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nvidia-drivers.html">NVIDIA Drivers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amd-intel-gpu.html">AMD &amp; Intel Graphics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="audio-setup.html">Audio (PipeWire)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="laptop-power.html">Laptops &amp; Battery Life</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="virtualization.html">Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">System Care</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="timeshift-snapshots.html">Timeshift Snapshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-environment.html">Recovery Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="backup-strategies.html">Backup Strategies</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="cleaning-disk-space.html">Freeing Disk Space</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kernel-management.html">Kernel Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="performance-tuning.html">Performance Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="users-sudo.html">Users &amp; Sudo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Security &amp; Privacy</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewall-basics.html">Firewall Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disk-encryption.html">Disk Encryption</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-windows.html">Dual-Boot with Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Desktop &amp; Media</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wayland-x11.html">Wayland vs X11</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="gaming.html">Gaming on AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multimedia-codecs.html">Multimedia &amp; Codecs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="keyboard-language.html">Keyboard &amp; Language</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Troubleshooting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="troubleshooting-boot.html">Boot Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chroot-rescue.html">Chroot Rescue</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">AcreetionOS Wiki</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="welcome.html">AcreetionOS Wiki</a></li>
+    <li>System Care</li>
+    <li><a href="cleaning-disk-space.html">Freeing Disk Space</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/wiki/modules/ROOT/pages/cleaning-disk-space.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Freeing Disk Space Safely</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Rolling systems accumulate. Here&#8217;s the safe purge order, biggest wins first.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_find_the_hogs_first"><a class="anchor" href="#_find_the_hogs_first"></a>Find the hogs first</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">df -h /
+sudo du -xh --max-depth=2 / | sort -rh | head -25
+ncdu /                      # interactive; sudo pacman -S ncdu</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_pacman_cache_often_530_gb"><a class="anchor" href="#_1_pacman_cache_often_530_gb"></a>1. Pacman cache (often 5–30 GB)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">du -sh /var/cache/pacman/pkg
+paccache -rk1               # keep ONE old version per package (rollback insurance)
+paccache -ruk0              # additionally drop cache of uninstalled packages</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add automation once and forget it — the shipped <code>paccache.timer</code> handles weekly trims (<code>systemctl status paccache.timer</code>).</p>
+</div>
+<div class="paragraph">
+<p>Avoid <code>pacman -Scc</code>: it deletes ALL cached versions, removing easy downgrades (see <a href="pacman-cheatsheet.html" class="xref page">Cheat Sheet</a>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_orphans_unused_packages"><a class="anchor" href="#_2_orphans_unused_packages"></a>2. Orphans &amp; unused packages</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pacman -Qdt
+sudo pacman -Rns $(pacman -Qdtq)
+yay -Yc                     # AUR leftovers, if using yay</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More context: <a href="removing-software.html" class="xref page">Removing Software</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_journald_logs"><a class="anchor" href="#_3_journald_logs"></a>3. Journald logs</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">journalctl --disk-usage
+sudo journalctl --vacuum-size=200M</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Make it permanent in <code>/etc/systemd/journald.conf</code>: <code>SystemMaxUse=200M</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_4_flatpak_runtimes"><a class="anchor" href="#_4_flatpak_runtimes"></a>4. Flatpak runtimes</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">flatpak uninstall --unused
+du -sh /var/lib/flatpak</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_timeshift_misc"><a class="anchor" href="#_5_timeshift_misc"></a>5. Timeshift &amp; misc</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Prune snapshots: <code>sudo timeshift --list</code>, delete stale ones.</p>
+</li>
+<li>
+<p>Thumbnails: <code>rm -rf ~/.thumbnails/*</code>.</p>
+</li>
+<li>
+<p>Browser caches from within each browser (safe way).</p>
+</li>
+<li>
+<p>Trash! <code>gio trash --empty</code> or Files app → empty trash.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dont_touch"><a class="anchor" href="#_dont_touch"></a>Don&#8217;t touch</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>/usr</code>, <code>/lib</code>, anything owned by packages — remove via pacman only.</p>
+</li>
+<li>
+<p>Kernel/initramfs files directly — manage through <a href="kernel-management.html" class="xref page">kernel packages</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

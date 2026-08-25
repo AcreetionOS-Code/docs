@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Performance Tuning :: AcreetionOS Docs</title>
+    <link rel="canonical" href="https://docs.acreetionos.org/wiki/stable/performance-tuning.html">
+    <meta name="description" content="Make AcreetionOS faster: zram, systemd service trims, Cinnamon tweaks, I/O schedulers and gaming latency basics.">
+    <meta name="keywords" content="speed up linux, zram tuning, systemd analyze">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<meta property="og:title" content="Performance Tuning">
+<meta property="og:description" content="Make AcreetionOS faster: zram, systemd service trims, Cinnamon tweaks, I/O schedulers and gaming latency basics.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://docs.acreetionos.org/wiki/stable/performance-tuning.html">
+<meta property="og:site_name" content="AcreetionOS Docs">
+<meta property="og:image" content="https://docs.acreetionos.org/_img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/webp" href="../../_/img/logo.webp">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.acreetionos.org">AcreetionOS Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wiki" data-version="stable">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="welcome.html">AcreetionOS Wiki</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Start Here</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="welcome.html">Welcome</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="about-acreetionos.html">About AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="post-installation.html">First Steps After Install</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="system-requirements.html">System Requirements</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Software</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="package-management.html">Package Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pacman-cheatsheet.html">Pacman Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="aur-guide.html">AUR &amp; yay Guide</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="repositories-and-mirrors.html">Repositories &amp; Mirrors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installing-software.html">Installing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="removing-software.html">Removing Software</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="updating-system.html">Updating the System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="flatpak.html">Flatpak &amp; Sandbox Apps</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wifi-setup.html">Wi-Fi Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bluetooth-setup.html">Bluetooth</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="printer-setup.html">Printers &amp; Scanners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nvidia-drivers.html">NVIDIA Drivers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amd-intel-gpu.html">AMD &amp; Intel Graphics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="audio-setup.html">Audio (PipeWire)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="laptop-power.html">Laptops &amp; Battery Life</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="virtualization.html">Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">System Care</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="timeshift-snapshots.html">Timeshift Snapshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="recovery-environment.html">Recovery Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="backup-strategies.html">Backup Strategies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cleaning-disk-space.html">Freeing Disk Space</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kernel-management.html">Kernel Management</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="performance-tuning.html">Performance Tuning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="users-sudo.html">Users &amp; Sudo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Security &amp; Privacy</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="firewall-basics.html">Firewall Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disk-encryption.html">Disk Encryption</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="dual-boot-windows.html">Dual-Boot with Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Desktop &amp; Media</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="wayland-x11.html">Wayland vs X11</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="gaming.html">Gaming on AcreetionOS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multimedia-codecs.html">Multimedia &amp; Codecs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="keyboard-language.html">Keyboard &amp; Language</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Troubleshooting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="troubleshooting-boot.html">Boot Problems</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chroot-rescue.html">Chroot Rescue</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">AcreetionOS Wiki</span>
+    <span class="version">stable</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="welcome.html">AcreetionOS Wiki</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="welcome.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../admin-guide/stable/index.html">Administration Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../admin-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../contributor/stable/index.html">Contributing</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../contributor/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../editions/stable/index.html">Editions</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../editions/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../install-guide/stable/index.html">Installation Guide</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../install-guide/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../release-notes/stable/index.html">Release Notes</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../release-notes/stable/index.html">stable</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="welcome.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="welcome.html">AcreetionOS Wiki</a></li>
+    <li>System Care</li>
+    <li><a href="performance-tuning.html">Performance Tuning</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/natalie/Projects/acreetionos-docs/components/wiki/modules/ROOT/pages/performance-tuning.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Performance Tuning</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Modern AcreetionOS is quick by default. These are the honest wins, ordered by effort-to-payoff.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_measure_before_touching"><a class="anchor" href="#_1_measure_before_touching"></a>1. Measure before touching</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemd-analyze                # boot time breakdown
+systemd-analyze blame | head   # slowest units
+free -h                        # RAM &amp; swap reality
+iostat -x 2                    # disk pressure (sysstat pkg)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_zram_the_single_best_generic_tweak"><a class="anchor" href="#_2_zram_the_single_best_generic_tweak"></a>2. zram (the single best generic tweak)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Compressed-RAM swap beats disk swap enormously:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo pacman -S zram-generator
+printf '[zram0]\nzram-size = min(ram, 8192)\ncompression-algorithm = zstd\n' | \
+  sudo tee /etc/systemd/zram-generator.conf
+sudo systemctl start systemd-zram-setup@zram0.service
+swapon --show</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_trim_startup_services"><a class="anchor" href="#_3_trim_startup_services"></a>3. Trim startup services</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl --user list-units --state=running
+systemctl list-units --type=service --state=running
+systemctl disable --now &lt;unit&gt;    # only ones YOU know you don't need</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_4_cinnamon_specifics"><a class="anchor" href="#_4_cinnamon_specifics"></a>4. Cinnamon specifics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Settings → General: disable unused effects; keep "Sync refresh" on.</p>
+</li>
+<li>
+<p>System Settings → Startup Applications: fewer autostarts, faster login.</p>
+</li>
+<li>
+<p>On hybrid graphics, make sure apps default to iGPU (battery + thermals): <a href="nvidia-drivers.html" class="xref page">NVIDIA PRIME notes</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_io_scheduler_ssds"><a class="anchor" href="#_5_io_scheduler_ssds"></a>5. I/O scheduler (SSDs)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Usually fine automatically. Check:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat /sys/block/nvme0n1/queue/scheduler    # 'none' is expected for NVMe</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_audio_latency_pro_audio"><a class="anchor" href="#_6_audio_latency_pro_audio"></a>6. Audio latency (pro-audio)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pw-metadata -n settings 0 clock.force-quantum 128   # lower = less latency</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_7_gaming_latency_extras"><a class="anchor" href="#_7_gaming_latency_extras"></a>7. Gaming latency extras</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>gamemoderun %command%</code> (Steam launch option) — Feral GameMode from repos.</p>
+</li>
+<li>
+<p>Full stack guide: <a href="gaming.html" class="xref page">Gaming</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anti_tips_skip_these"><a class="anchor" href="#_anti_tips_skip_these"></a>Anti-tips (skip these)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Random <code>sysctl</code> voodoo from forums — measure, don&#8217;t cargo-cult (see <a href="../../admin-guide/stable/sysctl-tuning.html" class="xref page">Sysctl Guide</a>).</p>
+</li>
+<li>
+<p>Disabling journaling/compositing globally for "speed".</p>
+</li>
+<li>
+<p>Any tweak promising 10× — skepticism is a performance tool too.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© AcreetionOS · <a href="https://acreetionos.org">acreetionos.org</a> · Arch-based, user-friendly.</p>
+  <p>Built with <a href="https://antora.org">Antora</a>. UI licensed under the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
