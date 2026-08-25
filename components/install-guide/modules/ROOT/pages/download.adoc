@@ -6,7 +6,7 @@
 
 Official source: https://acreetionos.org/install.html **only**. Mirrors appear over time; anything else is untrusted until proven otherwise.
 
-Pick the edition matching your plan (xref:editions/index.adoc[Editions overview] helps choose) — standard Cinnamon build suits most people.
+Pick the edition matching your plan (xref:editions::index.adoc[Editions overview] helps choose) — standard Cinnamon build suits most people.
 
 == Why verify?
 

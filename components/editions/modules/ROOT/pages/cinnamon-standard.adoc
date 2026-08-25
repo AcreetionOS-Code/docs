@@ -25,7 +25,7 @@ Expect: full PipeWire audio, NetworkManager + applet, XDG portals for flatpak/sa
 
 == Hardware envelope
 
-Runs beautifully from ~2010 hardware upward (xref:wiki:system-requirements.adoc[]). Below that threshold, honestly evaluate xref:openbox-lite.adoc[] instead.
+Runs beautifully from ~2010 hardware upward (xref:wiki::system-requirements.adoc[]). Below that threshold, honestly evaluate xref:openbox-lite.adoc[] instead.
 
 == Who outgrows it
 
@@ -33,4 +33,4 @@ Nobody forced to — but power users sometimes add a tiling WM alongside (`i3` c
 
 == Try before committing
 
-Live session boots the complete desktop from USB (xref:install-guide:live-environment.adoc[]) — settings changes there don't persist, which is exactly what you want in a test drive.
+Live session boots the complete desktop from USB (xref:install-guide::live-environment.adoc[]) — settings changes there don't persist, which is exactly what you want in a test drive.

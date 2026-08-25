@@ -21,11 +21,11 @@ Classic Intel RST/VMD RAID mode. Firmware → SATA/storage → switch **RAID/RST
 
 == Partition operation fails mid-way
 
-Usually overlapping/messy legacy layout: run GParted from live session, fix/align, retry. Data-bearing partitions: backup first (xref:wiki:backup-strategies.adoc[]).
+Usually overlapping/messy legacy layout: run GParted from live session, fix/align, retry. Data-bearing partitions: backup first (xref:wiki::backup-strategies.adoc[]).
 
 == Bootloader install failed at end
 
-System files are fine; only GRUB missing. Retry installer OR skip ahead: boot installed system via USB → xref:wiki:chroot-rescue.adoc[] → `grub-install` + config regen.
+System files are fine; only GRUB missing. Retry installer OR skip ahead: boot installed system via USB → xref:wiki::chroot-rescue.adoc[] → `grub-install` + config regen.
 
 == Wi-Fi needed during install but absent
 

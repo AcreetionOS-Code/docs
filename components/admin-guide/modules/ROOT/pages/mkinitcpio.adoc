@@ -2,7 +2,7 @@
 :description: Configure early userspace on AcreetionOS: mkinitcpio hooks order, presets, modules and compression, fallback images and rebuild procedures.
 :keywords: mkinitcpio hooks, initramfs rebuild
 
-Initramfs = tiny OS that finds/unlocks your real root. AcreetionOS regenerates it via hooks whenever kernels update (xref:admin-guide:pacman-hooks.adoc[]).
+Initramfs = tiny OS that finds/unlocks your real root. AcreetionOS regenerates it via hooks whenever kernels update (xref:admin-guide::pacman-hooks.adoc[]).
 
 == Presets drive everything
 

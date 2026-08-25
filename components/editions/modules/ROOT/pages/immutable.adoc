@@ -17,7 +17,7 @@ The system presents itself as a fixed image; your experiments happen in layers a
 |Yours entirely — normal files, flatpaks, dotfiles
 
 |Applications beyond base
-|xref:wiki:flatpak.adoc[Flatpak] first, containers second, layering last resort
+|xref:wiki::flatpak.adoc[Flatpak] first, containers second, layering last resort
 |===
 
 == Why people choose it
@@ -57,4 +57,4 @@ Timeshift-style rollback complements atomicity here; recovery tooling targets us
 |Larger update downloads (image-sized)
 |===
 
-Build source lives alongside standard edition in the org repos (acreetionos-immutable) — xref:contributor:index.adoc[contributors] welcome.
+Build source lives alongside standard edition in the org repos (acreetionos-immutable) — xref:contributor::index.adoc[contributors] welcome.

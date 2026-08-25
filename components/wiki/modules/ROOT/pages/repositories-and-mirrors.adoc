@@ -35,7 +35,7 @@ WARNING: Re-enabling official Arch `[core]`/`[extra]` servers mixes two package 
 Need something missing from repo-main? The right order is:
 
 . Check the xref:aur-guide.adoc[AUR].
-. Ask the maintainers to add it (xref:contributor/index.adoc[Contributing]).
+. Ask the maintainers to add it (xref:contributor::index.adoc[Contributing]).
 . Only as a last resort: xref:flatpak.adoc[Flatpak].
 
 == Keys & keyring

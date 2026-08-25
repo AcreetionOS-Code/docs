@@ -24,4 +24,4 @@ Version-ish anchors exist for support conversations: `pacman -Q linux`, ISO buil
 
 == Changelog culture
 
-Detailed engineering log lives in the source repo's Changes.md (https://github.com/AcreetionOS-Code[GitHub org]); these pages translate it into human. Community discussion happens on the main site channels — links in xref:contributor:index.adoc[Contributing].
+Detailed engineering log lives in the source repo's Changes.md (https://github.com/AcreetionOS-Code[GitHub org]); these pages translate it into human. Community discussion happens on the main site channels — links in xref:contributor::index.adoc[Contributing].

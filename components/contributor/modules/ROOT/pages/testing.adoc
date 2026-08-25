@@ -9,7 +9,7 @@ Testers catch breakage BEFORE it reaches daily drivers. Low status-barrier, high
 Per new ISO announcement:
 
 . VM install (fresh) → guided partitioning → first boot
-. Walk xref:install-guide:post-install.adoc[post-install] steps verbatim
+. Walk xref:install-guide::post-install.adoc[post-install] steps verbatim
 . Note ANY deviation — typos included (xref:report-bugs.adoc[] format)
 
 Matrix worth covering over time: UEFI vs BIOS · encrypted vs plain · dual-boot presence.
@@ -24,15 +24,15 @@ sudo pacman -Syu ; journalctl -b -p warning   # read what grumbles
 systemctl --failed                            # zero is the target number
 ----
 
-Regressions reported with journals become xref:release-notes:known-issues.adoc[] entries or same-day fixes.
+Regressions reported with journals become xref:release-notes::known-issues.adoc[] entries or same-day fixes.
 
 == Tier 3 — Feature-specific passes
 
-Recovery Environment drills (quarterly per machine — xref:admin-guide:recovery-partition.adoc[verification drill]), installer edge cases (dual-boot layouts), edition-specific flows (immutable updates, mobile flashing).
+Recovery Environment drills (quarterly per machine — xref:admin-guide::recovery-partition.adoc[verification drill]), installer edge cases (dual-boot layouts), edition-specific flows (immutable updates, mobile flashing).
 
 == Tooling expectations
 
-* VMs: QEMU/virt-manager preferred (xref:wiki:virtualization.adoc[])
+* VMs: QEMU/virt-manager preferred (xref:wiki::virtualization.adoc[])
 * Snapshot before risky test cycles even in VMs (habit building)
 * Logs archived per session: `journalctl -b > test-session-date.log`
 

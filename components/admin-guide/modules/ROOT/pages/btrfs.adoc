@@ -2,7 +2,7 @@
 :description: Administer btrfs on AcreetionOS: subvolume layout, snapshots with Timeshift BTRFS mode, zstd compression, scrubs/balances and send/receive backups.
 :keywords: btrfs subvolumes, timeshift btrfs mode
 
-Chose btrfs at install (xref:install-guide:partitioning.adoc[])? Here's the operating manual.
+Chose btrfs at install (xref:install-guide::partitioning.adoc[])? Here's the operating manual.
 
 == Layout conventions
 
@@ -23,7 +23,7 @@ sudo btrfs subvolume snapshot -r / /snapshots/root-$(date +%F)
 sudo btrfs subvolume delete /snapshots/root-2026-07-01
 ----
 
-Read-only (`-r`) ones are send/receive-able. Prefer Timeshift for scheduled work (xref:wiki:timeshift-snapshots.adoc[]) — switch its mode to BTRFS in settings first.
+Read-only (`-r`) ones are send/receive-able. Prefer Timeshift for scheduled work (xref:wiki::timeshift-snapshots.adoc[]) — switch its mode to BTRFS in settings first.
 
 == Compression
 
@@ -59,7 +59,7 @@ sudo btrfs send /snapshots/root-2026-08-01 | \
 # incremental: send -p parent-snap ...
 ----
 
-Pairs beautifully with xref:wiki:backup-strategies.adoc[backup planning].
+Pairs beautifully with xref:wiki::backup-strategies.adoc[backup planning].
 
 == RAID notes
 

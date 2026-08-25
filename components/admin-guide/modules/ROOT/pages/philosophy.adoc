@@ -41,6 +41,6 @@ Stay close to upstream Arch releases so security fixes arrive fast; curate at th
 
 == Practical consequences
 
-* Don't add Arch mirrors (xref:wiki:repositories-and-mirrors.adoc[]) — you'd bypass curation.
+* Don't add Arch mirrors (xref:wiki::repositories-and-mirrors.adoc[]) — you'd bypass curation.
 * Do file issues against our repos when a package misbehaves — curation means we can act.
 * Expect wiki/Arch-wiki knowledge to mostly apply; these docs flag divergences as they appear.

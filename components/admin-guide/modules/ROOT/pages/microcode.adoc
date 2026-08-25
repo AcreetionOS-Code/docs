@@ -36,6 +36,6 @@ Late (OS-level) reload misses many mitigations; the initramfs embedding above ap
 
 == Related hardware hygiene
 
-* GPU firmware: linux-firmware package covers Wi-Fi/BT/NIC/GPU DSP blobs (xref:wiki:wifi-setup.adoc[])
+* GPU firmware: linux-firmware package covers Wi-Fi/BT/NIC/GPU DSP blobs (xref:wiki::wifi-setup.adoc[])
 * SSD firmware: vendor tools occasionally; TRIM already handled by weekly fstrim.timer on shipped systems (`systemctl status fstrim.timer`)
 * Virtualized guests: host passes microcode through; guest packages harmless either way

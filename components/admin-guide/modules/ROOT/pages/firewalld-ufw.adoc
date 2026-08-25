@@ -11,7 +11,7 @@ Pick ONE frontend; they all program netfilter beneath.
 |Tool |Sweet spot |Think twice when
 
 |ufw
-|Desktop/laptop deny-incoming; two-command setup (xref:wiki:firewall-basics.adoc[])
+|Desktop/laptop deny-incoming; two-command setup (xref:wiki::firewall-basics.adoc[])
 |Complex zone/routing needs
 
 |firewalld

@@ -13,8 +13,8 @@ A great bug report halves fix time. Here's the craft.
 == Before filing
 
 . Fully updated? `sudo pacman -Syu` then retest (rolling rule)
-. Search existing issues — your bug may have a workaround already (xref:release-notes:known-issues.adoc[])
-. Fallback kernel test for boot/hardware oddities (xref:wiki:kernel-management.adoc[])
+. Search existing issues — your bug may have a workaround already (xref:release-notes::known-issues.adoc[])
+. Fallback kernel test for boot/hardware oddities (xref:wiki::kernel-management.adoc[])
 
 == The evidence bundle
 

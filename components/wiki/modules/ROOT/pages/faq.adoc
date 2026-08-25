@@ -15,10 +15,10 @@ Harder, not impossible. Partial upgrades remain forbidden (xref:updating-system.
 Weekly-ish is plenty. Details and safety habits: xref:updating-system.adoc[Updating Safely].
 
 **Is there a version number / how do releases work?*
-Rolling. ISOs are refreshed builds; your system stays current through pacman. See xref:release-notes/index.adoc[Release Notes].
+Rolling. ISOs are refreshed builds; your system stays current through pacman. See xref:release-notes::index.adoc[Release Notes].
 
 **Why Cinnamon?*
-Familiar workflow, lightweight enough for old machines, actively developed, GTK themable — sweet spot between modern and comfortable. Alternatives exist in editions: xref:editions/index.adoc[Editions].
+Familiar workflow, lightweight enough for old machines, actively developed, GTK themable — sweet spot between modern and comfortable. Alternatives exist in editions: xref:editions::index.adoc[Editions].
 
 **Do AUR helpers work?*
 Yes — yay is documented in xref:aur-guide.adoc[AUR Guide]. Same review-before-build caution as anywhere on Arch.
@@ -30,4 +30,4 @@ Disabled for install (standard for Arch-family). Can be set up with custom keys 
 AcreetionOS pins its own repo server instead of mirrorlists — see xref:repositories-and-mirrors.adoc[].
 
 **How do I help?*
-Docs (like improving this page!), testing, packaging, donations — start at xref:contributor/index.adoc[Contributing].
+Docs (like improving this page!), testing, packaging, donations — start at xref:contributor::index.adoc[Contributing].

@@ -20,11 +20,11 @@ sudo pacman -Sy archlinux-keyring 2>/dev/null; sudo pacman-key --refresh-keys
 sudo pacman -Syyu
 ----
 
-Signature errors mid-way? Re-run step 2, retry — documented in xref:wiki:repositories-and-mirrors.adoc[].
+Signature errors mid-way? Re-run step 2, retry — documented in xref:wiki::repositories-and-mirrors.adoc[].
 
 == Kernel major-jump etiquette
 
-* NVIDIA users: driver module rebuilds via hook — if boot lands black-screened, previous kernel lives in GRUB Advanced menu (xref:wiki:kernel-management.adoc[])
+* NVIDIA users: driver module rebuilds via hook — if boot lands black-screened, previous kernel lives in GRUB Advanced menu (xref:wiki::kernel-management.adoc[])
 * VirtualBox users: `sudo vboxreload` post-update or guest modules sulk
 * LTS-safety-net reminder: installing linux-lts BEFORE trouble is cheaper than after (same page)
 
@@ -44,10 +44,10 @@ sudo pacdiff                                # merge interactively (vimdiff mode 
 
 == Migrating FROM other distros
 
-* From vanilla Arch: keep your dotfiles; expect repos/keyring/Timeshift/recovery differences (xref:admin-guide:philosophy.adoc[]) — don't import old mirrorlist/keyring hacks
-* From Ubuntu-likes: apt muscle-memory map → xref:wiki:pacman-cheatsheet.adoc[]
+* From vanilla Arch: keep your dotfiles; expect repos/keyring/Timeshift/recovery differences (xref:admin-guide::philosophy.adoc[]) — don't import old mirrorlist/keyring hacks
+* From Ubuntu-likes: apt muscle-memory map → xref:wiki::pacman-cheatsheet.adoc[]
 * Home-directory data: plain file copy is fine; avoid copying ~/.config wholesale between DE generations
 
 == When notes aren't enough
 
-xref:known-issues.adoc[] first, community channels second, bug report with journal third (xref:contributor:report-bugs.adoc[]).
+xref:known-issues.adoc[] first, community channels second, bug report with journal third (xref:contributor::report-bugs.adoc[]).

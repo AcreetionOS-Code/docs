@@ -37,4 +37,4 @@ Welcome aboard. This guide covers every step from empty USB stick to logged-in d
 
 Installation itself erases only what you tell it to erase. Guided "Erase disk" wipes the chosen drive completely; *Manual* mode lets you carve space precisely — read xref:partitioning.adoc[partitioning] before choosing manual with existing data.
 
-Snapshot-worthy moment comes later — after install, per xref:wiki:post-installation.adoc[first steps].
+Snapshot-worthy moment comes later — after install, per xref:wiki::post-installation.adoc[first steps].

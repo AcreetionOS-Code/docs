@@ -11,7 +11,7 @@ You rebooted into Cinnamon. Fifteen focused minutes finish the job.
 sudo pacman -Syu
 ----
 
-(Why even fresh ISOs update: rolling repo moved since build day — xref:wiki:updating-system.adoc[].)
+(Why even fresh ISOs update: rolling repo moved since build day — xref:wiki::updating-system.adoc[].)
 
 == 2. Baseline snapshot
 
@@ -20,7 +20,7 @@ sudo pacman -Syu
 sudo timeshift --create --comments "clean install baseline"
 ----
 
-Confirm schedule exists too — xref:wiki:timeshift-snapshots.adoc[].
+Confirm schedule exists too — xref:wiki::timeshift-snapshots.adoc[].
 
 == 3. Hardware-specific passes
 
@@ -29,16 +29,16 @@ Confirm schedule exists too — xref:wiki:timeshift-snapshots.adoc[].
 |Machine has |Do
 
 |NVIDIA GPU
-|xref:wiki:nvidia-drivers.adoc[NVIDIA Drivers]
+|xref:wiki::nvidia-drivers.adoc[NVIDIA Drivers]
 
 |Wi-Fi flaky
-|xref:wiki:wifi-setup.adoc[Wi-Fi guide]
+|xref:wiki::wifi-setup.adoc[Wi-Fi guide]
 
 |Printer/scanner
-|xref:wiki:printer-setup.adoc[]
+|xref:wiki::printer-setup.adoc[]
 
 |Laptop
-|xref:wiki:laptop-power.adoc[power setup]
+|xref:wiki::laptop-power.adoc[power setup]
 
 |Dual-boot Windows
 |Verify menu per xref:dual-boot-install.adoc[]
@@ -51,18 +51,18 @@ Confirm schedule exists too — xref:wiki:timeshift-snapshots.adoc[].
 sudo pacman -S ufw && sudo ufw enable        # firewall
 ----
 
-Consider encryption retrofit planning (needs reinstall usually): xref:wiki:disk-encryption.adoc[]. Review who has sudo: xref:wiki:users-sudo.adoc[].
+Consider encryption retrofit planning (needs reinstall usually): xref:wiki::disk-encryption.adoc[]. Review who has sudo: xref:wiki::users-sudo.adoc[].
 
 == 5. Make it yours
 
 * Themes/wallpapers: System Settings (brand palette lives in our site theme too)
 * Startup apps: trim early — faster logins forever
-* Software round-up: browser, editor, media player — patterns in xref:wiki:installing-software.adoc[]
+* Software round-up: browser, editor, media player — patterns in xref:wiki::installing-software.adoc[]
 
 == 6. Know your escape hatch
 
-Bookmark xref:wiki:recovery-environment.adoc[Recovery Environment] — F9/failover entry, Timeshift restore, package repair. Reading it BEFORE disaster is a superpower.
+Bookmark xref:wiki::recovery-environment.adoc[Recovery Environment] — F9/failover entry, Timeshift restore, package repair. Reading it BEFORE disaster is a superpower.
 
 == Done!
 
-Welcome to AcreetionOS. When ready to go deeper: xref:wiki:getting-started.adoc[Getting Started] links onward, and the community doors on https://acreetionos.org[the main site] are open.
+Welcome to AcreetionOS. When ready to go deeper: xref:wiki::getting-started.adoc[Getting Started] links onward, and the community doors on https://acreetionos.org[the main site] are open.

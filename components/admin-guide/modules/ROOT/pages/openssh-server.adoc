@@ -11,7 +11,7 @@ sudo systemctl enable --now sshd.service
 ss -tlnp | grep :22                  # confirm listening
 ----
 
-Firewall allowance if ufw active (xref:wiki:firewall-basics.adoc[]): `sudo ufw limit ssh`.
+Firewall allowance if ufw active (xref:wiki::firewall-basics.adoc[]): `sudo ufw limit ssh`.
 
 == Keys first, passwords never
 

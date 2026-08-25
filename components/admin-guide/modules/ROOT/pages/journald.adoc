@@ -60,4 +60,4 @@ ForwardToSyslog=yes     # with a syslog-ng/rsyslog installed
 
 `journalctl -o short-precise -f | nc host port` for quick-and-dirty; proper: systemd-journal-remote packages, or vector/promtail reading journalctl output.
 
-Related: xref:wiki:logs-journalctl.adoc[user-level patterns] · size trimming recipes: xref:wiki:cleaning-disk-space.adoc[].
+Related: xref:wiki::logs-journalctl.adoc[user-level patterns] · size trimming recipes: xref:wiki::cleaning-disk-space.adoc[].

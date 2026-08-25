@@ -2,7 +2,7 @@
 :description: System administration reference for AcreetionOS: pacman internals, systemd, networking, storage stacks, boot chain and kernel tuning.
 :keywords: Linux system administration, Arch admin guide
 
-For operators, tinkerers and the professionally curious. User-level tasks live in the xref:wiki:welcome.adoc[Wiki]; here we go a level deeper.
+For operators, tinkerers and the professionally curious. User-level tasks live in the xref:wiki::welcome.adoc[Wiki]; here we go a level deeper.
 
 == Map of the territory
 
@@ -31,7 +31,7 @@ For operators, tinkerers and the professionally curious. User-level tasks live i
 
 == Assumed background
 
-Comfortable in a shell; willing to read man pages (`man pacman.conf` etc. referenced throughout). Root access via sudo per xref:wiki:users-sudo.adoc[].
+Comfortable in a shell; willing to read man pages (`man pacman.conf` etc. referenced throughout). Root access via sudo per xref:wiki::users-sudo.adoc[].
 
 == The one rule that rules them all
 

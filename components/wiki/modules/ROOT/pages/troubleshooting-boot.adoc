@@ -64,4 +64,4 @@ Classic culprits: fstab UUID typo (`mount -o remount,rw /`, edit /etc/fstab, `sy
 
 == Report what happened
 
-Persistent mysteries deserve bug reports with `journalctl -b -1` output attached — xref:contributor/report-bugs.adoc[Reporting Bugs] shows the template maintainers love.
+Persistent mysteries deserve bug reports with `journalctl -b -1` output attached — xref:contributor::report-bugs.adoc[Reporting Bugs] shows the template maintainers love.

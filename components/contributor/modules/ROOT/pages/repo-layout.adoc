@@ -14,10 +14,10 @@ Orientation map for https://github.com/AcreetionOS-Code[the org].
 |The flagship ISO builder: airootfs overlay, packages.x86_64 lists, mkarchiso plumbing, Calamares config, grub/syslinux setup, Recovery Environment sources, Changes.md engineering log
 
 |acreetionos-immutable
-|Image-style edition build (xref:editions:immutable.adoc[])
+|Image-style edition build (xref:editions::immutable.adoc[])
 
 |acreetionos-mobile
-|Touch/mobile port work (xref:editions:mobile.adoc[])
+|Touch/mobile port work (xref:editions::mobile.adoc[])
 
 |AcreetionMediaWriter
 |Cross-platform USB writer tool

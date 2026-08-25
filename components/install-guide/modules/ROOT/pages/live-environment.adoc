@@ -39,4 +39,4 @@ Desktop icon or menu → *Install AcreetionOS*. Calamares opens; continue with t
 
 == Recovery mode bonus
 
-The same media doubles as your rescue kit — GRUB repair, chroot shell and Timeshift restore are reachable from the recovery entries described in xref:wiki:recovery-environment.adoc[].
+The same media doubles as your rescue kit — GRUB repair, chroot shell and Timeshift restore are reachable from the recovery entries described in xref:wiki::recovery-environment.adoc[].

@@ -8,13 +8,13 @@ Curated highlights from the rolling stream — things with visible impact or req
 
 The Windows-RE-style maintenance mode keeps growing: Timeshift browse/restore, package repair pipelines, GRUB repair for BIOS+UEFI with dual-boot os-prober, fstab regeneration, password reset, network setup via nmtui, hardware/log inspection tools, chroot shell — plus VT palette remapping so even rescue TTYs match brand green-on-dark.
 
-Background + entry paths: xref:wiki:recovery-environment.adoc[].
+Background + entry paths: xref:wiki::recovery-environment.adoc[].
 
 == ACRECOVERY partition maturation
 
 Payload compression tightened (gzip -9 under GRUB gzio), footprint trimmed ~800→512 MiB class, fast-boot target design (no network-online waits, hidden 1s menu), automatic failover via grubenv recordfail tracking with boot-success flag clearing.
 
-Operator view: xref:admin-guide:recovery-partition.adoc[].
+Operator view: xref:admin-guide::recovery-partition.adoc[].
 
 == Installer & first-run polish
 

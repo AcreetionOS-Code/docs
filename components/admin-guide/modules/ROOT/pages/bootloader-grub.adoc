@@ -41,7 +41,7 @@ AcreetionOS ships branded GRUB bits under /boot/grub/themes/. Resolution quirks:
 |`ls` to find partitions; `set root=(hd0,gpt2)`; `linux /boot/vmlinuz-linux root=/dev/nvme0n1p2`; `initrd /boot/initramfs-linux.img`; `boot`. Then FIX via reinstall below.
 
 |No GRUB at all
-|Boot ISO → Recovery Environment → Boot repair, or manual chroot: xref:wiki:chroot-rescue.adoc[]
+|Boot ISO → Recovery Environment → Boot repair, or manual chroot: xref:wiki::chroot-rescue.adoc[]
 |===
 
 Manual reinstall inside chroot:

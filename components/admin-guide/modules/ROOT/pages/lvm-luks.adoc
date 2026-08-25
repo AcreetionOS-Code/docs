@@ -17,7 +17,7 @@ sudo cryptsetup luksAddKey /dev/nvme0n1p2         # enroll backup passphrase/key
 sudo cryptsetup luksRemoveKey /dev/nvme0n1p2      # retire one
 ----
 
-Rescue flow integration: xref:wiki:chroot-rescue.adoc[unlock-then-mount pattern].
+Rescue flow integration: xref:wiki::chroot-rescue.adoc[unlock-then-mount pattern].
 
 == LVM daily
 
@@ -51,4 +51,4 @@ Full parameter background: xref:sysctl-tuning.adoc[] covers cmdline editing conv
 
 == When LUKS prompts twice at boot
 
-GRUB unlocks first stage, initramfs re-prompts second stage — normal with /boot-inside-LUKS layouts. Trim friction via keyfile-in-ESP patterns only if threat model permits (xref:wiki:disk-encryption.adoc[] tradeoffs).
+GRUB unlocks first stage, initramfs re-prompts second stage — normal with /boot-inside-LUKS layouts. Trim friction via keyfile-in-ESP patterns only if threat model permits (xref:wiki::disk-encryption.adoc[] tradeoffs).

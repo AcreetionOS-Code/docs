@@ -31,7 +31,7 @@ Donation channels are listed on https://acreetionos.org/donate.html[the site's d
 
 * *Time*: any lane in xref:index.adoc[contributing] — testers and doc writers convert directly into project quality
 * *Hardware*: spare machines broaden the compatibility matrix (coordinate via community channels before shipping anything)
-* *Advocacy*: honest recommendations in your circles; comparison writeups grounded in xref:editions:index.adoc[facts]
+* *Advocacy*: honest recommendations in your circles; comparison writeups grounded in xref:editions::index.adoc[facts]
 * *Professional skills*: legal review, design passes, accessibility audits — offer via maintainer contact
 
 == Corporate sponsorship framing

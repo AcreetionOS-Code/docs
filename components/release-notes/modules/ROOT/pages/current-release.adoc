@@ -17,10 +17,10 @@ Fresh from https://acreetionos.org/install.html[the download page]. Exact packag
 |Cinnamon with AcreetionOS dark-green branding, Nemo, GNOME Terminal
 
 |Installer
-|Calamares incl. encryption + dual-boot flows (xref:install-guide:installer-walkthrough.adoc[])
+|Calamares incl. encryption + dual-boot flows (xref:install-guide::installer-walkthrough.adoc[])
 
 |Recovery
-|Live Recovery Environment TUI + optional ACRECOVERY provisioning step (xref:wiki:recovery-environment.adoc[])
+|Live Recovery Environment TUI + optional ACRECOVERY provisioning step (xref:wiki::recovery-environment.adoc[])
 
 |Snapshots
 |Timeshift pre-configured RSYNC mode active after install
@@ -34,11 +34,11 @@ Fresh from https://acreetionos.org/install.html[the download page]. Exact packag
 
 == Post-install expectation
 
-First `pacman -Syu` brings you fully current (rolling reality) — treat the ISO as a launchpad, not a museum piece. Guidance: xref:install-guide:post-install.adoc[].
+First `pacman -Syu` brings you fully current (rolling reality) — treat the ISO as a launchpad, not a museum piece. Guidance: xref:install-guide::post-install.adoc[].
 
 == Verification
 
-SHA256 alongside download link; verification steps: xref:install-guide:download.adoc[].
+SHA256 alongside download link; verification steps: xref:install-guide::download.adoc[].
 
 == Historical builds
 

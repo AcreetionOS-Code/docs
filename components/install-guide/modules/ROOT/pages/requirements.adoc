@@ -39,7 +39,7 @@
 == GPU reality
 
 * Intel/AMD: open-source stack included, zero setup.
-* NVIDIA: live desktop runs on Nouveau; proprietary driver is a post-install task (xref:wiki:nvidia-drivers.adoc[]).
+* NVIDIA: live desktop runs on Nouveau; proprietary driver is a post-install task (xref:wiki::nvidia-drivers.adoc[]).
 
 == Peripherals that "just work"
 
@@ -47,4 +47,4 @@ Standard keyboards/mice, most Wi-Fi (linux-firmware included), USB hubs, webcams
 
 == Virtual machines
 
-Welcome: 2 vCPU / 4 GB / 25 GB minimums, details in xref:wiki:virtualization.adoc[Virtual Machines].
+Welcome: 2 vCPU / 4 GB / 25 GB minimums, details in xref:wiki::virtualization.adoc[Virtual Machines].

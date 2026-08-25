@@ -40,4 +40,4 @@ SSD upgrade + this edition = the single highest-value resurrection combo known t
 
 == Keep the wiki handy
 
-Everything under Software/Hardware sections applies unchanged (xref:wiki:welcome.adoc[]); only desktop-specific pages (panel applets etc.) assume Cinnamon. Performance guidance: xref:wiki:performance-tuning.adoc[] pairs especially well here.
+Everything under Software/Hardware sections applies unchanged (xref:wiki::welcome.adoc[]); only desktop-specific pages (panel applets etc.) assume Cinnamon. Performance guidance: xref:wiki::performance-tuning.adoc[] pairs especially well here.

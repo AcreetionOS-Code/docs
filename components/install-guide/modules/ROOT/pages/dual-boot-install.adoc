@@ -2,7 +2,7 @@
 :description: Step-by-step AcreetionOS + Windows dual-boot installation: shrinking Windows safely, reusing the EFI partition, GRUB entries and post-install checks.
 :keywords: dual boot arch windows 11
 
-Companion page to the Windows-prep checklist in xref:wiki:dual-boot-windows.adoc[] — do those five things FIRST (shrink inside Windows, disable Fast Startup, note BitLocker state).
+Companion page to the Windows-prep checklist in xref:wiki::dual-boot-windows.adoc[] — do those five things FIRST (shrink inside Windows, disable Fast Startup, note BitLocker state).
 
 == In the installer
 
@@ -26,13 +26,13 @@ GRUB menu now lists both systems; default selection + timeout live in `/etc/defa
 == Verification checklist
 
 * [ ] Both entries boot cleanly (test Windows once now, not during an emergency)
-* [ ] Clocks agree — apply the registry fix from xref:wiki:dual-boot-windows.adoc[]
+* [ ] Clocks agree — apply the registry fix from xref:wiki::dual-boot-windows.adoc[]
 * [ ] BitLocker re-suspended→enabled without complaints
 * [ ] `efibootmgr` shows sane order (xref:bios-uefi.adoc[])
 
 == When Windows Update stomps GRUB (it happens)
 
-Boot ISO → xref:wiki:recovery-environment.adoc[Recovery] → *GRUB reinstall/boot repair* — regenerates entries including Windows detection. Two minutes.
+Boot ISO → xref:wiki::recovery-environment.adoc[Recovery] → *GRUB reinstall/boot repair* — regenerates entries including Windows detection. Two minutes.
 
 == Removing AcreetionOS later
 

@@ -52,9 +52,9 @@ Keep Changes.md entries coming with PRs — that log IS institutional memory.
 
 == Testing your artifact
 
-. VM boot first (xref:wiki:virtualization.adoc[]) — UEFI AND BIOS profiles both
+. VM boot first (xref:wiki::virtualization.adoc[]) — UEFI AND BIOS profiles both
 . Installer run to completion in VM before touching real media
-. USB write test via xref:install-guide:bootable-usb.adoc[] patterns
+. USB write test via xref:install-guide::bootable-usb.adoc[] patterns
 . Recovery Environment entry boots? (easy to break during airootfs edits)
 
 == Common build failures

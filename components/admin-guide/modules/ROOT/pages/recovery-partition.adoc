@@ -2,7 +2,7 @@
 :description: Administrator reference for the AcreetionOS recovery partition: provisioning modes, sync hooks, space management, retrofitting and safe removal.
 :keywords: recovery partition linux, acreetion recovery setup
 
-User-facing behavior documented in xref:wiki:recovery-environment.adoc[]; this page is the operator view.
+User-facing behavior documented in xref:wiki::recovery-environment.adoc[]; this page is the operator view.
 
 == Provisioning recap
 
@@ -41,7 +41,7 @@ Live ISO or running system:
 sudo acreetion-recovery-setup --auto
 ----
 
-Requires contiguous free space (it carves, never shrinks existing FS). No space? The ISO-based xref:wiki:recovery-environment.adoc[Recovery Environment] remains fully available as fallback tooling.
+Requires contiguous free space (it carves, never shrinks existing FS). No space? The ISO-based xref:wiki::recovery-environment.adoc[Recovery Environment] remains fully available as fallback tooling.
 
 == Space-constrained machines
 

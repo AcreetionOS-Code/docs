@@ -2,7 +2,7 @@
 :description: Pacman power features for administrators: IgnorePkg pinning, database queries at scale, transaction safety, lock recovery and local repositories.
 :keywords: pacman.conf options, ignorepkg, pacman db
 
-Beyond the cheat sheet (xref:wiki:pacman-cheatsheet.adoc[]): the knobs admins actually turn.
+Beyond the cheat sheet (xref:wiki::pacman-cheatsheet.adoc[]): the knobs admins actually turn.
 
 == /etc/pacman.conf essentials
 

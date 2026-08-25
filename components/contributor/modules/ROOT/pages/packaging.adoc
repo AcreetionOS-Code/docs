@@ -11,7 +11,7 @@ Before proposing a package:
 1. *Gap, not duplication* — not satisfiable by existing repo-main content
 2. *Maintainer reality* — someone (you?) commits to tracking upstream
 3. *License sane* — redistributable, documented
-4. *Builds clean* — namcap-silent-ish, reproducible recipe (xref:admin-guide:makepkg-pkgbuild.adoc[])
+4. *Builds clean* — namcap-silent-ish, reproducible recipe (xref:admin-guide::makepkg-pkgbuild.adoc[])
 
 == Recipe standards
 
@@ -29,7 +29,7 @@ check()           # include when upstream has tests; skip with comment when not
 Style points reviewers enforce:
 
 * No curl-pipe-bash in build()
-* install=() .install scripts only when hooks genuinely needed (prefer xref:admin-guide:pacman-hooks.adoc[] files)
+* install=() .install scripts only when hooks genuinely needed (prefer xref:admin-guide::pacman-hooks.adoc[] files)
 * Backup arrays (/etc files) declared properly so user configs survive upgrades
 * Split packages over monoliths when upstream naturally separates
 

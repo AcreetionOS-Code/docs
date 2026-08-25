@@ -64,4 +64,4 @@ Then wire [myorg] per xref:acreetion-repos.adoc[]. For signed publishing: create
 
 == Reading others' recipes
 
-The AUR is a university: `yay -G <pkg>` downloads any recipe locally for study (xref:wiki:aur-guide.adoc[]).
+The AUR is a university: `yay -G <pkg>` downloads any recipe locally for study (xref:wiki::aur-guide.adoc[]).

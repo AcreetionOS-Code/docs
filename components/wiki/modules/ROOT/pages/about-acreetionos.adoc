@@ -42,7 +42,7 @@ Most Arch-based distros make you choose: bleeding edge or stability, control or 
 
 == Editions
 
-Beyond the standard edition there is an immutable variant and lighter/mobile spins. See the xref:editions/index.adoc[Editions overview] to compare them side by side.
+Beyond the standard edition there is an immutable variant and lighter/mobile spins. See the xref:editions::index.adoc[Editions overview] to compare them side by side.
 
 == The name
 

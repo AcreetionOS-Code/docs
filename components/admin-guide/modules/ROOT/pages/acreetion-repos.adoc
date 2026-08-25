@@ -29,7 +29,7 @@ pacman -Sp linux              # exact URL pacman would fetch
 Packages carry detached signatures verified against the shipped keyring:
 
 * Keyring package updates propagate new/trusted keys through normal upgrades.
-* Manual surgery rarely needed; if ever: `sudo pacman-key --refresh-keys`, worst case re-install the acreetion keyring package per xref:wiki:repositories-and-mirrors.adoc[].
+* Manual surgery rarely needed; if ever: `sudo pacman-key --refresh-keys`, worst case re-install the acreetion keyring package per xref:wiki::repositories-and-mirrors.adoc[].
 
 Check what you trust:
 

@@ -7,13 +7,13 @@ Living page: entries retire as fixes roll out. Last triaged against current buil
 == Hardware-class issues
 
 === NVIDIA hybrid laptops: external display blank on Wayland sessions
-Workaround: use X11 session until upstream modeset fix lands (xref:wiki:nvidia-drivers.adoc[]); external outputs reliable there today.
+Workaround: use X11 session until upstream modeset fix lands (xref:wiki::nvidia-drivers.adoc[]); external outputs reliable there today.
 
 === Certain Realtek USB Wi-Fi dongles drop under load
-Module-option tuning usually stabilizes (`rtl8xxxu` family) — pattern documented in xref:wiki:wifi-setup.adoc[]. Firmware updates via `linux-firmware` resolve several variants each cycle.
+Module-option tuning usually stabilizes (`rtl8xxxu` family) — pattern documented in xref:wiki::wifi-setup.adoc[]. Firmware updates via `linux-firmware` resolve several variants each cycle.
 
 === Intel RST-mode laptops see no NVMe in installer
-Firmware switch to AHCI required pre-install — full procedure flagged in xref:install-guide:install-troubleshooting.adoc[] (Windows-side dance included).
+Firmware switch to AHCI required pre-install — full procedure flagged in xref:install-guide::install-troubleshooting.adoc[] (Windows-side dance included).
 
 == Software-class issues
 
@@ -32,4 +32,4 @@ Tracked without local action possible yet: Cinnamon experimental-Wayland gaps (p
 
 == Reporting something new
 
-Before filing: update fully, test fallback kernel, check search. Then bring evidence per xref:contributor:report-bugs.adoc[] — journal excerpts make maintainers move mountains.
+Before filing: update fully, test fallback kernel, check search. Then bring evidence per xref:contributor::report-bugs.adoc[] — journal excerpts make maintainers move mountains.

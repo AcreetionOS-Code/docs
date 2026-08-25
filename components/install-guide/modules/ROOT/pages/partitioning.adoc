@@ -24,14 +24,14 @@ Same minus EFI entry; partition table becomes msdos; root flagged bootable.
 == Size guidance
 
 * EFI: 512 MiB covers multiple kernels + fallback initramfs forever.
-* Root: 40+ GB comfortable for years of pacman history; 25 GB workable with cache hygiene (xref:wiki:cleaning-disk-space.adoc[]).
-* Swap: hibernation wants ≥ RAM; otherwise zram wins (xref:wiki:performance-tuning.adoc[]).
-* Leave ~10 GB unpartitioned if you want the ACRECOVERY partition later (it's optional — xref:wiki:recovery-environment.adoc[]).
+* Root: 40+ GB comfortable for years of pacman history; 25 GB workable with cache hygiene (xref:wiki::cleaning-disk-space.adoc[]).
+* Swap: hibernation wants ≥ RAM; otherwise zram wins (xref:wiki::performance-tuning.adoc[]).
+* Leave ~10 GB unpartitioned if you want the ACRECOVERY partition later (it's optional — xref:wiki::recovery-environment.adoc[]).
 
 == Filesystem choice
 
 * **ext4** — boring excellence, default, zero surprises. Choose unless you have an opinion.
-* **btrfs** — instant snapshots via Timeshift BTRFS mode, transparent compression (`compress=zstd`). Slightly more concepts; guide: xref:admin-guide:btrfs.adoc[].
+* **btrfs** — instant snapshots via Timeshift BTRFS mode, transparent compression (`compress=zstd`). Slightly more concepts; guide: xref:admin-guide::btrfs.adoc[].
 
 == Manual mode mechanics (Calamares)
 
@@ -46,4 +46,4 @@ Windows already owns the ESP — reuse it (don't format!). Details woven through
 
 == Changing your mind later
 
-Partitions grow/shrink via GParted from live media; snapshots don't protect partition tables, so xref:wiki:backup-strategies.adoc[backup] anything precious before surgery.
+Partitions grow/shrink via GParted from live media; snapshots don't protect partition tables, so xref:wiki::backup-strategies.adoc[backup] anything precious before surgery.

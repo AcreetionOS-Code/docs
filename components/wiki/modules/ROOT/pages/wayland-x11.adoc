@@ -35,7 +35,7 @@ Log out/in to switch back anytime.
 ----
 echo $XDG_SESSION_TYPE        # x11 or wayland
 cinnamon --version
-
+----
 
 Screen sharing in browsers, per-monitor scaling, and input latency all differ between sessions — test YOUR workload, not benchmarks.
 

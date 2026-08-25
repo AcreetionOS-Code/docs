@@ -33,4 +33,4 @@ Editions are separate images; switching later means reinstalling. Undecided betw
 
 == Still torn?
 
-Default answer: xref:cinnamon-standard.adoc[Standard]. It's the edition the docs, ISO defaults and community assume — diverging is easy later, and the live USB (xref:install-guide:live-environment.adoc[]) lets you audition any edition risk-free before committing.
+Default answer: xref:cinnamon-standard.adoc[Standard]. It's the edition the docs, ISO defaults and community assume — diverging is easy later, and the live USB (xref:install-guide::live-environment.adoc[]) lets you audition any edition risk-free before committing.

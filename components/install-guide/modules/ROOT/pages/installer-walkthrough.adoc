@@ -45,7 +45,7 @@ Real name, login name, hostname, password (typed twice), login options:
 * *Log in automatically* — convenience vs physical-security tradeoff; off is wiser on laptops.
 * Password hint field exists — leave empty habitually.
 
-Your user joins `wheel` = sudo-enabled (xref:wiki:users-sudo.adoc[]).
+Your user joins `wheel` = sudo-enabled (xref:wiki::users-sudo.adoc[]).
 
 == 7. Install & finish
 

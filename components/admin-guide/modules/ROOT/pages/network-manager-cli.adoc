@@ -38,7 +38,7 @@ sudo nmcli con add type bridge-slave ifname enp3s0 master br0
 sudo nmcli con up br0
 ----
 
-Point virt-manager networks at br0 for real-LAN VMs (xref:wiki:virtualization.adoc[]).
+Point virt-manager networks at br0 for real-LAN VMs (xref:wiki::virtualization.adoc[]).
 
 == Dispatcher: react to network events
 

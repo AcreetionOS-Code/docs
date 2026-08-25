@@ -48,4 +48,4 @@ vulkaninfo --summary      # from vulkan-tools
 
 . `glxinfo -B` — confirms which renderer/GL version is active.
 . Artifacts after update? Test previous kernel from GRUB advanced menu (xref:kernel-management.adoc[Kernel Management]).
-. Report persistent bugs with `inxi -Gxxx` output to the community channels (xref:contributor/report-bugs.adoc[Reporting Bugs]).
+. Report persistent bugs with `inxi -Gxxx` output to the community channels (xref:contributor::report-bugs.adoc[Reporting Bugs]).

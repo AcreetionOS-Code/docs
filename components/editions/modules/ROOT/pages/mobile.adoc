@@ -20,12 +20,12 @@ Device-specific support matrices live with the mobile repo (acreetionos-mobile i
 == Trying it safely
 
 1. Verify device listed as working/testing in the matrix
-2. Full backup first (xref:wiki:backup-strategies.adoc[] — non-negotiable on this frontier)
+2. Full backup first (xref:wiki::backup-strategies.adoc[] — non-negotiable on this frontier)
 3. Follow the flashing guide shipped with the image; desktop-install assumptions do NOT transfer blindly
 
 == Feedback loop
 
-This edition advances fastest through field reports: working/broken device reports with logs per xref:contributor:report-bugs.adoc[]. Driver bring-up contributions doubly welcome — see xref:contributor:index.adoc[] for packaging/onboarding paths.
+This edition advances fastest through field reports: working/broken device reports with logs per xref:contributor::report-bugs.adoc[]. Driver bring-up contributions doubly welcome — see xref:contributor::index.adoc[] for packaging/onboarding paths.
 
 == When to just watch
 

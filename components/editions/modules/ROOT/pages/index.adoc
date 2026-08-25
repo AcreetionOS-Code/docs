@@ -49,4 +49,4 @@ One base, four faces. All share the rolling Arch core, curated repo, pacman tool
 
 == Same everywhere
 
-Regardless of edition: xref:wiki:package-management.adoc[package management], Timeshift/recovery safety nets where applicable, and the community. Switching later = reinstall (editions are separate images), so a little xref:choosing.adoc[deliberation] pays.
+Regardless of edition: xref:wiki::package-management.adoc[package management], Timeshift/recovery safety nets where applicable, and the community. Switching later = reinstall (editions are separate images), so a little xref:choosing.adoc[deliberation] pays.

@@ -33,7 +33,7 @@ AcreetionOS stays lean for a Cinnamon distribution, so modest hardware goes far.
 
 === Older desktops & laptops
 
-Cinnamon runs well on 15-year-old hardware. If it still crawls, try the lightweight Openbox edition — comparison in xref:editions/cinnamon-standard.adoc[Editions]. For very constrained machines, zram helps a lot: xref:performance-tuning.adoc[Performance Tuning].
+Cinnamon runs well on 15-year-old hardware. If it still crawls, try the lightweight Openbox edition — comparison in xref:editions::cinnamon-standard.adoc[Editions]. For very constrained machines, zram helps a lot: xref:performance-tuning.adoc[Performance Tuning].
 
 === Modern rigs
 
