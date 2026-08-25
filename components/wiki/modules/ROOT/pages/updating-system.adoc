@@ -1,0 +1,46 @@
+= Updating AcreetionOS Safely
+:description: Keep AcreetionOS current: rolling-release updates with pacman/yay, how often to update, kernel notes and recovery when an update goes sideways.
+:keywords: update AcreetionOS, Arch rolling release upgrade
+
+AcreetionOS rolls: there are no version jumps to "upgrade" — you just stay updated.
+
+== The habit
+
+[source,bash]
+----
+sudo pacman -Syu        # repos
+yay -Syu                # repos + AUR (if you use yay)
+----
+
+Weekly is plenty; monthly still fine. Avoid letting a machine sit un-updated for *many months* — the bigger the jump, the likelier manual attention is needed.
+
+== Before you update
+
+. Plug in laptops (an update killing power mid-kernel-upgrade ruins days).
+. Glance at https://acreetionos.org[changelog/news] for flagged actions.
+. Optionally snapshot: `sudo timeshift --create --comments "pre-update"` — see xref:timeshift-snapshots.adoc[Timeshift].
+
+== During
+
+Read the prompts. Two classics deserve respect:
+
+[cols="2,3"]
+|===
+|Prompt |Meaning
+
+|`linux and linux-headers conflict; remove?`
+|Normal during kernel bumps — answer yes.
+
+|`.pacnew` file notices
+|Config templates changed upstream; merge with `sudo pacdiff` afterwards.
+|===
+
+== Kernel got updated — reboot?
+
+The running kernel stays in memory until reboot. New hardware modules load from disk, so mismatch bugs appear as weirdness after updates. Reboot soon after a kernel bump; `reboot required` style checks: compare `uname -r` with `pacman -Q linux`.
+
+== When an update misbehaves
+
+. *Still boots?* Roll back packages: `ls /var/cache/pacman/pkg | grep <pkg>` then `sudo pacman -U <cached-version>`.
+. *Won't boot?* Boot the ISO or built-in recovery: xref:recovery-environment.adoc[Recovery Environment], then xref:chroot-rescue.adoc[chroot] and repeat `pacman -Syu`.
+. *Snapshot exists?* Timeshift restore fixes everything non-/home in minutes.

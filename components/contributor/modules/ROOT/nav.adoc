@@ -1,0 +1,13 @@
+* xref:index.adoc[Contributing to AcreetionOS]
+* Getting Involved
+** xref:report-bugs.adoc[Reporting Bugs Well]
+** xref:testing.adoc[Testing & QA]
+** xref:docs-style.adoc[Writing Documentation]
+** xref:translations.adoc[Translations]
+* Building & Packaging
+** xref:repo-layout.adoc[Repository Layout]
+** xref:building-the-iso.adoc[Building the ISO]
+** xref:packaging.adoc[Packaging Guidelines]
+* Project
+** xref:governance.adoc[Governance & Teams]
+** xref:support-donate.adoc[Support & Donations]

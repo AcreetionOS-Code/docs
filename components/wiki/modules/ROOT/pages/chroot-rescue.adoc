@@ -1,0 +1,63 @@
+= Chroot Rescue Guide
+:description: Manual rescue of an unbootable AcreetionOS install by chrooting from the live ISO: mounts, network inside chroot, pacman repairs, GRUB rebuilds.
+:keywords: chroot arch linux, repair installation
+
+Chroot = enter your broken system from the outside and operate on it directly. The Recovery Environment automates common cases; here's the manual craft.
+
+== 1. Boot the live ISO, identify partitions
+
+[source,bash]
+----
+lsblk -f
+# typical UEFI layout: p1 = EFI (vfat), p2 = root
+----
+
+== 2. Mount everything in place
+
+[source,bash]
+----
+sudo mount /dev/nvme0n1p2 /mnt
+sudo mount /dev/nvme0n1p1 /mnt/boot/efi     # UEFI only
+for d in dev proc sys run; do sudo mount --rbind /$d /mnt/$d; done
+sudo cp -L /etc/resolv.conf /mnt/etc/       # DNS for network inside
+----
+
+Btrfs subvolume roots: mount with `-o subvol=@` first (xref:admin-guide::btrfs.adoc[]).
+
+== 3. Enter
+
+[source,bash]
+----
+sudo arch-chroot /mnt        # ships on the ISO (arch-install-scripts)
+----
+
+You now have your system's shell, packages, and configs.
+
+== 4. Fix things
+
+[source,bash]
+----
+pacman -Syu                        # finish interrupted upgrades
+pacman -S linux mkinitcpio         # reinstall kernel + regenerate images
+grub-mkconfig -o /boot/grub/grub.cfg
+passwd youruser                    # password resets
+nano /etc/fstab                    # UUID corrections
+journalctl -b -1 -p err            # inspect the failed boot
+----
+
+== 5. Leave cleanly
+
+[source,bash]
+----
+exit
+sudo umount -R /mnt
+reboot
+----
+
+== Gotchas
+
+* Encrypted root: `cryptsetup open /dev/nvme0n1p2 cryproot` before mounting /dev/mapper/cryproot.
+* Wrong-mode GRUB (installing BIOS GRUB on UEFI box) — match targets: `--target=x86_64-efi`.
+* If pacman complains about locks post-crash: `rm /var/lib/pacman/db.lck` inside chroot.
+
+Related: xref:troubleshooting-boot.adoc[structured boot triage] · xref:recovery-environment.adoc[the automated path].

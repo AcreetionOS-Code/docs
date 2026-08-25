@@ -1,0 +1,60 @@
+= Immutable Edition
+:description: AcreetionOS Immutable: system integrity through read-only root and atomic updates, ideal for shared machines and stability-critical setups.
+:keywords: immutable linux distro
+
+The system presents itself as a fixed image; your experiments happen in layers around it.
+
+== Model
+
+[cols="1,3"]
+|===
+|Layer |Behavior
+
+|Root (/)
+|Read-only at runtime; updated atomically as units, not package-by-package drift
+
+|/home & writable paths
+|Yours entirely — normal files, flatpaks, dotfiles
+
+|Applications beyond base
+|xref:wiki:flatpak.adoc[Flatpak] first, containers second, layering last resort
+|===
+
+== Why people choose it
+
+* Machines shared with family/colleagues stop accumulating mystery breakage
+* Kiosks/digital signage stay deterministic
+* Rollback = boot previous deployment entry, not snapshot surgery
+
+== Working within the model
+
+[source,bash]
+----
+# typical software flow:
+flatpak install flathub org.mozilla.firefox
+# development: containers/toolbx-style environments rather than host installs
+----
+
+Host-level package additions are possible but deliberately frictionful — if everything needs layering, standard edition fits better.
+
+== Relationship to snapshots
+
+Timeshift-style rollback complements atomicity here; recovery tooling targets user data + bootloader layers consistent with the image approach (edition-specific notes ship in its README/docs bundle).
+
+== Honest tradeoffs
+
+[cols="1,2"]
+|===
+|Gain |Cost
+
+|Predictability, easy rollback
+|Less spontaneous tinkering surface
+
+|Great Flatpak/container fit
+|Deep-system customization awkward
+
+|Fewer partial-state failures
+|Larger update downloads (image-sized)
+|===
+
+Build source lives alongside standard edition in the org repos (acreetionos-immutable) — xref:contributor:index.adoc[contributors] welcome.

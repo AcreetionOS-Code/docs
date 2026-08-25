@@ -1,0 +1,47 @@
+= Translating AcreetionOS
+:description: Help translate AcreetionOS documentation and tooling: workflow, priority languages, technical-term handling and review process.
+:keywords: translate linux docs
+
+The OS speaks English natively; the world doesn't. Translators multiply reach.
+
+== What's translatable (priority order)
+
+1. **Wiki** top pages — welcome/getting-started/package-management (highest traffic)
+2. **Install guide** — decision-critical moments benefit most
+3. Recovery Environment strings (TUI) — panic moments shouldn't require English
+4. Site chrome/landing pages
+
+Admin guide/release notes stay English-only initially — technical churn makes maintenance economics brutal.
+
+== Mechanics
+
+Docs side: language modules follow Antora convention — component copies under `~/pages` locale variants tracked in the docs repo (see xref:docs-style.adoc[] for structure; translation branches named `<lang>-l10n`).
+
+Tooling strings (recovery TUI etc.) live beside their source repos; gettext-style catalogs where applicable.
+
+== Handling technical terms
+
+[cols="1,2"]
+|===
+|Term class |Rule
+
+|Commands/flags/file paths
+|NEVER translate — `sudo pacman -Syu` is universal
+
+|Established localized vocabulary
+|Follow your language's established Linux press usage
+
+|AcreetionOS product terms (ACRECOVERY, repo-main)
+|Keep English, gloss on first use
+|===
+
+== Review & landing flow
+
+. Fork/branch, translate keeping markup intact (AsciiDoc syntax survives badly through creative editing — preserve structure exactly)
+. Open PR tagged `[l10n]`
+. Native-speaker reviewer from community signs off (you may BE that reviewer for your language eventually — xref:governance.adoc[])
+. Merge → site build includes locale navigation
+
+== Status tracking
+
+Translation coverage matrix maintained in docs repo README — claim languages there before starting to avoid collisions.

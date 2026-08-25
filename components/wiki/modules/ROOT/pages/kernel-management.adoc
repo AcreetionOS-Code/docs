@@ -1,0 +1,56 @@
+= Kernel Management
+:description: Manage kernels on AcreetionOS: check versions, boot older kernels from GRUB, install the LTS kernel as a safety net and rebuild initramfs.
+:keywords: Linux kernel update, lts kernel Arch, mkinitcpio
+
+AcreetionOS tracks the current `linux` kernel. Knowing how to add a fallback kernel turns "unbootable after update" into a five-minute detour instead of a reinstall.
+
+== What am I running?
+
+[source,bash]
+----
+uname -r                    # running now
+pacman -Q linux             # installed package
+ls /boot/vmlinuz-*          # all installed kernels
+----
+
+== Boot the previous kernel (right now)
+
+GRUB → *Advanced options for AcreetionOS* → pick the previous version. Great for testing whether a new kernel caused hardware weirdness.
+
+== Install the LTS safety net
+
+[source,bash]
+----
+sudo pacman -S linux-lts linux-lts-headers
+sudo grub-mkconfig -o /boot/grub/grub.cfg     # adds entries incl. Advanced submenu
+sudo mkinitcpio -P                            # ensure images exist
+----
+
+Now updates of the main kernel can never fully lock you out — LTS sits in the menu.
+
+TIP: On machines you depend on (work laptop!), installing `linux-lts` *before* problems happen is cheap insurance.
+
+== Removing a kernel
+
+[source,bash]
+----
+sudo pacman -Rns linux-lts
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+----
+
+Never delete files under /boot by hand.
+
+== Initramfs & hooks
+
+Kernel packages regenerate their initramfs automatically via pacman hooks. Manual rebuild after editing `/etc/mkinitcpio.conf`:
+
+[source,bash]
+----
+sudo mkinitcpio -P        # all presets
+----
+
+Deep dive: xref:admin-guide::mkinitcpio.adoc[Administration → mkinitcpio].
+
+== Recovery partition sync
+
+If you use the ACRECOVERY partition, its kernel copies are kept in step automatically by the shipped pacman hook — nothing to remember. Background: xref:recovery-environment.adoc[Recovery Environment].

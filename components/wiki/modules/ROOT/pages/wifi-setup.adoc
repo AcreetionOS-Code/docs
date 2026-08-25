@@ -1,0 +1,69 @@
+= Wi-Fi Setup & Troubleshooting
+:description: Connect to Wi-Fi on AcreetionOS using NetworkManager applet or nmtui, plus fixes for missing firmware and flaky connections.
+:keywords: AcreetionOS wifi, NetworkManager, Linux wireless setup
+
+AcreetionOS ships NetworkManager, so Wi-Fi usually "just works".
+
+== Graphical way
+
+Click the network icon in the system tray → choose network → enter password. That's it. Tick *Store password for all users* for auto-connect at boot.
+
+== Terminal way
+
+[source,bash]
+----
+nmcli device wifi list                 # scan
+nmcli device wifi connect "SSID" password "secret"
+nmtui                                  # friendly text UI if you prefer
+----
+
+Saved networks and priority:
+
+[source,bash]
+----
+nmcli connection show
+nmcli connection delete "old-network"
+nmcli connection modify "SSID" connection.autoconnect yes
+----
+
+== Radio off / airplane
+
+[source,bash]
+----
+rfkill list                    # any hard/soft blocks?
+sudo rfkill unblock wifi
+nmcli radio wifi on
+----
+
+== Common problems
+
+=== Adapter not visible
+
+Missing firmware is the top cause. Identify the chip and install its firmware package from repo-main:
+
+[source,bash]
+----
+lspci -k | grep -A3 -i network   # or lsusb
+sudo pacman -S linux-firmware    # covers most chips
+reboot
+----
+
+Realtek USB sticks sometimes need `rtl8xxxu` module tweaks — search your exact chipset + "arch" for the module options.
+
+=== Connects then drops
+
+* Disable MAC randomization for home router:
++
+[source,bash]
+----
+nmcli connection modify "SSID" 802-11-wireless.cloned-mac-address permanent
+----
+* Band steering issues? Pin band: `nmcli connection modify "SSID" 802-11-wireless.band a` (5 GHz) or `bg` (2.4).
+
+=== Slow but stable
+
+Check link rate: `iw dev wlan0 link`. If stuck at low MCS on 2.4 GHz, try channel 1/6/11 on the router or force 5 GHz.
+
+== Still dead?
+
+Work through xref:admin-guide::network-manager-cli.adoc[Administration → NetworkManager CLI], then check `journalctl -u NetworkManager -b` for errors, and ask in the community channels listed on https://acreetionos.org[acreetionos.org] with that log attached.

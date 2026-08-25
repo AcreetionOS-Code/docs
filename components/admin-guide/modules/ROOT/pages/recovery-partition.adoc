@@ -1,0 +1,57 @@
+= Managing the ACRECOVERY Partition
+:description: Administrator reference for the AcreetionOS recovery partition: provisioning modes, sync hooks, space management, retrofitting and safe removal.
+:keywords: recovery partition linux, acreetion recovery setup
+
+User-facing behavior documented in xref:wiki:recovery-environment.adoc[]; this page is the operator view.
+
+== Provisioning recap
+
+Created during install when unpartitioned space allowed (~800 MiB target, guards never touch existing partitions/filesystems):
+
+* Self-contained ext4 labeled ACRECOVERY
+* Own GRUB install + gzipped kernel/initramfs payloads
+* Main GRUB chainloads it: F9 hotkey entry + recordfail auto-failover
+
+Inspect yours:
+
+[source,bash]
+----
+lsblk -f | grep -i acrecovery
+sudo blkid | grep -i acreetion
+cat /boot/grub/grubenv | grep recordfail
+----
+
+== Sync mechanics
+
+A pacman hook refreshes partition copies whenever linux/kernel-related packages change — zero-maintenance by design. Manual trigger after exotic operations (hand-built kernel etc.):
+
+[source,bash]
+----
+sudo acreetion-recovery-setup --sync-kernels
+----
+
+Modes available: `--auto` (standard provision) · `--device <part>` (explicit target) · `--sync-kernels` (refresh payloads only).
+
+== Retrofit onto existing installs
+
+Live ISO or running system:
+
+[source,bash]
+----
+sudo acreetion-recovery-setup --auto
+----
+
+Requires contiguous free space (it carves, never shrinks existing FS). No space? The ISO-based xref:wiki:recovery-environment.adoc[Recovery Environment] remains fully available as fallback tooling.
+
+== Space-constrained machines
+
+Skip provisioning freely — it's insurance, not requirement. Existing one can be removed like any partition afterwards (update GRUB config; failover entries vanish cleanly).
+
+== Verification drill (quarterly)
+
+. Boot it deliberately once via F9/menu
+. Run its Network setup → confirm online capability
+. Timeshift browse → see your snapshot list
+. Reboot normally; `grub-editenv /boot/grub/grubenv list` → expect no stuck recordfail
+
+Untested recovery = decorative recovery.

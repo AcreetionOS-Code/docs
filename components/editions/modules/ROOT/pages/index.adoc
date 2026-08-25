@@ -1,0 +1,52 @@
+= AcreetionOS Editions
+:description: Compare AcreetionOS editions: standard Cinnamon desktop, immutable variant, lightweight Openbox build and mobile — same Arch core, different personalities.
+:keywords: AcreetionOS editions comparison
+
+One base, four faces. All share the rolling Arch core, curated repo, pacman tooling and recovery philosophy.
+
+[cols="1,2,2,2,2"]
+|===
+| |Standard |Immutable |Lightweight |Mobile
+
+|Desktop
+|Cinnamon
+|Cinnamon
+|Openbox stack
+|Touch-first shell
+
+|Target machine
+|Everyday PC
+|Shared/stable-critical
+|Old/low-RAM hardware
+|Tablets/convertibles
+
+|System updates
+|Rolling
+|Atomic image-style
+|Rolling
+|Rolling
+
+|RAM comfort
+|4 GB+
+|4 GB+
+|2 GB workable
+|Device-dependent
+
+|Best for
+|Most people
+|Kiosks, cautious users
+|Reviving old laptops
+|Touch devices
+|===
+
+== Deep dives
+
+* xref:cinnamon-standard.adoc[] — the default everyone pictures
+* xref:immutable.adoc[] — system-as-image, experiment freely
+* xref:openbox-lite.adoc[] — maximum thrift
+* xref:mobile.adoc[] — touch input world
+* xref:choosing.adoc[] — decision helper if still torn
+
+== Same everywhere
+
+Regardless of edition: xref:wiki:package-management.adoc[package management], Timeshift/recovery safety nets where applicable, and the community. Switching later = reinstall (editions are separate images), so a little xref:choosing.adoc[deliberation] pays.

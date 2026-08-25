@@ -1,0 +1,66 @@
+= First Steps After Installing AcreetionOS
+:description: Recommended post-install checklist for AcreetionOS: update, enable Timeshift, set up the firewall, add users, and install your apps.
+:keywords: AcreetionOS post install, Arch setup checklist
+
+Fresh install? Run through this list once and your system is dialed in.
+
+== 1. Update everything
+
+Even a fresh ISO may be a few days behind the rolling repo:
+
+[source,bash]
+----
+sudo pacman -Syu
+----
+
+Learn what the flags mean in xref:updating-system.adoc[Updating the System].
+
+== 2. Let Timeshift take a snapshot
+
+AcreetionOS pre-configures Timeshift with RSYNC snapshots during install. Confirm a baseline snapshot exists now — if an update ever misbehaves, you roll back instead of reinstalling:
+
+[source,bash]
+----
+sudo timeshift --create --comments "clean baseline"
+----
+
+Details: xref:timeshift-snapshots.adoc[Timeshift Snapshots]. If things do break: xref:recovery-environment.adoc[Recovery Environment].
+
+== 3. Turn on the firewall
+
+[source,bash]
+----
+sudo pacman -S ufw
+sudo ufw enable
+sudo ufw status verbose
+----
+
+More options: xref:firewall-basics.adoc[Firewall Basics].
+
+== 4. Add your daily user (if you skipped it)
+
+The installer creates your user, but double-check sudo access:
+
+[source,bash]
+----
+groups          # you should be in 'wheel'
+sudo whoami     # should print root
+----
+
+User management reference: xref:users-sudo.adoc[Users & Sudo].
+
+== 5. Install your everyday software
+
+[source,bash]
+----
+sudo pacman -S firefox libreoffice-still vlc
+----
+
+Browsing tip: the xref:pacman-cheatsheet.adoc[Pacman Cheat Sheet] covers 95% of day-to-day commands, and xref:aur-guide.adoc[AUR & yay] unlocks the rest of the Arch ecosystem.
+
+== 6. Optional but nice
+
+* NVIDIA card? Follow xref:nvidia-drivers.adoc[NVIDIA Drivers].
+* Laptop? Enable power saving in xref:laptop-power.adoc[Laptops & Battery].
+* Gamer? Head to xref:gaming.adoc[Gaming on AcreetionOS].
+* Dual-booting Windows? Verify the GRUB entry exists — xref:dual-boot-windows.adoc[Dual-Boot with Windows].

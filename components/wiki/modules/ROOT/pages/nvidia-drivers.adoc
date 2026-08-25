@@ -1,0 +1,75 @@
+= NVIDIA Drivers on AcreetionOS
+:description: Install and configure NVIDIA proprietary drivers on AcreetionOS: which package for which GPU generation, Wayland/X11 notes, PRIME laptops and GSP issues.
+:keywords: NVIDIA Arch, AcreetionOS graphics driver
+
+AcreetionOS defaults to the open-source stack (Nouveau/NVK). Fine for desktops; gamers and compute users want the proprietary driver.
+
+== Pick your package
+
+[cols="1,2"]
+|===
+|GPU |Package
+
+|Turing+ (GTX 16xx, RTX 20xx/30xx/40xx/50xx)
+|`nvidia` (or `nvidia-open` — modern default upstream)
+
+|Kepler..Pascal (GTX 600–10xx)
+|`nvidia-470xx-dkms` style legacy branches from AUR
+
+|Very old (Fermi and earlier)
+|Stay on Nouveau — proprietary support ended
+|===
+
+Check your card first:
+
+[source,bash]
+----
+lspci | grep -Ei 'vga|3d'
+----
+
+== Standard install (single GPU)
+
+[source,bash]
+----
+sudo pacman -S nvidia nvidia-utils
+sudo mkinitcpio -P        # rebuilds initramfs with the module
+reboot
+----
+
+Verify afterwards: `nvidia-smi` should print your GPU and driver version.
+
+== Hybrid laptops (Intel/AMD + NVIDIA)
+
+Use PRIME offload so the dGPU sleeps when idle:
+
+[source,bash]
+----
+prime-run glxinfo | grep "OpenGL renderer"    # forces NVIDIA for one app
+glxinfo | grep "OpenGL renderer"              # default stays power-saving GPU
+----
+
+Prefix games/apps with `prime-run` to hand them the big GPU. The same pattern applies to every app you launch.
+
+== Wayland vs X11
+
+* X11: works out of the box.
+* Wayland (Cinnamon experimental): needs `nvidia-drm.modeset=1`:
++
+[source,bash]
+----
+echo 'options nvidia_drm modeset=1 fbdev=1' | sudo tee /etc/modprobe.d/nvidia.conf
+sudo mkinitcpio -P && reboot
+----
+
+== After kernel updates
+
+The repo `nvidia` package rebuilds against the shipped kernel automatically via pacman hooks. DKMS legacy branches do the same. If boot lands at a black screen post-update, roll back per xref:updating-system.adoc[When an update misbehaves].
+
+== Uninstall / revert to open source
+
+[source,bash]
+----
+sudo pacman -Rns nvidia nvidia-utils
+sudo pacman -S mesa vulkan-radeon   # or intel-media etc.
+sudo mkinitcpio -P && reboot
+----

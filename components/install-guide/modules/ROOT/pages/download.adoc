@@ -1,0 +1,37 @@
+= Downloading & Verifying the ISO
+:description: Get the official AcreetionOS ISO from acreetionos.org and verify its checksum so you know your install media is authentic and uncorrupted.
+:keywords: download AcreetionOS ISO, checksum verification
+
+== Get it
+
+Official source: https://acreetionos.org/install.html **only**. Mirrors appear over time; anything else is untrusted until proven otherwise.
+
+Pick the edition matching your plan (xref:editions/index.adoc[Editions overview] helps choose) — standard Cinnamon build suits most people.
+
+== Why verify?
+
+A corrupted download wastes an hour at the "installation failed" screen; a tampered one is worse. Checksums catch both.
+
+== Verify on Linux/macOS
+
+[source,bash]
+----
+sha256sum AcreetionOS-x86_64.iso        # macOS: shasum -a 256 ...
+----
+
+Compare against the SHA256 published next to the download link. Match = good to write.
+
+== Verify on Windows (PowerShell)
+
+[source,powershell]
+----
+Get-FileHash .\AcreetionOS-x86_64.iso -Algorithm SHA256
+----
+
+== Optional: signature check
+
+If you manage keys, signed checksum files let you verify authenticity rather than just integrity — import instructions ship alongside release announcements.
+
+== Size sanity
+
+Expect roughly 2–3 GB for the standard image. Wildly different sizes mean truncated download — re-fetch before blaming your USB stick.

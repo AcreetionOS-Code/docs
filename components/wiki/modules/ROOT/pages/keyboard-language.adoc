@@ -1,0 +1,42 @@
+= Keyboard Layouts & Localization
+:description: Change keyboard layouts, language packs, timezone and locale settings on AcreetionOS using Cinnamon settings or localectl.
+:keywords: change keyboard layout linux, locale settings
+
+== Graphical route
+
+* Keyboard layout: System Settings → Keyboard → Layouts → Add. Set per-window or global switching, compose key options included.
+* System language: System Settings → Language → install/add languages; re-login applies.
+* Formats (dates, numbers): same panel, independent of display language.
+
+== Terminal route
+
+[source,bash]
+----
+localectl list-x11-keymap-layouts | grep -i de   # find code
+sudo localectl set-x11-keymap de                 # console + X11 together
+localectl status
+
+sudo localectl set-locale de_DE.UTF-8           # system language
+timedatectl set-timezone Europe/Berlin
+timedatectl                                      # verify NTP sync too
+----
+
+New locales need generation first:
+
+[source,bash]
+----
+sudo sed -i 's/^#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
+sudo locale-gen
+----
+
+== Dead keys, compose & accents
+
+Enable Compose key in Settings → Keyboard → Compose. Then `<Compose>` + `'` + `e` = é. Full tables: `compose` file docs.
+
+== Switching layouts mid-session
+
+Add two layouts in the applet; default shortcut is Super+Space. Terminal-only sessions honor `loadkeys de` (console) separately.
+
+== Time drift with dual-boot
+
+Hours off by your UTC offset? Classic Windows/localtime clash — fix in xref:dual-boot-windows.adoc[Dual-Boot guide §5].

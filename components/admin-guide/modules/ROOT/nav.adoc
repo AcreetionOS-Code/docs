@@ -1,0 +1,27 @@
+* xref:index.adoc[Administration Guide]
+* Foundations
+** xref:philosophy.adoc[System Philosophy]
+** xref:pacman-advanced.adoc[Advanced Pacman]
+** xref:pacman-hooks.adoc[Pacman Hooks]
+** xref:acreetion-repos.adoc[AcreetionOS Repositories]
+** xref:makepkg-pkgbuild.adoc[makepkg & PKGBUILDs]
+* systemd
+** xref:systemd-units.adoc[Units & Services]
+** xref:systemd-timers.adoc[Timers (cron replacement)]
+** xref:journald.adoc[journald & Logs]
+* Network & Security
+** xref:network-manager-cli.adoc[NetworkManager CLI]
+** xref:openssh-server.adoc[OpenSSH Server]
+** xref:firewalld-ufw.adoc[Firewalls Compared]
+* Storage
+** xref:disks-fstab.adoc[Disks, Mounts & fstab]
+** xref:lvm-luks.adoc[LVM & LUKS]
+** xref:btrfs.adoc[Btrfs Management]
+** xref:swap-zram.adoc[Swap & Zram]
+* Boot Chain
+** xref:bootloader-grub.adoc[GRUB Deep Dive]
+** xref:mkinitcpio.adoc[mkinitcpio]
+** xref:microcode.adoc[CPU Microcode]
+* Tuning & Recovery
+** xref:sysctl-tuning.adoc[Sysctl & Kernel Params]
+** xref:recovery-partition.adoc[Managing ACRECOVERY]

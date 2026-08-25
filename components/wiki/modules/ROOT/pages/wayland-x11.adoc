@@ -1,0 +1,44 @@
+= Wayland vs X11 on AcreetionOS
+:description: Which display server does Cinnamon use on AcreetionOS, how to try experimental Wayland, when X11 remains the right choice.
+:keywords: Wayland Cinnamon, X11 vs Wayland
+
+Short version: **X11 is the default and works everywhere today; Wayland support exists for the curious.**
+
+== What's what
+
+[cols="1,3"]
+|===
+| |Reality check
+
+|X11
+|The 1987 protocol that still runs most Linux desktops. Rock-solid, universally compatible, compositing handled by Muffin.
+
+|Wayland
+|Modern replacement protocol: better security isolation, smoother multi-monitor fractional scaling, tear-free by design. Cinnamon's implementation is present but marked experimental upstream.
+|===
+
+== Trying Wayland
+
+If your session manager offers *"Cinnamon (Wayland)"* at the login screen (gear icon), pick it for a test drive. For NVIDIA cards first enable modesetting per xref:nvidia-drivers.adoc[NVIDIA Drivers].
+
+Log out/in to switch back anytime.
+
+== Choosing X11 (still sensible when...)
+
+* NVIDIA proprietary driver without recent modeset config.
+* You depend on apps doing screen capture/input injection the old way (some remote-desktop, macro tools).
+* Fractional-scaling quirks annoy you less than Wayland's current gaps in Cinnamon.
+
+== Checking where you are
+
+[source,bash]
+----
+echo $XDG_SESSION_TYPE        # x11 or wayland
+cinnamon --version
+
+
+Screen sharing in browsers, per-monitor scaling, and input latency all differ between sessions — test YOUR workload, not benchmarks.
+
+== The trajectory
+
+Upstream Cinnamon keeps landing Wayland pieces each release. AcreetionOS follows upstream defaults rather than forcing experiments — you'll get Wayland-by-default exactly when it stops being brave.

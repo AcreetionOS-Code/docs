@@ -1,0 +1,62 @@
+= Writing Documentation for AcreetionOS
+:description: Style guide for AcreetionOS documentation: AsciiDoc conventions, tone rules, cross-linking patterns and how doc changes flow to this site.
+:keywords: documentation style guide, asciidoc conventions
+
+You're reading the product of these conventions — improve them by example.
+
+== Source of truth
+
+This site = Antora component tree (xref:repo-layout.adoc[] shows placement). Pages are AsciiDoc (.adoc); PRs to the docs repo rebuild it automatically.
+
+== Page anatomy standard
+
+[source,text]
+----
+= Title (sentence case)
+:description: One SEO sentence with keywords naturally included.
+:keywords: comma, separated, terms
+
+[intro paragraph — what reader achieves]
+
+== Section (task-oriented names)
+
+[source,bash]
+----
+commands with expected outcomes
+----
+[TIP]/WARNING blocks where genuinely warranted
+Cross-links liberally via xref:
+----
+
+Every page MUST carry `:description:` — feeds meta tags/search engines (see any page here for live examples).
+
+== Voice & tone
+
+* Second person, present tense ("Run", not "You should run" / "The user runs")
+* Confident, warm, zero condescension — beginners deserve precision, not baby talk
+* Humor allowed in TIPs only, one per page maximum
+* No "simply"/"just"/"obviously" — nothing is obvious to everyone
+
+== Technical conventions
+
+* Commands assume default AcreetionOS state; call out deviations explicitly
+* Show expected output when ambiguity exists
+* Placeholders use angle brackets: `<package>`
+* Warn BEFORE destructive commands, never after
+* Prefer wiki↔guide cross-links over repeating procedures — single-source each procedure
+
+== Structural map
+
+* *Wiki* — task/user facing, shallow depth per page, heavy linking
+* *Install guide* — linear journey, walkthrough voice
+* *Admin guide* — deeper mechanics, assumes shell fluency
+* *Release notes* — time-anchored truth
+* *Editions* — comparative, honest tradeoffs
+* *Contributor* — meta but still styled
+
+== Review checklist (self-serve before PR)
+
+[ ] Renders locally (`npx antora antora-playbook.yml`)
+[ ] All xrefs resolve (build warnings = failures)
+[ ] :description: present and human-readable
+[ ] Commands copy-paste safe (no prompt characters inside blocks)

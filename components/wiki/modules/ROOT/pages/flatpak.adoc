@@ -1,0 +1,50 @@
+= Flatpak & Sandboxed Apps
+:description: Set up Flatpak on AcreetionOS, enable Flathub, install and manage sandboxed applications alongside pacman and the AUR.
+:keywords: Flatpak AcreetionOS, Flathub, sandboxed Linux apps
+
+Flatpak runs applications in sandboxes with bundled runtimes — newer app versions than your distro might ship, isolated from system changes.
+
+== One-time setup
+
+[source,bash]
+----
+sudo pacman -S flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+----
+
+Log out/in once so Cinnamon picks up .desktop entries.
+
+== Everyday commands
+
+[source,bash]
+----
+flatpak search spotify
+flatpak install flathub com.spotify.Client
+flatpak update
+flatpak list
+flatpak uninstall com.spotify.Client
+flatpak uninstall --unused          # reclaim orphaned runtimes
+----
+
+Cinnamon's app menu shows installed Flatpaks like any other app.
+
+== Permissions
+
+Sandboxes deny by default. Grant selectively per-app:
+
+[source,bash]
+----
+flatpak override --user --filesystem=~/Documents com.example.App
+----
+
+or review visually if you install Flatseal (`flatpak install flathub com.github.tchx84.Flatseal`).
+
+== When to choose Flatpak
+
+* App needs a *newer runtime/library* than repo-main provides.
+* You want *isolation* (untrusted-ish software, testing).
+* Same app across multiple machines/distros.
+
+When NOT to: CLI daemons, deep system integration (themes sometimes need tweaks), or anything available natively — those belong in pacman/AUR land (see xref:installing-software.adoc[Installing Software]).
+
+Disk note: runtimes cost GBs; trim with `--unused` regularly per xref:cleaning-disk-space.adoc[Freeing Disk Space].

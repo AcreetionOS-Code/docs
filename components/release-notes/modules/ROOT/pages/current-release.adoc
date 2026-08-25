@@ -1,0 +1,45 @@
+= Current ISO Build
+:description: Contents of the latest AcreetionOS ISO: kernel line, Cinnamon version, installer state and included recovery tooling.
+:keywords: latest ISO contents
+
+Fresh from https://acreetionos.org/install.html[the download page]. Exact package versions ship at build time — this page describes shape and intent.
+
+== Included stack
+
+[cols="2,3"]
+|===
+|Piece |State in current build
+
+|Kernel
+|Current stable linux series + matching headers/firmware
+
+|Desktop
+|Cinnamon with AcreetionOS dark-green branding, Nemo, GNOME Terminal
+
+|Installer
+|Calamares incl. encryption + dual-boot flows (xref:install-guide:installer-walkthrough.adoc[])
+
+|Recovery
+|Live Recovery Environment TUI + optional ACRECOVERY provisioning step (xref:wiki:recovery-environment.adoc[])
+
+|Snapshots
+|Timeshift pre-configured RSYNC mode active after install
+
+|Audio/net
+|PipeWire stack · NetworkManager (+ nmtui)
+
+|Boot
+|GRUB w/ os-prober dual-boot detection, Plymouth splash, syslinux fallback on BIOS media
+|===
+
+== Post-install expectation
+
+First `pacman -Syu` brings you fully current (rolling reality) — treat the ISO as a launchpad, not a museum piece. Guidance: xref:install-guide:post-install.adoc[].
+
+== Verification
+
+SHA256 alongside download link; verification steps: xref:install-guide:download.adoc[].
+
+== Historical builds
+
+Older ISOs remain downloadable but unsupported once superseded — rolling means current or nothing. Upgrade path for installed systems = updates, not re-downloads (xref:upgrade-notes.adoc[]).

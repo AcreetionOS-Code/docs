@@ -1,0 +1,52 @@
+= Gaming on AcreetionOS
+:description: Play games on AcreetionOS: Steam with Proton, Lutris for Epic/GOG/Battle.net, GameMode, drivers and anti-cheat reality check.
+:keywords: Linux gaming, Steam Proton, Lutris
+
+Arch-based + current Mesa/NVIDIA drivers = one of the best gaming platforms around. Setup takes minutes.
+
+== Steam + Proton
+
+[source,bash]
+----
+sudo pacman -S steam lib32-mesa vulkan-radeon lib32-vulkan-radeon   # AMD
+# NVIDIA instead: nvidia-utils lib32-nvidia-utils (see xref below)
+----
+
+In Steam: *Settings → Compatibility → Enable Proton for all titles*. Most single-player Windows titles now run out of the box — check specific titles on https://www.protondb.com[ProtonDB].
+
+NVIDIA users: xref:nvidia-drivers.adoc[NVIDIA Drivers] first; AMD users are already done (xref:amd-intel-gpu.adoc[AMD & Intel Graphics]).
+
+== Launch options worth knowing
+
+[source,text]
+----
+gamemoderun %command%                    # performance mode while playing
+mangohud gamemoderun %command%           # + overlay FPS monitor
+PROTON_ENABLE_NVAPI=1 %command%          # DLSS on some titles (NVIDIA)
+----
+
+Install the helpers: `sudo pacman -S gamemode mangohud`.
+
+== Everything else via Lutris
+
+Epic, GOG, EA, Battle.net, emulators — Lutris orchestrates Wine versions and runners:
+
+[source,bash]
+----
+lutris            # from repos/AUR; community install scripts handle the rest
+----
+
+== Native games
+
+Factorio, CS2, Dota 2, Hades, Baldur's Gate 3... run native. Filter the Steam store by "SteamOS" — that flag means native Linux build available.
+
+== Anti-cheat honesty
+
+Kernel-level anti-cheats (Valorant, some CoD/Fortnite modes) block Linux regardless of effort. Check https://areweanticheatyet.com before buying competitive titles. Single-player is unaffected.
+
+== Performance checklist
+
+* Vulkan active: `vulkaninfo --summary`
+* GPU acceleration confirmed in-game overlays via mangohud
+* zram helps shader-compile memory spikes: xref:performance-tuning.adoc[]
+* Laptop: `prime-run %command%` to force dGPU (xref:laptop-power.adoc[])

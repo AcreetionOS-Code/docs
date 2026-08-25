@@ -1,0 +1,68 @@
+= Freeing Disk Space Safely
+:description: Reclaim disk space on AcreetionOS: pacman cache trimming, orphan removal, journal limits, Flatpak runtimes and finding what eats your SSD.
+:keywords: free disk space linux, paccache, disk cleanup
+
+Rolling systems accumulate. Here's the safe purge order, biggest wins first.
+
+== Find the hogs first
+
+[source,bash]
+----
+df -h /
+sudo du -xh --max-depth=2 / | sort -rh | head -25
+ncdu /                      # interactive; sudo pacman -S ncdu
+----
+
+== 1. Pacman cache (often 5–30 GB)
+
+[source,bash]
+----
+du -sh /var/cache/pacman/pkg
+paccache -rk1               # keep ONE old version per package (rollback insurance)
+paccache -ruk0              # additionally drop cache of uninstalled packages
+----
+
+Add automation once and forget it — the shipped `paccache.timer` handles weekly trims (`systemctl status paccache.timer`).
+
+Avoid `pacman -Scc`: it deletes ALL cached versions, removing easy downgrades (see xref:pacman-cheatsheet.adoc[Cheat Sheet]).
+
+== 2. Orphans & unused packages
+
+[source,bash]
+----
+pacman -Qdt
+sudo pacman -Rns $(pacman -Qdtq)
+yay -Yc                     # AUR leftovers, if using yay
+----
+
+More context: xref:removing-software.adoc[Removing Software].
+
+== 3. Journald logs
+
+[source,bash]
+----
+journalctl --disk-usage
+sudo journalctl --vacuum-size=200M
+----
+
+Make it permanent in `/etc/systemd/journald.conf`: `SystemMaxUse=200M`.
+
+== 4. Flatpak runtimes
+
+[source,bash]
+----
+flatpak uninstall --unused
+du -sh /var/lib/flatpak
+----
+
+== 5. Timeshift & misc
+
+* Prune snapshots: `sudo timeshift --list`, delete stale ones.
+* Thumbnails: `rm -rf ~/.thumbnails/*`.
+* Browser caches from within each browser (safe way).
+* Trash! `gio trash --empty` or Files app → empty trash.
+
+== Don't touch
+
+* `/usr`, `/lib`, anything owned by packages — remove via pacman only.
+* Kernel/initramfs files directly — manage through xref:kernel-management.adoc[kernel packages].

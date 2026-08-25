@@ -1,0 +1,47 @@
+= Audio Setup (PipeWire)
+:description: How PipeWire audio works on AcreetionOS: output/input selection, per-app volumes, HDMI audio, Bluetooth profiles and troubleshooting no-sound.
+:keywords: PipeWire, Linux sound, AcreetionOS audio
+
+AcreetionOS uses PipeWire with WirePlumber session management — modern, low-latency, and it also powers screen sharing and Bluetooth.
+
+== Everyday controls
+
+* *Cinnamon sound applet*: click the speaker icon — master volume, per-device switching.
+* *System Settings → Sound*: full input/output matrix, per-app volume under Applications tab.
+* Terminal equivalents:
++
+[source,bash]
+----
+pactl info                        # server = PipeWire expected
+pactl list short sinks            # outputs ("sinks")
+pactl set-default-sink <name>     # switch output
+pavucontrol                       # GUI mixer, install if wanted
+----
+
+== HDMI / monitor audio
+
+Select the sink named after your monitor:
+
+[source,bash]
+----
+pactl list sinks short | grep -i hdmi
+pactl set-default-sink alsa_output.pci-0000_00_1f.3.hdmi-stereo
+----
+
+If absent: check profile in `pactl list cards` and set `output:hdmi-stereo` profile.
+
+== No sound checklist
+
+. Muted or zero in applet? (`pactl get-sink-mute @DEFAULT_SINK@`)
+. Wrong default sink selected?
+. `wpctl status` — shows the whole graph; look for `[vol: 0]`.
+. New kernel missing your codec? Boot previous kernel per xref:kernel-management.adoc[Kernel Management].
+. `alsamixer` — F6 select card, unmute with `M`.
+
+== Bluetooth audio
+
+Covered separately in xref:bluetooth-setup.adoc[Bluetooth] — key point: pick the *a2dp* profile for music quality.
+
+== Pro-audio notes
+
+PipeWire speaks JACK: `pw-jack <app>` runs JACK clients; low-latency tuning lives in xref:performance-tuning.adoc[Performance Tuning].

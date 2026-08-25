@@ -1,0 +1,6 @@
+name: wiki
+title: AcreetionOS Wiki
+version: 'stable'
+start_page: welcome.adoc
+nav:
+- modules/ROOT/nav.adoc

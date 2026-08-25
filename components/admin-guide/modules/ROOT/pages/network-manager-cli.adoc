@@ -1,0 +1,61 @@
+= NetworkManager CLI Administration
+:description: Scriptable network management on AcreetionOS with nmcli: connections, static IPs, DNS, bridges/vlans, dispatcher scripts and headless setups.
+:keywords: nmcli examples, networkmanager config
+
+Desktop users click the applet; admins script nmcli — same engine underneath.
+
+== Connection lifecycle
+
+[source,bash]
+----
+nmcli device status                  # interfaces + states
+nmcli connection show                # saved profiles
+nmcli connection add type ethernet ifname eth0 con-name office \
+    ipv4.method manual ipv4.addresses 192.168.10.50/24 \
+    ipv4.gateway 192.168.10.1 ipv4.dns "192.168.10.1 1.1.1.1"
+nmcli connection up office
+nmcli connection modify office connection.autoconnect yes
+nmcli device wifi hotspot ssid acreet ssid-password supersecret   # instant AP!
+----
+
+== DNS handling
+
+Per-connection DNS beats editing resolv.conf (it's generated!):
+
+[source,bash]
+----
+nmcli con mod office ipv4.ignore-auto-dns yes ipv4.dns "10.0.0.53"
+nmcli con up office
+resolvectl status | less             # per-link DNS view (systemd-resolved glue)
+----
+
+== VLANs & bridges (libvirt friends)
+
+[source,bash]
+----
+sudo nmcli con add type bridge ifname br0 stp no
+sudo nmcli con add type bridge-slave ifname enp3s0 master br0
+sudo nmcli con up br0
+----
+
+Point virt-manager networks at br0 for real-LAN VMs (xref:wiki:virtualization.adoc[]).
+
+== Dispatcher: react to network events
+
+/etc/NetworkManager/dispatcher.d/90-home-magic:
+
+[source,bash]
+----
+#!/bin/sh
+IF="$1"; ACTION="$2"
+[ "$ACTION" = up ] || exit 0
+case "$(nmcli -t -f GENERAL.CONNECTION dev show "$IF")" in
+  *home-wifi*) nmcli con down office-vpn ;;
+esac
+----
+
+chmod +x it; runs as root on events (up/down/hostname...).
+
+== Headless servers
+
+NetworkManager runs fine without desktop (shipped enabled): all above applies over SSH (xref:openssh-server.adoc[]). nmtui covers the quick-edit niche interactively.

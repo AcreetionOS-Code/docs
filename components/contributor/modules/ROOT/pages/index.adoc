@@ -1,0 +1,46 @@
+= Contributing to AcreetionOS
+:description: Ways to contribute to AcreetionOS: bug reporting, testing, documentation, packaging, ISO building and project governance.
+:keywords: contribute open source, AcreetionOS project
+
+A distribution is a team sport. Every skill level has a position.
+
+== Pick your lane
+
+[cols="2,3"]
+|===
+|If you can... |Start at
+
+|Break things methodically
+|xref:testing.adoc[Testing & QA]
+
+|Write clearly
+|xref:docs-style.adoc[Documentation] — including improving these very pages
+
+|Read/build code or recipes
+|xref:packaging.adoc[Packaging] · xref:building-the-iso.adoc[ISO builds]
+
+|Speak more than one language
+|xref:translations.adoc[Translations]
+
+|Reproduce failures precisely
+|xref:report-bugs.adoc[Bug reporting] — the highest-leverage entry point
+
+|Sponsor infrastructure
+|xref:support-donate.adoc[Support & donations]
+|===
+
+== Where the work lives
+
+Everything hangs off https://github.com/AcreetionOS-Code[the GitHub org] — layout map in xref:repo-layout.adoc[]. Docs (this site) build with Antora; content fixes are pull requests away.
+
+== Ground rules
+
+* Rolling-release discipline applies to contributors too — test against current, not ancient
+* Reproduce before reporting; document after fixing
+* Be excellent to each other; maintainers volunteer time like everyone else
+
+== First contribution ideas
+
+. Typos/unclear passages here → PR them (seriously, docs hunger)
+. Run current ISO in a VM weekly (xref:testing.adoc[]) and note regressions early
+. Package something from your toolkit per xref:packaging.adoc[]

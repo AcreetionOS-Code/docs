@@ -1,0 +1,63 @@
+= journald & Log Management
+:description: Query and manage logs on AcreetionOS with journalctl: filtering by boot/unit/priority, persistent journals, size limits and forwarding syslog.
+:keywords: journalctl tutorial, linux logs
+
+The journal indexes everything systemd touches — structured, fast, binary-backed.
+
+== Queries you'll actually run
+
+[source,bash]
+----
+journalctl -b                    # this boot
+journalctl -b -1                 # previous boot (post-crash goldmine)
+journalctl -p err -b             # errors+ this boot
+journalctl -u NetworkManager -f  # follow one unit
+journalctl --since "2026-08-01" --until "2026-08-02"
+journalctl _COMM=pacman | tail   # who installed what, when
+journalctl -k                    # kernel ring
+journalctl --disk-usage
+sudo journalctl --vacuum-size=200M --vacuum-time=30d
+----
+
+Tab-completion works on field values (`_PID=<TAB>`); combine fields freely.
+
+== Make it survive reboots
+
+By default volatile (/run). Persist:
+
+[source,bash]
+----
+sudo mkdir -p /etc/systemd/journald.conf.d
+printf '[Journal]\nStorage=persistent\n' | sudo tee /etc/systemd/journald.conf.d/persist.conf
+sudo systemctl restart systemd-journald
+----
+
+== Size discipline
+
+Defaults cap at 10% fs / 4GB. Tighter:
+
+[source,ini]
+---- 
+# journald.conf.d/size.conf
+[Journal]
+SystemMaxUse=500M
+MaxRetentionSec=90day
+----
+
+Then `--vacuum-size` once to shrink existing.
+
+== Classic syslog files?
+
+Some daemons still write /var/log files themselves (nginx, samba...). Forwarding bridge exists if tooling expects syslog format:
+
+[source,ini]
+----
+[Journal]
+ForwardToSyslog=yes     # with a syslog-ng/rsyslog installed
+----
+
+== Ship logs elsewhere (small scale)
+
+`journalctl -o short-precise -f | nc host port` for quick-and-dirty; proper: systemd-journal-remote packages, or vector/promtail reading journalctl output.
+
+Related: xref:wiki:logs-journalctl.adoc[user-level patterns] · size trimming recipes: xref:wiki:cleaning-disk-space.adoc[].

@@ -1,0 +1,6 @@
+name: wiki
+title: Editions
+version: 'stable'
+start_page: index.adoc
+nav:
+- modules/ROOT/nav.adoc

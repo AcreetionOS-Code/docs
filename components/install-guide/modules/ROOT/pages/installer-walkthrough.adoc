@@ -1,0 +1,60 @@
+= Calamares Installer Walkthrough
+:description: Every screen of the AcreetionOS Calamares installer explained: language, location, keyboard, partitioning choices, user creation and summary.
+:keywords: calamares install steps
+
+The installer asks seven questions. Here's what each means and how to answer well.
+
+== 1. Welcome & language
+
+Pick your language — affects system locale, keyboard defaults and docs links.
+
+== 2. Location
+
+Region/zone sets timezone + NTP. Map click or list; both fine.
+
+== 3. Keyboard
+
+Test box included — type something with your layout's special characters before proceeding.
+
+== 4. Partitions — the big one
+
+[cols="2,3"]
+|===
+|Choice |Meaning & when
+
+|*Erase disk*
+|Wipes the selected drive completely, creates EFI + root (+ swap/zram). Simplest, destructive to THAT disk only.
+
+|*Install alongside*
+|Auto-shrinks an existing OS partition into free space. Convenient for single-Windows-disk machines.
+
+|*Manual*
+|Full control — read xref:partitioning.adoc[] first if data survives on this disk.
+|===
+
+Encryption tick-box here enables LUKS2 full-disk (details: xref:encrypted-install.adoc[]).
+
+== 5. Summary review
+
+Calamares shows the exact operations list. READ IT. "Format nvme0n1p2" appearing next to your home partition is a moment to catch NOW.
+
+== 6. User account
+
+Real name, login name, hostname, password (typed twice), login options:
+
+* *Log in automatically* — convenience vs physical-security tradeoff; off is wiser on laptops.
+* Password hint field exists — leave empty habitually.
+
+Your user joins `wheel` = sudo-enabled (xref:wiki:users-sudo.adoc[]).
+
+== 7. Install & finish
+
+Progress screens stream by (~5–10 min depending on USB speed). Finish offers *Restart now* — remove USB when prompted so it boots from disk.
+
+== First boot lands you at LightDM → Cinnamon
+
+Continue with xref:post-install.adoc[Post-Install Setup] — five minutes that make the machine yours.
+
+== Installer crashed / failed?
+
+Don't retry blind — check xref:install-troubleshooting.adoc[] for known causes (bad ISO write, RST mode, weird partition layouts).

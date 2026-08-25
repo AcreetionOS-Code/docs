@@ -1,0 +1,62 @@
+= GRUB Deep Dive
+:description: Master GRUB on AcreetionOS: configuration generation, kernel command line changes, themes, serial consoles, rescue from grub prompt and secure-ish ordering.
+:keywords: grub config, grub-mkconfig, kernel parameters
+
+== The regeneration ritual
+
+Edits land in `/etc/default/grub` + `/etc/grub.d/*`; NOTHING takes effect until:
+
+[source,bash]
+----
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+grub-editenv list                   # tracked state (failover flags etc.)
+----
+
+== Common edits
+
+[source,ini]
+----
+# /etc/default/grub
+GRUB_TIMEOUT=5                       # menu seconds (0 hidden unless Shift held)
+GRUB_DEFAULT=saved                   # remember last choice:
+GRUB_SAVEDEFAULT=true
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"     # everyday params
+GRUB_CMDLINE_LINUX="resume=UUID=..."          # always-present params
+GRUB_DISABLE_OS_PROBER=false         # keep Windows detection active
+----
+
+One-off kernel param test without permanent change: press `e` at menu, edit linux line, F10 boots THIS time only.
+
+== Theme & resolution
+
+AcreetionOS ships branded GRUB bits under /boot/grub/themes/. Resolution quirks: `GRUB_GFXMODE=1920x1080,auto` + `GRUB_GFXPAYLOAD_LINUX=keep`.
+
+== Rescue ladder
+
+[cols="1,2"]
+|===
+|You see |Do
+
+|grub> prompt
+|`ls` to find partitions; `set root=(hd0,gpt2)`; `linux /boot/vmlinuz-linux root=/dev/nvme0n1p2`; `initrd /boot/initramfs-linux.img`; `boot`. Then FIX via reinstall below.
+
+|No GRUB at all
+|Boot ISO → Recovery Environment → Boot repair, or manual chroot: xref:wiki:chroot-rescue.adoc[]
+|===
+
+Manual reinstall inside chroot:
+
+[source,bash]
+----
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=AcreetionOS
+grub-install --target=i386-pc /dev/sda        # BIOS variant
+grub-mkconfig -o /boot/grub/grub.cfg
+----
+
+== Failover behavior (ACRECOVERY integration)
+
+grubenv records failed boots; consecutive failures chainload the recovery partition automatically (xref:recovery-partition.adoc[]). Clear flags manually: `grub-editenv /boot/grub/grubenv unset recordfail`.
+
+== Serial/console servers
+
+Add `console=ttyS0,115200n8` + enable serial terminal block in grub.d — headless boxes stop requiring KVM dongles for boot debugging.

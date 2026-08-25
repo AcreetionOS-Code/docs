@@ -1,0 +1,47 @@
+= Governance & Team Structure
+:description: How the AcreetionOS project organizes decisions: maintainer roles, contribution trust levels, council-style coordination and conflict resolution.
+:keywords: open source governance
+
+Small project, deliberate structure — designed to stay pleasant as it grows.
+
+== Roles ladder
+
+[cols="1,3"]
+|===
+|Role |Powers & path
+
+|User
+|Everything end-user facing; bug reports count as contribution (xref:report-bugs.adoc[])
+
+|Contributor
+|Merged PRs in any area; docs/testing credit accumulates (xref:testing.adoc[])
+
+|Trusted contributor
+|Sustained quality → direct push rights to specific repos after maintainer sponsorship
+
+|Area maintainer
+|Owns a component (recovery tooling, installer, docs, edition builds); reviews within scope
+
+|Core / project lead
+|Cross-cutting calls: repo policy, release cadence, infrastructure spend
+|===
+
+== Decision mechanics
+
+* *Component-level*: area maintainer decides, core overrides rarely
+* *Cross-cutting* (packaging policy, new editions): discussion thread → core synthesizes → written decision in repo (README/governance notes), revisitable via same process
+* *Emergency security*: private channel, public post-mortem after fix ships
+
+Disagreements resolve through evidence (benchmarks, journals, use cases) more than volume. Bikes shed on their own eventually.
+
+== Communication surfaces
+
+Primary channels live on https://acreetionos.org[the main site] — community pages list current chat/forum locations. Decisions of record always migrate INTO repos; chat is where thinking happens, not where conclusions live.
+
+== Becoming a maintainer (honest version)
+
+There's no form. Sustained useful presence → existing maintainers notice → sponsorship offered. The fastest documented routes: testing reliability (Tier 2+ canaries get known personally fast), documentation depth (this site's growth), or owning an unloped package set.
+
+== Conflict resolution order
+
+Direct discussion → involved-maintainer mediation → core tiebreak → written rationale. Escalation steps exist to be rare.

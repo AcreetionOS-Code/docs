@@ -1,0 +1,50 @@
+= Pacman Cheat Sheet
+:description: Every-day pacman commands for AcreetionOS: search, install, remove, update, downgrade and clean packages, in one table.
+:keywords: pacman commands, Arch cheat sheet, AcreetionOS terminal
+
+Pacman looks terse but it's just verbs + flags. Here's the working set.
+
+== Daily drivers
+
+[source,bash]
+----
+sudo pacman -Syu            # update EVERYTHING (do this first, always)
+sudo pacman -S firefox      # install a package
+sudo pacman -Rns firefox    # remove package + deps + config
+sudo pacman -Ss video edit  # search by keyword in name/description
+pacman -Qs video            # search what YOU have installed
+pacman -Qi firefox          # info about an installed package
+----
+
+== Fixing things
+
+[source,bash]
+----
+sudo pacman -Syyu           # force-refresh all databases + upgrade
+sudo pacman -S linux        # reinstall a specific package over a bad copy
+pacman -Ql firefox          # list every file a package owns
+pacman -Qo /usr/bin/xyz     # which package owns this file?
+pacman -Qdt                 # orphaned dependencies nobody needs
+sudo pacman -Rns $(pacman -Qdtq)   # remove all orphans
+sudo pacman -Sc             # clear old cached packages (see note)
+----
+
+NOTE: `-Sc` keeps the newest version of each cached package. For smarter trimming use `paccache -rk1` (keep 1) or read xref:cleaning-disk-space.adoc[Freeing Disk Space].
+
+== Reading output
+
+* `[installed]` in search results = already on your system.
+* Optional deps are listed as suggestions — install only if you want the feature.
+* Groups like `gnome` install many packages at once; pacman asks before proceeding.
+
+== Downgrading after a bad update
+
+Cached copies make rollback easy:
+
+[source,bash]
+----
+ls /var/cache/pacman/pkg | grep firefox
+sudo pacman -U /var/cache/pacman/pkg/firefox-<version>.pkg.tar.zst
+----
+
+Better yet, snapshot before updating — xref:timeshift-snapshots.adoc[Timeshift] restores the whole system, packages included.

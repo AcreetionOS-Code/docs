@@ -1,0 +1,60 @@
+= The AcreetionOS Recovery Environment
+:description: AcreetionOS includes a Windows-RE-style recovery environment: fix packages, restore Timeshift snapshots, repair GRUB, reset passwords — even when Linux won't boot.
+:keywords: AcreetionOS recovery, boot repair, Windows RE Linux
+
+This is the feature people write home about. The **AcreetionOS Recovery Environment** is a maintenance mode built into your install — no USB hunting required.
+
+== Getting in
+
+* *GRUB menu* → "AcreetionOS Recovery Environment" entry (press F9 hotkey where provisioned).
+* *Failover*: if boots keep failing, the tracked-default mechanism drops you there automatically.
+* *From the live ISO*: same entry exists on the installer media.
+
+You'll land in a green-on-dark TUI matching the AcreetionOS brand.
+
+== What it can fix
+
+[cols="2,3"]
+|===
+|Menu item |Use it for
+
+|Package repair
+|Broken keyring, failed upgrades, dependency hell → runs keyring refresh + full upgrade + `pacman -Syyu` fixes
+
+|Timeshift restore
+|xref:timeshift-snapshots.adoc[Snapshots] — auto-detects and mounts any installed Linux system (multi-boot aware)
+
+|Filesystem check
+|fsck after power loss/dirty shutdown
+
+|GRUB reinstall / boot repair
+|BIOS + UEFI, including dual-boot os-prober regeneration
+
+|fstab regeneration
+|UUID drift after partitioning changes
+
+|Password reset
+|Forgot your user password
+
+|Network setup (nmtui)
+|Get online inside recovery for downloads
+
+|Hardware info / log viewer
+|inxi summaries, journal browsing for bug reports
+
+|Chroot shell / live shell
+|Full manual control — see xref:chroot-rescue.adoc[Chroot Rescue]
+|===
+
+== The ACRECOVERY partition
+
+During install, if free space allowed, AcreetionOS provisions an ~800 MiB self-contained `ACRECOVERY` ext4 partition: its own GRUB plus kernel/initramfs copies, chainloaded from the main bootloader via F9 or grubenv failover. It survives even a destroyed main `/boot`. A pacman hook keeps its kernels synced on updates; retrofit it anytime from the live ISO with:
+
+[source,bash]
+----
+sudo acreetion-recovery-setup --auto
+----
+
+== When recovery can't help
+
+Total hardware failure, or an encrypted disk whose passphrase is lost. For everything else, this menu plus xref:backup-strategies.adoc[good backups] covers ~every disaster scenario.

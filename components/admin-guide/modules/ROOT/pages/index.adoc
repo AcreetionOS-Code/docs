@@ -1,0 +1,40 @@
+= AcreetionOS Administration Guide
+:description: System administration reference for AcreetionOS: pacman internals, systemd, networking, storage stacks, boot chain and kernel tuning.
+:keywords: Linux system administration, Arch admin guide
+
+For operators, tinkerers and the professionally curious. User-level tasks live in the xref:wiki:welcome.adoc[Wiki]; here we go a level deeper.
+
+== Map of the territory
+
+[cols="2,3"]
+|===
+|Section |You'll learn
+
+|xref:philosophy.adoc[Foundations]
+|How AcreetionOS composes Arch: repos, hooks, packaging
+
+|systemd chapters
+|Units, timers, journal — the service backbone
+
+|Network & Security
+|NetworkManager CLI control, SSH hardening, firewall choices
+
+|Storage
+|fstab discipline, LVM+LUKS, btrfs administration, zram
+
+|Boot Chain
+|GRUB internals, initramfs presets, microcode
+
+|Tuning & Recovery
+|sysctl parameters with evidence, ACRECOVERY partition management
+|===
+
+== Assumed background
+
+Comfortable in a shell; willing to read man pages (`man pacman.conf` etc. referenced throughout). Root access via sudo per xref:wiki:users-sudo.adoc[].
+
+== The one rule that rules them all
+
+Rolling release discipline: *no partial upgrades*. Everything else is negotiable craft.
+
+Start wherever your problem lives — each chapter stands alone.

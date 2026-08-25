@@ -1,0 +1,55 @@
+= Creating Bootable USB Media
+:description: Write the AcreetionOS ISO to USB correctly: dd on Linux, Rufus/Ventoy/balenaEtcher on Windows, Acreetion Media Writer, plus common write failures.
+:keywords: bootable usb linux, dd iso, rufus ventoy
+
+You need a 4 GB+ stick; everything on it will be erased.
+
+== Linux
+
+=== dd (the classic)
+
+[source,bash]
+----
+lsblk -o NAME,SIZE,TYPE,MOUNTPOINT      # identify stick! (e.g., sdb)
+sudo dd if=AcreetionOS-x86_64.iso of=/dev/sdX bs=4M status=progress conv=fsync
+sync
+----
+
+WARNING: `of=` targets the whole device (`/dev/sdb`), never a partition (`/dev/sdb1`), and absolutely not your disk. Triple-check `lsblk`.
+
+=== GUI tools
+
+* Popsicle / balenaEtcher from repos or Flatpak.
+* **Acreetion Media Writer** — our own writer, handles verification automatically.
+
+=== Ventoy (multi-ISO sticks)
+
+Install Ventoy once, then just copy the ISO file onto the stick — boot menu lists it. Great for keeping several testers around.
+
+== Windows
+
+* **Rufus** — select the ISO, GPT/UEFI (or MBR/BIOS to match target machine), DD-mode when prompted about ISOHybrid.
+* **balenaEtcher** — dead simple flash-and-verify.
+
+== After writing
+
+The stick may look "empty" in Explorer — normal; the filesystem is ISO9660. Eject cleanly, then test-boot it per xref:bios-uefi.adoc[Firmware].
+
+== Write failures & fixes
+
+[cols="1,2"]
+|===
+|Symptom |Fix
+
+|Rufus stuck at 99%
+|Let it finish — fsync takes a while on slow sticks
+
+|"Failed to sync after 10 retries"
+|Stick is dying; try another port/stick
+
+|Boots but hangs at loading initramfs
+|Re-write with `conv=fsync`, avoid USB hubs
+
+|Machine ignores stick entirely
+|Firmware section: xref:bios-uefi.adoc[]
+|===

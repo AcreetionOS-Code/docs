@@ -1,0 +1,32 @@
+= Mobile Edition
+:description: AcreetionOS Mobile brings the Arch base to touch-first devices: current state, supported device classes and how to test or contribute.
+:keywords: Linux mobile, touch Linux
+
+The experimental frontier: Arch-based AcreetionOS shaped for tablets, convertibles and phone-adjacent hardware.
+
+== Status framing
+
+Honest labels: **experimental**, moving quickly, device-support-gated. It shares the core with sibling editions but adapts input methods, scaling and power behavior for touch.
+
+== What works today (device-class level)
+
+* Touch input, on-screen keyboard flows
+* Auto-rotation on accelerometer-equipped convertibles
+* Mobile broadband via ModemManager where firmware cooperates
+* Convergence-ish patterns: dock → external display workflows
+
+Device-specific support matrices live with the mobile repo (acreetionos-mobile in the org) — check YOUR device class before flashing anything precious.
+
+== Trying it safely
+
+1. Verify device listed as working/testing in the matrix
+2. Full backup first (xref:wiki:backup-strategies.adoc[] — non-negotiable on this frontier)
+3. Follow the flashing guide shipped with the image; desktop-install assumptions do NOT transfer blindly
+
+== Feedback loop
+
+This edition advances fastest through field reports: working/broken device reports with logs per xref:contributor:report-bugs.adoc[]. Driver bring-up contributions doubly welcome — see xref:contributor:index.adoc[] for packaging/onboarding paths.
+
+== When to just watch
+
+If your device isn't listed or daily-driver reliability matters more than novelty: the xref:cinnamon-standard.adoc[standard edition] remains the product built for permanence. Mobile is where we learn; standard is where we live.

@@ -1,0 +1,70 @@
+= Performance Tuning
+:description: Make AcreetionOS faster: zram, systemd service trims, Cinnamon tweaks, I/O schedulers and gaming latency basics.
+:keywords: speed up linux, zram tuning, systemd analyze
+
+Modern AcreetionOS is quick by default. These are the honest wins, ordered by effort-to-payoff.
+
+== 1. Measure before touching
+
+[source,bash]
+----
+systemd-analyze                # boot time breakdown
+systemd-analyze blame | head   # slowest units
+free -h                        # RAM & swap reality
+iostat -x 2                    # disk pressure (sysstat pkg)
+----
+
+== 2. zram (the single best generic tweak)
+
+Compressed-RAM swap beats disk swap enormously:
+
+[source,bash]
+----
+sudo pacman -S zram-generator
+printf '[zram0]\nzram-size = min(ram, 8192)\ncompression-algorithm = zstd\n' | \
+  sudo tee /etc/systemd/zram-generator.conf
+sudo systemctl start systemd-zram-setup@zram0.service
+swapon --show
+----
+
+== 3. Trim startup services
+
+[source,bash]
+----
+systemctl --user list-units --state=running
+systemctl list-units --type=service --state=running
+systemctl disable --now <unit>    # only ones YOU know you don't need
+----
+
+== 4. Cinnamon specifics
+
+* Settings → General: disable unused effects; keep "Sync refresh" on.
+* System Settings → Startup Applications: fewer autostarts, faster login.
+* On hybrid graphics, make sure apps default to iGPU (battery + thermals): xref:nvidia-drivers.adoc[NVIDIA PRIME notes].
+
+== 5. I/O scheduler (SSDs)
+
+Usually fine automatically. Check:
+
+[source,bash]
+----
+cat /sys/block/nvme0n1/queue/scheduler    # 'none' is expected for NVMe
+----
+
+== 6. Audio latency (pro-audio)
+
+[source,bash]
+----
+pw-metadata -n settings 0 clock.force-quantum 128   # lower = less latency
+----
+
+== 7. Gaming latency extras
+
+* `gamemoderun %command%` (Steam launch option) — Feral GameMode from repos.
+* Full stack guide: xref:gaming.adoc[Gaming].
+
+== Anti-tips (skip these)
+
+* Random `sysctl` voodoo from forums — measure, don't cargo-cult (see xref:admin-guide::sysctl-tuning.adoc[Sysctl Guide]).
+* Disabling journaling/compositing globally for "speed".
+* Any tweak promising 10× — skepticism is a performance tool too.

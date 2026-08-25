@@ -1,0 +1,41 @@
+= Testing & Quality Assurance
+:description: Join AcreetionOS QA: ISO smoke tests, update-stream testing on spare machines, VM matrices and structured feedback into the changelog pipeline.
+:keywords: distro testing QA
+
+Testers catch breakage BEFORE it reaches daily drivers. Low status-barrier, high impact.
+
+== Tier 1 — ISO smoke test (~20 min, anyone)
+
+Per new ISO announcement:
+
+. VM install (fresh) → guided partitioning → first boot
+. Walk xref:install-guide:post-install.adoc[post-install] steps verbatim
+. Note ANY deviation — typos included (xref:report-bugs.adoc[] format)
+
+Matrix worth covering over time: UEFI vs BIOS · encrypted vs plain · dual-boot presence.
+
+== Tier 2 — Update canary (spare machine/VM)
+
+Keep a disposable install updated aggressively; run your normal workload there days ahead of main machines:
+
+[source,bash]
+----
+sudo pacman -Syu ; journalctl -b -p warning   # read what grumbles
+systemctl --failed                            # zero is the target number
+----
+
+Regressions reported with journals become xref:release-notes:known-issues.adoc[] entries or same-day fixes.
+
+== Tier 3 — Feature-specific passes
+
+Recovery Environment drills (quarterly per machine — xref:admin-guide:recovery-partition.adoc[verification drill]), installer edge cases (dual-boot layouts), edition-specific flows (immutable updates, mobile flashing).
+
+== Tooling expectations
+
+* VMs: QEMU/virt-manager preferred (xref:wiki:virtualization.adoc[])
+* Snapshot before risky test cycles even in VMs (habit building)
+* Logs archived per session: `journalctl -b > test-session-date.log`
+
+== Recognition
+
+Consistent testers land in release notes credits — reliable eyes get maintainer trust, and maintainer trust is the on-ramp to commit access (xref:governance.adoc[]).

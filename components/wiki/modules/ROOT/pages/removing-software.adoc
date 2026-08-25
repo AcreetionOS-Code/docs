@@ -1,0 +1,61 @@
+= Removing Software Cleanly
+:description: Uninstall applications on AcreetionOS properly: remove packages with dependencies and configs, hunt orphans, and reclaim disk space.
+:keywords: uninstall AcreetionOS, pacman remove package
+
+Uninstalling is where distros differ. Do it right and your disk stays lean for years.
+
+== Remove a package completely
+
+[source,bash]
+----
+sudo pacman -Rns <package>
+----
+
+Flag anatomy: `-R` remove · `-n` delete saved config files · `-s` strip now-unused dependencies.
+
+== Find what's worth removing
+
+[source,bash]
+----
+pacman -Qdt                    # orphans (installed as deps, nothing needs them)
+pacman -Qe                     # explicitly installed by you
+pacman -Qeq | sort             # same, alphabetical
+du -sh /var/cache/pacman/pkg   # how much cache you're hoarding
+----
+
+Then act:
+
+[source,bash]
+----
+sudo pacman -Rns $(pacman -Qdtq)   # purge all orphans at once
+----
+
+== Removing an AUR package
+
+Same command — yay builds real pacman packages:
+
+[source,bash]
+----
+yay -Rns <package>
+yay -Yc                        # also drop unneeded AUR deps
+----
+
+== Flatpak cleanup
+
+[source,bash]
+----
+flatpak uninstall <app>
+flatpak uninstall --unused     # drop runtimes nothing uses anymore
+----
+
+== Full reset checklist
+
+Before wiping an entire app ecosystem (e.g., "all Python stuff"), list first, then delete:
+
+[source,bash]
+----
+pacman -Qs python
+pacman -Qg gnome               # group members
+----
+
+And remember the safety net: big removal sprees are exactly when a fresh xref:timeshift-snapshots.adoc[Timeshift snapshot] pays for itself.

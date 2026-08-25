@@ -1,0 +1,28 @@
+site:
+  title: AcreetionOS Docs
+  url: https://docs.acreetionos.org
+  robots: allow
+  start_page: wiki::welcome.adoc
+  keys:
+    google_analytics: false
+urls:
+  redirect_facility: static
+runtime:
+  fetch: false
+  log:
+    failure_level: warn
+content:
+  sources:
+    - url: ./components
+      branches: HEAD
+      edit_url: https://github.com/AcreetionOS-Code/docs/edit/main/{path}
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      index_latest_only: true
+ui:
+  bundle:
+    url: ./ui-bundle.zip
+    snapshot: true
+output:
+  dir: ./public

@@ -1,0 +1,6 @@
+* xref:index.adoc[Editions Overview]
+** xref:cinnamon-standard.adoc[Standard (Cinnamon)]
+** xref:immutable.adoc[Immutable Edition]
+** xref:openbox-lite.adoc[Lightweight / Openbox]
+** xref:mobile.adoc[Mobile Edition]
+** xref:choosing.adoc[Choosing Your Edition]

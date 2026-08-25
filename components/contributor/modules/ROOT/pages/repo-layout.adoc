@@ -1,0 +1,59 @@
+= Repository Layout
+:description: Map of the AcreetionOS GitHub organization: which repository does what, from ISO builder to immutable variant, mobile port and this documentation site.
+:keywords: source repositories, project structure
+
+Orientation map for https://github.com/AcreetionOS-Code[the org].
+
+== Core repositories
+
+[cols="2,3"]
+|===
+|Repo |Contains
+
+|acreetionos
+|The flagship ISO builder: airootfs overlay, packages.x86_64 lists, mkarchiso plumbing, Calamares config, grub/syslinux setup, Recovery Environment sources, Changes.md engineering log
+
+|acreetionos-immutable
+|Image-style edition build (xref:editions:immutable.adoc[])
+
+|acreetionos-mobile
+|Touch/mobile port work (xref:editions:mobile.adoc[])
+
+|AcreetionMediaWriter
+|Cross-platform USB writer tool
+
+|acreetionos-code.github.io
+|Main website (acreetionos.org) — landing, downloads, community pages
+
+|docs (this site's source)
+|Antora components powering docs.acreetionos.org
+|===
+
+== Inside the flagship repo (acreetionos/)
+
+[source,text]
+----
+airootfs/            live-system overlay: configs, services, recovery units
+packages.x86_64      the package manifest (heavily commented sections)
+build.sh             orchestration entry point
+mkarchiso*           modified archiso tooling
+grub/ syslinux/      bootloader assets incl. recovery entries
+installer/           calamares config + postinstall hooks
+Changes.md           append-only engineering changelog (read for context!)
+Issues/              historical triage notes
+----
+
+== Branching culture
+
+* `main` = buildable truth
+* Feature branches short-lived; recovery-related work sometimes branches (historical `recovery` branch precedent) until proven
+* Tags mark shipped ISO builds — traceability from download page back to source state
+
+== Where YOUR change goes
+
+* Package additions/removals → packages.x86_64 PR + Changes.md entry (xref:packaging.adoc[] standards)
+* Live-environment behavior → airootfs paths
+* Installer UX → calamares config areas
+* These docs → docs repo (xref:docs-style.adoc[])
+
+Clone sizes stay modest; full ISO builds need no exotic infra (xref:building-the-iso.adoc[]).

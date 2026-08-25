@@ -1,0 +1,59 @@
+= Bluetooth on AcreetionOS
+:description: Enable Bluetooth on AcreetionOS with BlueZ and Blueman/blueberry: pairing audio devices, keyboards, phones, and fixing adapter-not-found.
+:keywords: AcreetionOS bluetooth, bluez, pair headphones linux
+
+Cinnamon's bluetooth applet handles day-to-day pairing once the stack is running (it is, by default, when hardware exists).
+
+== Quick start
+
+. Click the bluetooth tray icon → toggle on.
+. Put your device in pairing mode.
+. Click *Add device*, pick it, confirm the code.
+
+Prefer terminal?
+
+[source,bash]
+----
+bluetoothctl power on
+bluetoothctl devices                # after scanning: scan on
+bluetoothctl pair MAC
+bluetoothctl trust MAC              # auto-reconnect future boots
+bluetoothctl connect MAC
+----
+
+== Audio devices
+
+Headphones/speakers need the PipeWire bluetooth backend — preinstalled on AcreetionOS. If sound routes but quality is poor:
+
+[source,bash]
+----
+pactl list cards | grep -i profile     # see available profiles
+pactl set-card-profile bluez_card.XX a2dp-sink    # high-quality A2DP
+----
+
+Mic-on-headset (HFP) needs the `bluez-plugins` extras; A2DP-only is the common case for listening.
+
+== Keyboard / mouse / gamepad
+
+Pair like any device. Input devices should be `trust`ed so they reconnect without re-pairing each boot.
+
+== Troubleshooting
+
+[cols="1,2"]
+|===
+|Symptom |Fix attempt
+
+|No adapter found
+|`lsusb`/`lspci` to confirm hardware exists; `sudo modprobe btusb`; some laptops need BIOS bluetooth enabled
+
+|Rfkill blocked
+|`rfkill unblock bluetooth`
+
+|Pairs but won't connect later
+|You skipped `trust` — repeat pairing with trust step above
+
+|Audio stuttering
+|Momentary Wi-Fi coexistence issue; try moving to 5 GHz Wi-Fi per xref:wifi-setup.adoc[Wi-Fi guide]
+|===
+
+Deeper logs: `journalctl -b | grep -i blue`.

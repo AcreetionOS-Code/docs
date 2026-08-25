@@ -1,0 +1,51 @@
+= Pacman Hooks
+:description: Automate actions around package transactions with pacman hooks: how AcreetionOS uses them for kernels, grub, recovery sync, plus writing your own.
+:keywords: pacman hook examples, alpm hook
+
+Hooks run before/after package operations — the mechanism keeping initramfs, GRUB and ACRECOVERY synced automatically.
+
+== Where they live
+
+`/usr/share/libalpm/hooks/` (shipped) and `/etc/pacman.d/hooks/` (yours). Precedence to /etc.
+
+== Shipped hooks worth knowing
+
+[source,bash]
+----
+ls /usr/share/libalpm/hooks/
+cat /usr/share/libalpm/hooks/linux.hook
+----
+
+Representative behaviors on AcreetionOS:
+
+* **linux.hook** → mkinitcpio -P when kernel files change
+* **grub.hook** → grub-mkconfig after grub/kernel updates
+* **acreetion-recovery-sync** → refreshes ACRECOVERY partition kernels (xref:recovery-partition.adoc[])
+* **timeshift-grub** → keeps snapshot menu entries current
+
+== Anatomy of a hook
+
+/etc/pacman.d/hooks/backup-etc.hook:
+
+[source,ini]
+----
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Description = Snapshotting /etc before changes...
+When = PreTransaction
+Exec = /usr/local/bin/etc-backup.sh
+Depends = rsync
+----
+
+`When = PreTransaction` fires before anything changes — perfect for backups; PostTransaction for rebuilds.
+
+== Write your own safely
+
+. Trigger narrowly (`Type = Path`, specific targets) — wildcard pre-transactions slow every install.
+. Exec must not prompt; failures abort the transaction (pre-hooks) — log, don't block, unless blocking IS the point.
+. Debug timing: touch a marker file in Exec while developing.

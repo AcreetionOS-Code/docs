@@ -1,0 +1,65 @@
+= Backup Strategies
+:description: Protect your data on AcreetionOS: what Timeshift does and doesn't cover, rsync/borg/restic recipes, and the 3-2-1 rule made practical.
+:keywords: Linux backups, rsync, borg, restic, 3-2-1 rule
+
+Snapshots (xref:timeshift-snapshots.adoc[Timeshift]) protect the *system*. Backups protect *you*. Different jobs, both needed.
+
+== The mental model
+
+[cols="1,2"]
+|===
+|Tool |Protects against
+
+|Timeshift snapshots
+|Bad updates, config mistakes — system-level undo
+
+|File backups (rsync/borg/restic)
+|Dead disks, ransomware, theft, "I deleted my thesis"
+
+|Offsite/cloud copy
+|Fire, flood, house-level disasters
+|===
+
+== Practical plan: 3-2-1
+
+**3** copies of data · **2** different devices · **1** offsite.
+
+For most humans that translates to: internal disk + external USB drive + cloud folder.
+
+== Recipe: simple mirror with rsync
+
+[source,bash]
+----
+rsync -aAXHv --delete \
+  --exclude={"/dev/*,/proc/*,/sys/*,/tmp/*,/run/*,/mnt/*,/media/*,/lost+found"} \
+  /home/you/ /run/media/you/BACKUP/home-mirror/
+----
+
+Run before coffee every Sunday, or cron it — xref:admin-guide::systemd-timers.adoc[timers] make scheduling clean.
+
+== Recipe: versioned + encrypted with borg
+
+[source,bash]
+----
+sudo pacman -S borg
+borg init --encryption=repokey /run/media/you/BACKUP/borg-repo
+borg create --progress /run/media/you/BACKUP/borg-repo::{now} ~/Documents ~/Pictures
+borg list /run/media/you/BACKUP/borg-repo       # browse history
+borg mount ... /mnt/old                          # open an old state as a folder
+----
+
+Deduplicated, so nightly snapshots cost megabytes, not gigabytes.
+
+== Recipe: restic to cloud/B2/S3
+
+[source,bash]
+----
+restic -r rclone:b2:mybucket/docs backup ~/Documents
+restic snapshots
+----
+
+Encrypted client-side; the provider sees noise.
+
+== Test restores, not just backups
+
+Once a quarter: pull one random file from last month's backup and open it. Untested backups are hope, not plans.

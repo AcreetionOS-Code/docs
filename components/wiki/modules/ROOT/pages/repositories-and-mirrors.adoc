@@ -1,0 +1,54 @@
+= Repositories & Mirrors
+:description: Understanding AcreetionOS package sources: the repo-main repository, pacman.conf structure, why you shouldn't add Arch repos, and mirror settings.
+:keywords: AcreetionOS repository, pacman.conf, Arch mirrors
+
+Out of the box, AcreetionOS uses one primary source plus your local cache.
+
+== The default setup
+
+/etc/pacman.conf defines the repositories; the shipped configuration activates:
+
+[source,ini]
+----
+[core]
+Server = https://iso.acreetionos.org/repo-main/$arch
+
+[personal]
+Server = https://iso.acreetionos.org/personal
+----
+
+* *core/repo-main* — the tested set: kernel, desktop, apps, everything the ISO ships.
+* *personal* — maintainer extras.
+
+Inspect yours any time:
+
+[source,bash]
+----
+grep -A2 '^\[' /etc/pacman.conf
+pacman-conf                 # parsed view of effective config
+----
+
+== Do NOT add stock Arch repos
+
+WARNING: Re-enabling official Arch `[core]`/`[extra]` servers mixes two package sets signed under different keys. This breaks the AcreetionOS keyring and can brick updates ("unable to lock database", signature unknown trust errors). If you already did this, restore the original `/etc/pacman.conf`, then run `sudo pacman -Syyu`.
+
+Need something missing from repo-main? The right order is:
+
+. Check the xref:aur-guide.adoc[AUR].
+. Ask the maintainers to add it (xref:contributor/index.adoc[Contributing]).
+. Only as a last resort: xref:flatpak.adoc[Flatpak].
+
+== Keys & keyring
+
+The AcreetionOS keyring ships pre-trusted and updates through normal upgrades. After very long offline periods:
+
+[source,bash]
+----
+sudo pacman-key --refresh-keys   # or simply:
+sudo pacman -Syy acreetion-keyring 2>/dev/null || sudo pacman -Sy archlinux-keyring
+sudo pacman -Syyu
+----
+
+== Download speed
+
+The single-server design keeps things consistent; if `iso.acreetionos.org` feels slow, check status at https://acreetionos.org/status.html before assuming your connection.

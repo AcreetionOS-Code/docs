@@ -1,0 +1,53 @@
+= Firewall Basics (ufw)
+:description: Set up a simple host firewall on AcreetionOS with ufw: default deny incoming, allow SSH selectively, rate limiting and status checks.
+:keywords: ufw firewall, Linux security basics
+
+Desktop Linux exposes few services, but a deny-by-default firewall costs two minutes and closes the door anyway.
+
+== Enable the simple one
+
+[source,bash]
+----
+sudo pacman -S ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+sudo ufw status verbose
+----
+
+That's a complete, sane desktop posture. `enable` also wires up the boot-time service.
+
+== Common allowances
+
+[source,bash]
+----
+sudo ufw allow ssh                     # only if you run an ssh server
+sudo ufw allow 5353/udp                # mDNS printer discovery (see xref:printer-setup.adoc[])
+sudo ufw allow samba                   # file sharing sessions
+sudo ufw limit ssh/tcp                 # brute-force rate limiting
+----
+
+Delete a rule: `sudo ufw delete allow 5353/udp`.
+
+== GUI option
+
+`gufw` wraps everything above with toggles (`sudo pacman -S gufw`) if you prefer clicking.
+
+== Alternatives
+
+* *firewalld* — zone-based, plays well with libvirt networks: `sudo pacman -S firewalld && sudo systemctl enable --now firewalld`.
+* Plain nftables for maximalists — xref:admin-guide::firewalld-ufw.adoc[Administration → Firewalls] compares them properly.
+
+== Verify exposure like an attacker
+
+[source,bash]
+----
+ss -tulpn                  # what's listening, locally
+sudo nmap -sT localhost    # from repos; scan yourself
+----
+
+Anything listening on 0.0.0.0 that you didn't intend? Decide: firewall it off or unmask/remove the service.
+
+== What about antivirus?
+
+Linux malware exists but mass-market AV adds little for typical desktops; timely updates (xref:updating-system.adoc[]) + sane habits cover more ground. See xref:disk-encryption.adoc[disk encryption] for theft protection — firewalls don't help there.

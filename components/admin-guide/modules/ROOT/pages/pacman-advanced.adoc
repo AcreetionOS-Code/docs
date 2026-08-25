@@ -1,0 +1,67 @@
+= Advanced Pacman Operation
+:description: Pacman power features for administrators: IgnorePkg pinning, database queries at scale, transaction safety, lock recovery and local repositories.
+:keywords: pacman.conf options, ignorepkg, pacman db
+
+Beyond the cheat sheet (xref:wiki:pacman-cheatsheet.adoc[]): the knobs admins actually turn.
+
+== /etc/pacman.conf essentials
+
+[source,ini]
+----
+[options]
+HoldPkg     = pacman glibc        # refuse removal of critical base
+IgnorePkg   = linux-lts           # pin packages from updates
+IgnoreGroup = 
+NoUpgrade   = /etc/passwd /etc/group
+UseDelta    = 
+ParallelDownloads = 5
+Color
+----
+
+* `IgnorePkg` pins versions — document WHY in a comment beside it, or future-you removes mysteries angrily.
+* `ParallelDownloads` on fast links cuts update wall-time noticeably.
+
+== Query arsenal
+
+[source,bash]
+----
+pactree firefox              # dependency tree (from pacman-contrib)
+pactree -r pipewire          # reverse: what needs this?
+pacman -Qii vim | grep -i 'modified\|install reason'
+pacman -Qet                  # explicitly installed, no deps-of
+pacman -Qqn                 # native-repo only listing
+pacman -Spu                  # what WOULD update (dry-run URLs)
+----
+
+Mark something explicit vs dependency (affects orphan detection):
+
+[source,bash]
+----
+sudo pacman -D --asexplicit python
+sudo pacman -D --asdeps "$(pacman -Qqg gnome)"  # whole group example
+----
+
+== Transaction anatomy & safety
+
+Every -S/-R is one atomic transaction: download → check → commit. Interrupted commits resume cleanly; interrupted *downloads* just retry.
+
+Database lock stuck after crash: confirm no pacman/yay running, then remove `/var/lib/pacman/db.lck`.
+
+== Local repository hosting
+
+For fleets or heavy custom packaging:
+
+[source,ini]
+----
+# pacman.conf
+[localrepo]
+Server = file:///srv/localrepo
+SigLevel = Optional TrustAll      # or sign properly with repo-add --key
+----
+
+[source,bash]
+----
+repo-add /srv/localrepo/localrepo.db.tar.gz /srv/localrepo/*.pkg.tar.zst
+----
+
+Serve over HTTP for multi-machine setups; signing properly is documented in makepkg chapter (xref:makepkg-pkgbuild.adoc[]).

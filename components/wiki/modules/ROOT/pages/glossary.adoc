@@ -1,0 +1,62 @@
+= Glossary
+:description: Definitions for AcreetionOS and Arch terminology: AUR, pacman hooks, initramfs, LUKS, PipeWire, snapshot types and more.
+:keywords: Linux terminology, glossary
+
+[cols="2,3"]
+|===
+|Term |Meaning
+
+|ACRECOVERY
+|Self-contained ~800 MiB recovery partition provisioned by AcreetionOS — boots even when main /boot dies. xref:recovery-environment.adoc[]
+
+|AUR
+|Arch User Repository — community PKGBUILD recipes; installed via yay. xref:aur-guide.adoc[]
+
+|Calamares
+|The graphical installer used by the ISO.
+
+|Cinnamon
+|The desktop environment (GTK, Muffin WM, Nemo files).
+
+|initramfs
+|Mini-system loaded by GRUB before real root; rebuilt by mkinitcpio.
+
+|LUKS2
+|Standard Linux disk encryption. xref:disk-encryption.adoc[]
+
+|Mesa
+|Open-source graphics drivers (OpenGL/Vulkan) for AMD/Intel.
+
+|pacman
+|Package manager; flags cheat sheet in xref:pacman-cheatsheet.adoc[].
+
+|pacnew
+|Updated config template shipped beside your edited config; merge via `pacdiff`.
+
+|PipeWire
+|Audio/video server replacing PulseAudio/JACK roles. xref:audio-setup.adoc[]
+
+|PKGBUILD
+|Build recipe describing how a package is compiled/assembled.
+
+|repo-main
+|AcreetionOS's curated package server at iso.acreetionos.org. xref:repositories-and-mirrors.adoc[]
+
+|RSYNC snapshot
+|File-based Timeshift snapshot; cheap via hardlinks. xref:timeshift-snapshots.adoc[]
+
+|systemd
+|Init/service manager — units, timers, journal.
+
+|Timeshift
+|Snapshot/restore tool pre-configured on install.
+
+|Wheel
+|Admin group whose members may sudo.
+
+|yay
+|Popular AUR helper wrapping pacman syntax.
+
+|zram
+|Compressed-RAM swap; faster than disk swap. xref:performance-tuning.adoc[]
+|===

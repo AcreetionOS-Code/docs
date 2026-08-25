@@ -1,0 +1,77 @@
+= Firewalls on AcreetionOS: ufw, firewalld, nftables
+:description: Compare firewall options for AcreetionOS hosts: ufw simplicity, firewalld zones and libvirt integration, raw nftables control.
+:keywords: ufw vs firewalld, nftables basics
+
+Pick ONE frontend; they all program netfilter beneath.
+
+== Decision table
+
+[cols="1,3,2"]
+|===
+|Tool |Sweet spot |Think twice when
+
+|ufw
+|Desktop/laptop deny-incoming; two-command setup (xref:wiki:firewall-basics.adoc[])
+|Complex zone/routing needs
+
+|firewalld
+|Servers, libvirt/KVM hosts (auto-manages its zones), multiple trust levels
+|You want minimal moving parts
+
+|nftables direct
+|Routers/gateways, exotic NAT, maximal control
+|Anything maintainable-by-humans
+|===
+
+== firewalld essentials
+
+[source,bash]
+----
+sudo pacman -S firewalld && sudo systemctl enable --now firewalld
+firewall-cmd --get-active-zones
+sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --zone=home --add-port=8080/tcp --permanent
+sudo firewall-cmd --reload
+firewall-cmd --list-all --zone=public
+----
+
+libvirt inserts rules automatically — don't hand-manage virbr0 inside other tools.
+
+== nftables taste
+
+/etc/nftables.conf:
+
+[source,text]
+----
+#!/usr/bin/nft -f
+flush ruleset
+table inet filter {
+  chain input {
+    type filter hook input priority 0; policy drop;
+    ct state established,related accept
+    iif lo accept
+    tcp dport { 22 } ct state new limit rate 6/minute accept comment "ssh"
+    ip protocol icmp accept
+  }
+  chain forward { type filter hook forward priority 0; policy drop; }
+}
+----
+
+[source,bash]
+----
+sudo systemctl enable --now nftables.service ; sudo nft list ruleset
+----
+
+== Verification regardless of tool
+
+[source,bash]
+----
+ss -tulpn                     # listeners
+sudo iptables -S | head       # effective v4 rules (whatever wrote them)
+nmap -sV localhost
+----
+
+== Migration paths
+
+* ufw→firewalld: disable+disable ufw service first; rules rarely translate 1:1 — rebuild intent, not lines.
+* iptables-legacy habits: translate via `iptables-translate`.

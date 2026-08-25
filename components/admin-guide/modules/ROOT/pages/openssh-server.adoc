@@ -1,0 +1,78 @@
+= OpenSSH Server Setup & Hardening
+:description: Install and harden an SSH server on AcreetionOS: key-only authentication, sensible sshd_config, fail2ban-style rate limits, and client tricks.
+:keywords: ssh server arch, secure ssh setup
+
+== Install & activate
+
+[source,bash]
+----
+sudo pacman -S openssh
+sudo systemctl enable --now sshd.service
+ss -tlnp | grep :22                  # confirm listening
+----
+
+Firewall allowance if ufw active (xref:wiki:firewall-basics.adoc[]): `sudo ufw limit ssh`.
+
+== Keys first, passwords never
+
+Client side once:
+
+[source,bash]
+----
+ssh-keygen -t ed25519 -a 100
+ssh-copy-id user@server
+----
+
+Server side then:
+
+[source,ini]
+----
+# /etc/ssh/sshd_config.d/10-hardening.conf
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PermitRootLogin no
+PubkeyAuthentication yes
+X11Forwarding no
+MaxAuthTries 3
+LoginGraceTime 20
+AllowUsers natalie        # explicit allowlist
+ClientAliveInterval 300
+ClientAliveCountMax 2
+----
+
+[source,bash]
+----
+sudo systemctl reload sshd
+ssh -o PubkeyAuthentication=no user@host   # must FAIL now = correct
+----
+
+Keep your current session open while testing config changes — escape hatch.
+
+== Exposure reduction ladder
+
+1. LAN-only bind: `ListenAddress 192.168.x.x`
+2. Non-standard port (noise reduction, NOT security): `Port 2222` (+ firewall rule change)
+3. VPN/WireGuard front-door instead of internet-exposed SSH
+4. Certificates/principals when teams grow
+
+== Brute-force dampening
+
+`ufw limit ssh/tcp` handles basic rates. Heavier: crowdsec/fail2ban from repos watching `journalctl -u sshd` (xref:journald.adoc[]).
+
+== Client quality-of-life
+
+~/.ssh/config:
+
+[source,text]
+----
+Host home
+  HostName home.example.org
+  User natalie
+  Port 22
+  ServerAliveInterval 60
+Host *.lab
+  User root
+  IdentityFile ~/.ssh/lab_key
+----
+
+Then just `ssh home`. Multiplexing (`ControlMaster auto`) speeds repeated sessions.

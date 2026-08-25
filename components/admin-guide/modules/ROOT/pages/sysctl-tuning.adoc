@@ -1,0 +1,56 @@
+= Sysctl & Kernel Parameters
+:description: Apply evidence-based sysctl tuning on AcreetionOS: where settings persist, parameters that matter for zram/desktop/server roles, and kernel cmdline basics.
+:keywords: sysctl tuning, kernel parameters linux
+
+== Where settings live
+
+[source,bash]
+----
+sysctl vm.swappiness                     # current value
+/etc/sysctl.d/*.conf                     # persistent, lexicographic merge
+----
+
+File format: `param = value`, one per line. Drop-ins beat editing any distro file.
+
+== Parameters with real-world effect (desktop+zram)
+
+[source,ini]
+----
+# /etc/sysctl.d/90-desktop.conf
+vm.swappiness = 180                  # WITH zram (see swap guide) 
+vm.vfs_cache_pressure = 50           # keep dentries/inodes cached longer
+vm.dirty_bytes = 268435456           # cap dirty writeout ~256MB (smoother IO)
+vm.min_free_kbytes = 65536           # breathing room for atomic allocs
+net.core.default_qdisc = fq          # fair queueing...
+net.ipv4.tcp_congestion_control = bbr    # ...+BBR: snappier real-world TCP
+----
+
+Server-flavored additions: somaxconn raise, tcp_fastopen, fewer SYN retries — adjust per role, measure per xref:performance-tuning.adoc[] philosophy.
+
+== Things NOT to cargo-cult
+
+* `vm.overcommit_memory=2` without deep understanding → apps die mysteriously
+* Disabling IPv6 wholesale → subtle breakage; prefer addressing fixes
+* Magic "gaming" lists from forums → most values no-op on modern kernels
+
+Evidence loop: `perf`, PSI pressures (/proc/pressure), before/after workload timing.
+
+== Kernel command line parameters
+
+Transient test: GRUB menu → `e` → append → F10 (per xref:bootloader-grub.adoc[]). Persistent: edit GRUB_CMDLINE_LINUX_DEFAULT, regenerate config. Common legit needs:
+
+[source,text]
+----
+nvme_core.default_ps_max_latency_us=0    # NVMe power-state flakiness workaround  
+amdgpu.sg_display=0                       # certain hybrid-graphics artifacts
+module_blacklist=nouveau                  # pre-NVIDIA-driver installs
+----
+
+== Verify what actually applied
+
+[source,bash]
+----
+sysctl -a 2>/dev/null | grep -E 'swappiness|qdisc'
+cat /proc/cmdline
+systemd-delta --type=sysctl     # who overrode whom
+----

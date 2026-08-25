@@ -1,0 +1,41 @@
+= CPU Microcode Updates
+:description: Ensure Intel and AMD microcode updates apply early during boot on AcreetionOS — security fixes like Spectre-class mitigations ship through it.
+:keywords: intel microcode linux, amd microcode
+
+Microcode patches CPU behavior — speculative-execution mitigations land this way FIRST, before OS workarounds.
+
+== Install (one-time)
+
+[source,bash]
+----
+# identify vendor:
+grep -m1 vendor /proc/cpuinfo
+
+sudo pacman -S intel-ucode        # Intel
+sudo pacman -S amd-ucode          # AMD
+sudo grub-mkconfig -o /boot/grub/grub.cfg   # adds initrd line automatically
+sudo mkinitcpio -P                # embeds into initramfs too
+----
+
+Verify presence in boot path:
+
+[source,bash]
+----
+ls /boot/intel-ucode.img /boot/amd-ucode.img 2>/dev/null
+journalctl -k | grep -i microcode | head
+grep microcode /proc/cpuinfo
+----
+
+== Update cadence
+
+Microcode files update through normal `pacman -Syu` — nothing to remember. Early-loading wiring persists.
+
+== Why EARLY loading matters
+
+Late (OS-level) reload misses many mitigations; the initramfs embedding above applies patches before userspace breathes. This is why both the grub config line AND initramfs contain it — belt plus suspenders.
+
+== Related hardware hygiene
+
+* GPU firmware: linux-firmware package covers Wi-Fi/BT/NIC/GPU DSP blobs (xref:wiki:wifi-setup.adoc[])
+* SSD firmware: vendor tools occasionally; TRIM already handled by weekly fstrim.timer on shipped systems (`systemctl status fstrim.timer`)
+* Virtualized guests: host passes microcode through; guest packages harmless either way

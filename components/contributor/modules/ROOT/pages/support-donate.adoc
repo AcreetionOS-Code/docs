@@ -1,0 +1,43 @@
+= Supporting & Donating to AcreetionOS
+:description: Ways to financially and materially support AcreetionOS development: what donations fund, infrastructure costs and non-monetary support options.
+:keywords: donate open source, support linux distro
+
+Distributions have real bills: mirrors, ISO hosting bandwidth, build hardware, domain/DNS, coffee maintaining keyrings at 2 AM.
+
+== Where money goes
+
+[cols="1,2"]
+|===
+|Cost center |Why it matters
+
+|ISO/mirror bandwidth
+|Downloads are the product's front door (us.iso server runs on this)
+
+|Build infrastructure
+|Clean-chroot builders per release cycle (xref:building-the-iso.adoc[] scale)
+
+|Domains & DNS
+|acreetionos.org family incl. this docs subdomain
+
+|Test hardware diversity
+|The laptop models QA doesn't own personally
+|===
+
+== How to give
+
+Donation channels are listed on https://acreetionos.org/donate.html[the site's donate page] — kept current there rather than duplicated here (payment options churn faster than docs cycles). Recurring amounts beat one-shots for planning; infrastructure likes predictability.
+
+== Non-money currencies equally welcome
+
+* *Time*: any lane in xref:index.adoc[contributing] — testers and doc writers convert directly into project quality
+* *Hardware*: spare machines broaden the compatibility matrix (coordinate via community channels before shipping anything)
+* *Advocacy*: honest recommendations in your circles; comparison writeups grounded in xref:editions:index.adoc[facts]
+* *Professional skills*: legal review, design passes, accessibility audits — offer via maintainer contact
+
+== Corporate sponsorship framing
+
+Companies standardizing fleets on AcreetionOS: sponsored infra (mirrors in your region especially) benefits you directly while funding the commons — reach out through site contact for specifics.
+
+== Transparency norm
+
+Aggregate donation usage gets reported through community channels periodically — donors deserve to see mirrors spin faster, not disappear into fog.

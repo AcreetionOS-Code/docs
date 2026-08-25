@@ -1,0 +1,42 @@
+= Getting Started with AcreetionOS
+:description: From zero to desktop: download the AcreetionOS ISO, write it to USB, install with Calamares, and log in to Cinnamon.
+:keywords: AcreetionOS install, Arch beginner guide, easy Arch Linux
+
+This page takes you from nothing to a working AcreetionOS desktop in about 20 minutes.
+
+== 1. Check your hardware
+
+Minimum and recommended specs live in xref:system-requirements.adoc[System Requirements]. Short version: 4 GB RAM, 25 GB disk, any x86_64 CPU from the last decade.
+
+== 2. Download the ISO
+
+Grab the latest image from https://acreetionos.org/install.html[the download page]. Verify integrity if you want belt-and-braces certainty — instructions are on the same page and in xref:install-guide::download.adoc[Installation Guide → Downloading].
+
+== 3. Write it to a USB stick
+
+Use whatever you have handy:
+
+* *Windows/macOS*: Rufus, balenaEtcher, or https://acreetionos.org[Acreetion Media Writer]
+* *Linux*: `dd`, Popsicle, or Acreetion Media Writer
+
+Full walkthrough (including Ventoy): xref:install-guide::bootable-usb.adoc[Creating Bootable USB Media].
+
+== 4. Boot it
+
+Plug the stick in, reboot, open your firmware boot menu (usually F12/F11/Esc) and pick the USB. If the machine refuses, check xref:install-guide::bios-uefi.adoc[UEFI/BIOS settings].
+
+You'll land in the live session — a full desktop running entirely from the USB. Poke around as much as you like; nothing touches your disk until you click *Install*.
+
+== 5. Install
+
+Launch the installer from the menu or desktop icon. Calamares will:
+
+. Ask your language, timezone, and keyboard.
+. Offer guided partitioning (*Erase disk*) or manual partitioning.
+. Copy the system and set up GRUB.
+
+Screens are explained step by step in xref:install-guide::installer-walkthrough.adoc[Installer Walkthrough]. Want encryption? Read xref:install-guide::encrypted-install.adoc[Encrypted Installation] first.
+
+== 6. First boot
+
+After reboot you'll see the login screen. Then follow xref:post-installation.adoc[First Steps After Install] — five minutes that save hours later.

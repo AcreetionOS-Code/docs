@@ -1,0 +1,46 @@
+= Encrypted Installation Guide
+:description: Full-disk encryption during AcreetionOS installation: enabling LUKS2 in Calamares, passphrase advice, verification steps and recovery implications.
+:keywords: encrypted linux install, luks2 calamares
+
+Ten extra seconds of setup; theft of the laptop stops mattering for your data.
+
+== Enable during guided install
+
+In the partitioning step (xref:installer-walkthrough.adoc[]): choose *Erase disk*, tick **Encrypt**, enter the passphrase twice. Calamares builds LUKS2-on-root automatically; only the EFI partition stays readable.
+
+== Passphrase craft
+
+* Four-plus random words beat symbol soup ("ember-cactus-vault-nine").
+* You'll type it every boot — make it typeable half-asleep.
+* No recovery backdoor exists: lost passphrase + no keyfile = gone. Consider enrolling a second keyfile afterwards per xref:wiki:disk-encryption.adoc[].
+
+== Verify after first boot
+
+[source,bash]
+----
+lsblk                          # 'crypto_LUKS' under the root partition
+sudo cryptsetup status         # active mapping details
+----
+
+== What's protected vs not
+
+[cols="1,2"]
+|===
+|Protected |Not protected
+
+|Files, swap-in-partition, system configs at rest
+|Boot firmware settings, ESP bootloader bits
+
+|Data on stolen powered-off machine
+|Running session (screen lock matters!), cloud accounts
+|===
+
+== Recovery & snapshots interplay
+
+* Timeshift restores work normally — they operate on the unlocked mapper.
+* Chroot rescue adds one step (unlock first): `cryptsetup open ...` per xref:wiki:chroot-rescue.adoc[].
+* The Recovery Environment handles this dance itself.
+
+== Hibernation with encryption
+
+Doable — needs sized swap + resume hook configuration after install: xref:admin-guide:lvm-luks.adoc[] walks the parameters.

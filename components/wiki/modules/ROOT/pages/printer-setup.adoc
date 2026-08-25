@@ -1,0 +1,60 @@
+= Printers & Scanners
+:description: Set up printers and scanners on AcreetionOS using CUPS, driverless AirPrint printing, HP/Canon/Epson drivers and SANE scanning.
+:keywords: AcreetionOS printer, CUPS setup, scanner linux
+
+Modern printers are mostly driverless (IPP Everywhere/AirPrint); older ones need vendor drivers. Both paths covered.
+
+== Fast path (most printers made after ~2010)
+
+[source,bash]
+----
+sudo pacman -S cups system-config-printer
+sudo systemctl enable --now cups.service
+----
+
+Then open *System Settings → Printers* (or http://localhost:631[CUPS web UI]) → Add. Your printer appears via mDNS discovery; pick *everywhere/driverless* when offered.
+
+== HP printers
+
+HP's plugin covers older models and scanners:
+
+[source,bash]
+----
+yay -S hplip            # repo package if present; else AUR
+hp-setup -i             # guided install incl. plugin download
+----
+
+== Epson / Canon / Brother
+
+* Epson: `epson-inkjet-printer-escpr` (repo/AUR).
+* Canon: proprietary drivers live in the AUR (`cnijfilter2-*` per model).
+* Brother: AUR has `brother-*-lpr-driver`/cupswrapper pairs — install both, then add printer normally.
+
+See xref:aur-guide.adoc[AUR & yay] if you're new to AUR installs.
+
+== Printing test
+
+[source,bash]
+----
+lpstat -p                       # list printers
+lp -d PrinterName /usr/share/cups/data/testprint
+----
+
+Queue management lives at http://localhost:631/jobs[localhost:631/jobs].
+
+== Scanning
+
+[source,bash]
+----
+sudo pacman -S sane simple-scan
+scanimage -L                    # detect scanner
+simple-scan                     # GUI
+----
+
+HP multi-function units may additionally want `hp-plugin -i`.
+
+== Nothing detected?
+
+* Same network subnet as the printer (guest-WiFi isolation blocks discovery).
+* USB printer: `lsusb` shows it? Then `cups` service actually running?
+* Firewall blocking mDNS: allow 5353/udp per xref:firewall-basics.adoc[Firewall Basics].

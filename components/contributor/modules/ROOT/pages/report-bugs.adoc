@@ -1,0 +1,46 @@
+= Reporting Bugs Well
+:description: File effective AcreetionOS bug reports: where to report, what evidence to attach (journalctl, inxi, package versions), and what happens next.
+:keywords: how to report linux bugs
+
+A great bug report halves fix time. Here's the craft.
+
+== Where
+
+* *Distro-level issues* (installer, recovery tooling, repo problems): issue tracker on the relevant org repo (xref:repo-layout.adoc[])
+* *Upstream-looking issues* (specific app behavior, kernel driver bugs): still tell us first if unsure — misrouted reports get redirected kindly
+* *Security-sensitive*: private channel via maintainers on the main site contact — never public-tracker fresh exploits
+
+== Before filing
+
+. Fully updated? `sudo pacman -Syu` then retest (rolling rule)
+. Search existing issues — your bug may have a workaround already (xref:release-notes:known-issues.adoc[])
+. Fallback kernel test for boot/hardware oddities (xref:wiki:kernel-management.adoc[])
+
+== The evidence bundle
+
+[source,bash]
+----
+inxi -Fxxxz                        # hardware + driver picture (privacy-trimmed by z flag)
+journalctl -b -p err --no-pager    # errors this boot
+journalctl -b --no-pager > full-boot.log   # when asked for everything
+pacman -Q | grep -E 'linux|mesa|nvidia|pipewire'   # stack versions
+sudo dmidecode -t bios | head      # firmware version, BIOS-class issues
+----
+
+Attach as files (not screenshots of text!). For graphical issues: exact DE/session (`echo $XDG_SESSION_TYPE`, Cinnamon version).
+
+== The template that works
+
+[source,text]
+----
+SUMMARY: one line — what fails
+EXPECTED: what should happen instead
+REPRO: numbered steps from clean state, incl. "fresh install" vs "updated system"
+HARDWARE: inxi output attached
+FREQUENCY: always / intermittent (rate) / once
+WORKAROUND: if you found one — say so even if ugly
+----
+
+== What happens next
+
+Triage → reproduce attempt → possibly needs-more-info ping (answer fast, tickets age out) → fix lands in rolling updates → ticket closes referencing the update. You're allowed to ping politely after a week of silence.

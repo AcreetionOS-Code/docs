@@ -1,0 +1,47 @@
+= Disk Encryption on AcreetionOS
+:description: Protect data at rest on AcreetionOS with LUKS encryption — installed via Calamares full-disk option or manual LUKS/LVM setup, plus hibernate notes.
+:keywords: LUKS encryption, full disk encryption linux
+
+Encryption protects against theft: stolen laptop, "wiped" drive resold, snooping repair shop. It does nothing once the system is unlocked and running — pair it with sane passwords.
+
+== Easiest path: encrypt during install
+
+The xref:install-guide::installer-walkthrough.adoc[Calamares installer] offers *Encrypt partition* in guided mode:
+
+. Tick encryption, set a strong passphrase.
+. Everything except /boot/EFI is encrypted with LUKS2.
+. Boot prompts for the passphrase before GRUB hands over.
+
+This is what 95% of people should use. Snapshot first if reinstalling an existing machine — encryption setup repartitions!
+
+== Verify afterwards
+
+[source,bash]
+----
+lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT    # crypto_LUKS under root
+sudo cryptsetup luksDump /dev/nvme0n1p2 | grep -E 'Version|Cipher'
+----
+
+== Passphrase strength matters
+
+LUKS2 + Argon2id slows guesses enormously, but a weak passphrase still loses to patience. Four random words beat one "clever" password.
+
+== Keyfiles & extra slots
+
+Add a backup way in (e.g., keyfile on a USB you keep safe):
+
+[source,bash]
+----
+sudo dd if=/dev/urandom of=/etc/mykeyfile bs=512 count=4
+sudo cryptsetup luksAddKey /dev/nvme0n1p2 /etc/mykeyfile
+sudo cryptsetup luksListKeys /dev/nvme0n1p2      # see enrolled slots
+----
+
+== Hibernate with encryption
+
+Suspend-to-disk writes RAM (with your keys!) to swap. Requirements: encrypted swap ≥ RAM size and `resume=` hook — full recipe in xref:admin-guide::swap-zram.adoc[Administration → Swap] and xref:admin-guide::lvm-luks.adoc[LUKS & LVM].
+
+== Emergency access
+
+* Lost passphrase with no second slot/keyfile = data gone. Period.
+* Wipe-in-place (sell the laptop): `sudo cryptsetup luksErase /dev/nvme0n1p2` destroys keyslots instantly; filesystem becomes unrecoverable noise without reformatting.

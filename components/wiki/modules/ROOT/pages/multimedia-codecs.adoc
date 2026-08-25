@@ -1,0 +1,47 @@
+= Multimedia & Codecs
+:description: Play everything on AcreetionOS: ffmpeg codecs ship standard, DVD playback libdvdcss, hardware video decode via VA-API and recommended players.
+:keywords: multimedia codecs linux, VA-API video playback
+
+AcreetionOS ships the codec stack most distros make you hunt for.
+
+## Already working
+
+* MP4/H.264/H.265, WebM/VP9, AV1 (decode), AAC/MP3/Opus/Vorbis, FLAC — via ffmpeg-backed players.
+* Browser media (YouTube etc.) uses built-in open codecs + VA-API acceleration.
+
+## Recommended players
+
+[source,bash]
+----
+sudo pacman -S mpv          # minimal, plays literally everything
+sudo pacman -S vlc          # GUI classic
+----
+
+## Hardware acceleration
+
+Offloads video decode to the GPU — cooler and battery-friendlier:
+
+* AMD/older Intel: `libva-mesa-driver` · Intel Broadwell+: `intel-media-driver` — details in xref:amd-intel-gpu.adoc[AMD & Intel Graphics].
+* Verify: `vainfo` lists H264/HEVC entries.
+* mpv honors it automatically (`mpv --hwdec=auto-safe file.mkv`).
+
+## DVDs
+
+Commercial DVDs use CSS scrambling:
+
+[source,bash]
+----
+yay -S libdvdcss            # AUR; legality varies by country — check locally
+----
+
+Blu-rays work best in VLC with AUR `libaacs` + configured KEYDB for commercial discs.
+
+## Creating content
+
+* Screen recording: OBS Studio (`flatpak install flathub com.obsproject.Studio` or repos).
+* Editing: Kdenlive (`pacman`/Flatpak) or DaVinci Resolve via AUR.
+* Conversion CLI: `ffmpeg -i in.mov -c:v libx264 -crf 20 out.mp4`.
+
+## Audio pipeline
+
+PipeWire handles routing; pro-audio latency knobs live in xref:performance-tuning.adoc[Performance Tuning], device switching in xref:audio-setup.adoc[Audio].

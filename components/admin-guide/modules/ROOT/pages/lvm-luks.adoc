@@ -1,0 +1,54 @@
+= LVM & LUKS Administration
+:description: Work with encrypted volumes on AcreetionOS: cryptsetup daily commands, LVM resize operations, hibernate-on-LUKS setup and recovery scenarios.
+:keywords: lvm resize, luks management
+
+== The mental stack
+
+Disk → LUKS container → PV → VG → LVs → filesystems. Each layer adds vocabulary but also flexibility (resize anything, span disks, snapshot).
+
+== Daily cryptsetup
+
+[source,bash]
+----
+sudo cryptsetup luksDump /dev/nvme0n1p2 | head    # slots, cipher
+sudo cryptsetup open /dev/nvme0n1p2 cryproot      # manual unlock (rescue)
+sudo cryptsetup close cryproot
+sudo cryptsetup luksAddKey /dev/nvme0n1p2         # enroll backup passphrase/keyfile
+sudo cryptsetup luksRemoveKey /dev/nvme0n1p2      # retire one
+----
+
+Rescue flow integration: xref:wiki:chroot-rescue.adoc[unlock-then-mount pattern].
+
+== LVM daily
+
+[source,bash]
+----
+sudo vgdisplay ; sudo lvdisplay            # topology
+sudo lvextend -r -l +100%FREE /dev/vg/root # grow LV AND filesystem (-r!)
+sudo vgs ; lvs                             # compact views
+----
+
+Shrink (ext4): fsck→resize2fs shrink→lvreduce (order matters); xfs cannot shrink.
+
+== Growing into new space (typical VM/disk upgrade)
+
+[source,bash]
+----
+# after partition grows or new PV added:
+sudo pvresize /dev/nvme0n1p2        # or pvcreate+vgextend for new disk
+sudo lvextend -r -l +100%FREE /dev/vg/root
+----
+
+== Hibernation on encrypted swap
+
+Requirements: LV/zram-configured swap ≥ RAM, resume hook:
+
+1. `/etc/mkinitcpio.conf`: add `resume` after `encrypt`/`lvm2` in HOOKS
+2. Kernel cmdline: `resume=/dev/vg/swap`
+3. `sudo mkinitcpio -P` then reboot-test suspend once BEFORE trusting it
+
+Full parameter background: xref:sysctl-tuning.adoc[] covers cmdline editing conventions.
+
+== When LUKS prompts twice at boot
+
+GRUB unlocks first stage, initramfs re-prompts second stage — normal with /boot-inside-LUKS layouts. Trim friction via keyfile-in-ESP patterns only if threat model permits (xref:wiki:disk-encryption.adoc[] tradeoffs).

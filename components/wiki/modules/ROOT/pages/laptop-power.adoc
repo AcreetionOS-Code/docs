@@ -1,0 +1,78 @@
+= Laptops: Battery & Power Saving
+:description: Extend battery life on AcreetionOS laptops: TLP/auto-cpufreq, zram instead of swap, brightness keys, suspend-then-hibernate setup.
+:keywords: laptop battery linux, TLP, power saving Arch
+
+Stock AcreetionOS is already reasonable on power; these steps make it excellent.
+
+== Choose a daemon
+
+Pick ONE of the two popular managers (they conflict):
+
+=== Option A — TLP (set-and-forget)
+
+[source,bash]
+----
+sudo pacman -S tlp tlp-rdw
+sudo systemctl enable --now tlp.service NetworkManager-dispatcher.service
+tlp-stat -s -b          # status summary
+----
+
+=== Option B — auto-cpufreq (performance-aware governor control)
+
+[source,bash]
+----
+yay -S auto-cpufreq
+sudo auto-cpufreq --install
+auto-cpufreq --stats
+----
+
+Either typically adds 30–90 minutes on typical hardware.
+
+== Swap strategy: zram over disk swap
+
+zram compresses RAM instead of writing to SSD — faster AND battery-friendlier:
+
+[source,bash]
+----
+zramctl                      # active?
+# If not configured yet:
+sudo pacman -S zram-generator
+printf '[zram0]\nzram-size = min(ram, 8192)\n' | sudo tee /etc/systemd/zram-generator.conf
+sudo daemon-reload && sudo systemctl start systemd-zram-setup@zram0.service
+----
+
+Full background: xref:performance-tuning.adoc[Performance Tuning].
+
+== Suspend & hibernate
+
+* Lid close behavior: System Settings → Power Management.
+* Hibernate needs swap ≥ RAM (or zstd-compressed resume config): see xref:admin-guide::swap-zram.adoc[Administration → Swap & Zram] for resume= kernel parameters.
+
+== Small wins
+
+[cols="2,3"]
+|===
+|Change |Effect
+
+|Darker screen (biggest consumer!)
+|Minutes per percentage point
+
+|`powertop --auto-tune` experimentally
+|USB/PCI runtime PM; persist what helps via TLP instead
+
+|Disable unused radios (bt/WiFi) when idle
+|`rfkill block bluetooth`
+
+|NVMe APST left at default
+|Already optimal; don't fight it
+|===
+
+== Diagnostics
+
+[source,bash]
+----
+upower -i $(upower -e | grep BAT)   # capacity & wear
+inxi -Fxxxz | grep -A6 Battery
+----
+
+Capacity far below design value = aging cell, not software.

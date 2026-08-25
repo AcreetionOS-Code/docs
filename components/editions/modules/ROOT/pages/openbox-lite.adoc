@@ -1,0 +1,43 @@
+= Lightweight Edition (Openbox)
+:description: Revive old hardware with the AcreetionOS Openbox edition: minimal RAM footprint, same Arch core and package access as the standard build.
+:keywords: lightweight linux old laptop, openbox distro
+
+For the machine your family called "the slow computer" until now.
+
+== What's inside
+
+Openbox window manager + light panel + minimal file manager + the same Arch base and repo access as everything else. Idle RAM measured in hundreds of MB — room left for the browser that actually matters.
+
+== Philosophy
+
+Nothing pre-installed you didn't ask for; nothing preventing what you need:
+
+[source,bash]
+----
+sudo pacman -S thunar        # add pieces as YOU want them
+yay -S picom                 # compositor when you fancy eye-candy
+----
+
+Right-click desktop = applications menu (Openbox convention — muscle memory arrives within a day).
+
+== Real-world expectations
+
+[cols="1,2"]
+|===
+|Hardware |Experience
+
+|Core2 Duo / 4GB, HDD→SSD swapped
+|Genuinely pleasant daily driver
+
+|2 GB RAM era netbooks
+|Usable for writing/browsing-light
+
+|Anything with SSD + 8 GB
+|Overkill — standard edition serves better
+|===
+
+SSD upgrade + this edition = the single highest-value resurrection combo known to computing.
+
+== Keep the wiki handy
+
+Everything under Software/Hardware sections applies unchanged (xref:wiki:welcome.adoc[]); only desktop-specific pages (panel applets etc.) assume Cinnamon. Performance guidance: xref:wiki:performance-tuning.adoc[] pairs especially well here.

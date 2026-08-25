@@ -1,0 +1,49 @@
+= Dual-Booting AcreetionOS with Windows
+:description: Run Windows and AcreetionOS side by side: partition planning, os-prober GRUB entries, fixing fast-startup/secure-boot/time conflicts.
+:keywords: dual boot windows arch, grub os-prober
+
+Entirely reasonable. Do these five things and coexistence is boring (the good kind).
+
+== 1. Make room BEFORE installing
+
+Shrink Windows from within Windows (Disk Management → Shrink Volume). Leave ≥40 GB unallocated for AcreetionOS, then shut down fully.
+
+== 2. Windows-side gotchas
+
+* Disable **Fast Startup** (Control Panel → Power Options → Choose what power buttons do). Fast Startup = permanent hibernation = NTFS always "in use" = Linux can't safely mount it.
+* If BitLocker is on, suspend/recover it after partition changes so recovery keys stay valid.
+* Note your firmware: UEFI+GPT (any PC since ~2012) vs legacy BIOS+MBR. Install AcreetionOS in matching mode.
+
+== 3. Install AcreetionOS alongside
+
+In Calamares choose *Manual partitioning*: put `/` (+ swap or zram) into the free space, mount the existing EFI partition at `/boot/efi` WITHOUT formatting. Walkthrough: xref:install-guide::partitioning.adoc[Partitioning].
+
+== 4. Let GRUB find Windows
+
+os-prober ships enabled; after install (or after Windows updates its bootloader):
+
+[source,bash]
+----
+sudo os-prober                       # expect a Windows Boot Manager line
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+grep -i menuentry /boot/grub/grub.cfg | head
+----
+
+Missing? Ensure `GRUB_DISABLE_OS_PROBER=false` isn't set in /etc/default/grub.
+
+== 5. The clock war
+
+Windows stores hardware clock as local time; Linux as UTC → hours drift. Fix on the Windows side (run as admin):
+
+[source,powershell]
+----
+Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+----
+
+== When Windows updates eat the boot menu
+
+It sometimes reinstalls its own bootloader. Boot the AcreetionOS ISO → xref:recovery-environment.adoc[Recovery Environment] → *GRUB reinstall/boot repair* → done, both entries restored.
+
+== Recovery partition note
+
+The ACRECOVERY partition (xref:recovery-environment.adoc[]) coexists fine with dual-boots — it's chainloaded from the main GRUB and never touches Windows entries.

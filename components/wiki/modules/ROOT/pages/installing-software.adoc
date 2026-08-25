@@ -1,0 +1,54 @@
+= Installing Software
+:description: Find and install applications on AcreetionOS via pacman, the AUR with yay, or Flatpak — with tips on choosing the right source.
+:keywords: install programs AcreetionOS, Arch software install
+
+Three doors, one room. Pick whichever fits.
+
+== Door 1: pacman (native)
+
+[source,bash]
+----
+pacman -Ss <keyword>          # search
+sudo pacman -S <name>         # install
+----
+
+Prefer this when the package exists here — best Cinnamon/system integration, fastest updates.
+
+== Door 2: AUR via yay
+
+[source,bash]
+----
+yay <keyword>                 # searches repos AND AUR interactively
+yay -S <name>                 # installs from either
+----
+
+Use for proprietary apps (Chrome, Spotify...), niche tools, anything absent from repo-main. Safety habits: xref:aur-guide.adoc[AUR & yay Guide].
+
+== Door 3: Flatpak
+
+[source,bash]
+----
+flatpak search kdenlive
+flatpak install flathub org.kde.kdenlive
+----
+
+Best for always-latest GUI releases inside a sandbox. Setup steps: xref:flatpak.adoc[Flatpak & Sandbox Apps].
+
+== Choosing well
+
+[TIP]
+====
+Rule of thumb: *system tool → pacman*, *proprietary/niche → AUR*, *cutting-edge GUI app → Flatpak*. When in doubt, pacman first.
+====
+
+== Graphical options
+
+Prefer clicking? Cinnamon's Software manager frontends work too — they ultimately call the same sources. Terminal users usually end up memorizing just two lines:
+
+[source,bash]
+----
+yay -Syu                      # keep everything current
+yay <search-term>             # find and install anything else
+----
+
+Related: xref:pacman-cheatsheet.adoc[Pacman Cheat Sheet] · xref:removing-software.adoc[Removing Software].

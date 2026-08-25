@@ -1,0 +1,40 @@
+= Installation Troubleshooting
+:description: Fix common AcreetionOS installer failures: black screen boot, missing NVMe disks in Calamares, partition errors, failed bootloader installs.
+:keywords: installer fails, calamares error
+
+Symptom-first index. Nothing here fits? Community channels on https://acreetionos.org welcome logs (`journalctl` from live session).
+
+== Black/garbled screen when booting USB
+
+* Try `nomodeset`: press `e` in GRUB menu, add to `linux` line, F10.
+* Intel iGPU old-gen: `i915.modeset=0` test similarly.
+* NVIDIA hybrid laptop: BIOS switchable-graphics toggle sometimes required pre-install.
+
+== Installer sees no internal disk
+
+Classic Intel RST/VMD RAID mode. Firmware → SATA/storage → switch **RAID/RST → AHCI**. Windows-side prep needed first if dual-booting (safe-mode boot cycle trick) — search "RST to AHCI windows" + follow xref:partitioning.adoc[] carefully after.
+
+== "Failed to mount ESP" / EFI errors
+
+* ESP missing/corrupt: create 512 MiB FAT32 with esp flag manually (xref:partitioning.adoc[]) and retry.
+* Dual-boot: never format Windows' ESP — reuse it.
+
+== Partition operation fails mid-way
+
+Usually overlapping/messy legacy layout: run GParted from live session, fix/align, retry. Data-bearing partitions: backup first (xref:wiki:backup-strategies.adoc[]).
+
+== Bootloader install failed at end
+
+System files are fine; only GRUB missing. Retry installer OR skip ahead: boot installed system via USB → xref:wiki:chroot-rescue.adoc[] → `grub-install` + config regen.
+
+== Wi-Fi needed during install but absent
+
+Live session includes most firmware; exotic chips may need packages from the same repo after connecting by phone USB-tethering temporarily.
+
+== Installed but boots to firmware/old OS only
+
+Boot order (xref:bios-uefi.adoc[] end section) or Windows stomped entries → one-shot boot menu → pick "AcreetionOS"; permanent fix via efibootmgr ordering.
+
+== Random freeze during package copy
+
+USB stick dying (very common symptom!). Different port/stick, re-write with `conv=fsync` (xref:bootable-usb.adoc[]).

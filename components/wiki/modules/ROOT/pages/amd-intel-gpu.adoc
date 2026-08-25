@@ -1,0 +1,51 @@
+= AMD & Intel Graphics
+:description: AcreetionOS uses the open-source stack for AMD and Intel GPUs by default — here's what's installed, optional extras, VA-API video acceleration and tuning tips.
+:keywords: AMD GPU Linux, Intel graphics, VA-API, Mesa
+
+Good news: for AMD and Intel, the best driver is already what you're running.
+
+== What's preinstalled
+
+The open-source stack comes standard:
+
+* *Kernel*: amdgpu (AMD), i915/i965/Xe (Intel)
+* *Mesa*: OpenGL + Vulkan (RADV for AMD, ANV for Intel)
+* *X11 DDX*: modesetting
+* *Wayland*: native support
+
+Nothing to install for normal desktop use — this is the configuration Mesa upstream tests hardest.
+
+== Video acceleration (VA-API)
+
+Offloads decode/encode to the GPU, saving battery and CPU:
+
+[source,bash]
+----
+sudo pacman -S intel-media-driver    # Broadwell+ Intel
+sudo pacman -S libva-mesa-driver     # AMD & older Intel
+pacman -Qs va-api                    # sanity check
+vainfo                               # lists supported codecs
+----
+
+Browsers/players pick it up automatically (VLC: Tools→Preferences→Video→VA-API).
+
+== Vulkan
+
+Games increasingly want Vulkan; RADV/ANV ship with Mesa. Confirm:
+
+[source,bash]
+----
+vulkaninfo --summary      # from vulkan-tools
+----
+
+== Optional tuning
+
+* Overclocking/monitoring: `radeontop`, `nvtop`, `amdgpu_top` from repos.
+* Fresh AGESA/kernel gains on new APUs arrive by simply staying updated (xref:updating-system.adoc[Updating]).
+* Tear-free X11: enable in Cinnamon Settings → General → "Sync refresh rate"; compositing already prevents tearing otherwise.
+
+== When things look wrong
+
+. `glxinfo -B` — confirms which renderer/GL version is active.
+. Artifacts after update? Test previous kernel from GRUB advanced menu (xref:kernel-management.adoc[Kernel Management]).
+. Report persistent bugs with `inxi -Gxxx` output to the community channels (xref:contributor/report-bugs.adoc[Reporting Bugs]).

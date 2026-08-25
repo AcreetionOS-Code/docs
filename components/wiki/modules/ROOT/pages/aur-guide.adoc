@@ -1,0 +1,45 @@
+= Using the AUR with yay
+:description: Access 85,000+ community packages on AcreetionOS using yay: installing from the Arch User Repository safely, updating AUR packages, voting.
+:keywords: AUR, yay, Arch User Repository, AcreetionOS
+
+The https://aur.archlinux.org[Arch User Repository] is a community collection of build recipes (PKGBUILDs) covering nearly every Linux application ever ported. On AcreetionOS, https://github.com/Jguer/yay[yay] automates fetching, building and updating them.
+
+== Install yay once
+
+[source,bash]
+----
+sudo pacman -S --needed base-devel git yay
+----
+
+== Daily use
+
+[source,bash]
+----
+yay -S google-chrome         # build & install an AUR package
+yay -Syu                     # update system AND AUR packages together
+yay -Sua                     # update only AUR packages
+yay -Ss discord              # search repos + AUR at once
+yay -Ps                      # print system health summary
+----
+
+TIP: `yay` accepts all pacman flags. If you know pacman, you know yay.
+
+== Staying safe
+
+AUR packages are user-submitted build scripts, not officially vetted binaries:
+
+. *Read the PKGBUILD* when yay offers to review it — at least skim for anything odd (curl to random hosts, writing outside $srcdir...).
+. Prefer popular, well-maintained entries (check votes and last-updated on https://aur.archlinux.org[aur.archlinux.org]).
+. Build failures are normal after upstream changes — check comments on the AUR page before filing issues.
+
+== When something won't build
+
+Most AUR breakage is a missing dependency or outdated source URL:
+
+[source,bash]
+----
+yay -S <package> --editmenu     # tweak the PKGBUILD before building
+yay -G <package>                # just download the recipe into ./package
+----
+
+If the app also exists on Flathub, xref:flatpak.adoc[Flatpak] is often the lower-friction fallback.

@@ -1,0 +1,36 @@
+= Standard Edition (Cinnamon)
+:description: The default AcreetionOS experience: Cinnamon desktop on an Arch base with Nemo, GNOME Terminal and the full polish set.
+:keywords: Cinnamon desktop Linux
+
+The flagship. If you downloaded "AcreetionOS" without qualifiers, this is it.
+
+== The desktop
+
+Cinnamon delivers the classic layout — panel(s), menu, tray — without plugin-hunting:
+
+* *Muffin* window manager: compositing, tiling hotkeys, workspace control
+* *Nemo* file manager: fast, extension-friendly, dual-pane optional
+* System Settings applets cover 95% of needs GUI-first
+
+Branding ships in the site palette — dark surfaces, green accents (same theme family as this documentation).
+
+== Included baseline
+
+[source,bash]
+----
+pacman -Qg | head        # or inspect the ISO package list upstream
+----
+
+Expect: full PipeWire audio, NetworkManager + applet, XDG portals for flatpak/sandbox integration, LightDM login, Plymouth boot, Timeshift configured, Recovery Environment entries in GRUB.
+
+== Hardware envelope
+
+Runs beautifully from ~2010 hardware upward (xref:wiki:system-requirements.adoc[]). Below that threshold, honestly evaluate xref:openbox-lite.adoc[] instead.
+
+== Who outgrows it
+
+Nobody forced to — but power users sometimes add a tiling WM alongside (`i3` coexists fine; session picker appears at login). The Arch base makes such experiments cheap.
+
+== Try before committing
+
+Live session boots the complete desktop from USB (xref:install-guide:live-environment.adoc[]) — settings changes there don't persist, which is exactly what you want in a test drive.

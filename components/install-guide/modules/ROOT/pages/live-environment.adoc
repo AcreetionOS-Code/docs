@@ -1,0 +1,42 @@
+= The Live Session
+:description: What the AcreetionOS live ISO offers: full Cinnamon desktop running from RAM, hardware testing, Wi-Fi setup and starting the installer.
+:keywords: live USB linux, try before install
+
+Booting the ISO gives you the complete AcreetionOS experience running from the USB/RAM — nothing touches your disks until you say so.
+
+== Try everything
+
+* Desktop feel, Cinnamon settings, themes
+* Wi-Fi connect (applet or nmtui) — confirms your chip works
+* Audio playback — PipeWire live too
+* Partition layout review: `lsblk -f`, GParted available
+* Browser runs for consulting these very docs
+
+Rule of thumb: if something works here on YOUR hardware, it'll work installed. If it doesn't work here, check the wiki page for that subsystem *before* committing an install.
+
+== Starting the installer
+
+Desktop icon or menu → *Install AcreetionOS*. Calamares opens; continue with the xref:installer-walkthrough.adoc[walkthrough].
+
+== Live-session quirks
+
+[cols="1,2"]
+|===
+|Observation |Explanation
+
+|Slower than expected
+|Everything reads off USB; SSD-speed arrives after install
+
+|Changes vanish on reboot
+|By design — overlay live system
+
+|No Timeshift snapshots listed
+|Snapshots belong to installed systems
+
+|Password prompts ask for 'live' user sudo
+|Passwordless-ish defaults for testing convenience
+|===
+
+== Recovery mode bonus
+
+The same media doubles as your rescue kit — GRUB repair, chroot shell and Timeshift restore are reachable from the recovery entries described in xref:wiki:recovery-environment.adoc[].

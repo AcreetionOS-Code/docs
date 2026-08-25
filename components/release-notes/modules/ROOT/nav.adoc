@@ -1,0 +1,5 @@
+* xref:index.adoc[What's New]
+** xref:current-release.adoc[Current ISO Build]
+** xref:update-highlights.adoc[Recent Update Highlights]
+** xref:upgrade-notes.adoc[Upgrade & Migration Notes]
+** xref:known-issues.adoc[Known Issues & Workarounds]

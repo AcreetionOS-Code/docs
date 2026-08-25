@@ -1,0 +1,27 @@
+= AcreetionOS Release Notes
+:description: What's new in AcreetionOS: current ISO builds, rolling update highlights, upgrade notes and known issues with workarounds.
+:keywords: AcreetionOS changelog, release notes
+
+AcreetionOS rolls continuously; ISOs are refreshed snapshots of it. This component tracks both.
+
+== Reading order
+
+* xref:current-release.adoc[Current ISO] — what fresh downloads contain
+* xref:update-highlights.adoc[Update highlights] — notable changes landing via pacman
+* xref:upgrade-notes.adoc[Upgrade notes] — actions needed before/after specific updates
+* xref:known-issues.adoc[Known issues] — open problems + workarounds, kept honest
+
+== The rolling contract
+
+Your system doesn't "upgrade to a version" — it stays current:
+
+[source,bash]
+----
+sudo pacman -Syu        # that's the whole ceremony
+----
+
+Version-ish anchors exist for support conversations: `pacman -Q linux`, ISO build date on https://acreetionos.org/download.html[download page].
+
+== Changelog culture
+
+Detailed engineering log lives in the source repo's Changes.md (https://github.com/AcreetionOS-Code[GitHub org]); these pages translate it into human. Community discussion happens on the main site channels — links in xref:contributor:index.adoc[Contributing].

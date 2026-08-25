@@ -1,0 +1,66 @@
+= Btrfs Management
+:description: Administer btrfs on AcreetionOS: subvolume layout, snapshots with Timeshift BTRFS mode, zstd compression, scrubs/balances and send/receive backups.
+:keywords: btrfs subvolumes, timeshift btrfs mode
+
+Chose btrfs at install (xref:install-guide:partitioning.adoc[])? Here's the operating manual.
+
+== Layout conventions
+
+[source,bash]
+----
+sudo btrfs subvolume list /
+# typical: @ (root), @home, maybe @log/@cache
+mount | grep btrfs              # subvol= options visible
+----
+
+Subvolumes are namespace units snapshots operate on — Timeshift BTRFS mode snapshots `@`.
+
+== Snapshots: instant & cheap
+
+[source,bash]
+----
+sudo btrfs subvolume snapshot -r / /snapshots/root-$(date +%F)
+sudo btrfs subvolume delete /snapshots/root-2026-07-01
+----
+
+Read-only (`-r`) ones are send/receive-able. Prefer Timeshift for scheduled work (xref:wiki:timeshift-snapshots.adoc[]) — switch its mode to BTRFS in settings first.
+
+== Compression
+
+Recompress existing tree + set mount option:
+
+[source,bash]
+----
+sudo btrfs property set / compress zstd    # new files
+# fstab: defaults,noatime,compress=zstd:3
+sudo btrfs filesystem defragment -r -czstd /home
+----
+
+Typical 20–40% space win on source trees/docs; negligible CPU cost with zstd levels 1–3.
+
+== Health routines
+
+[source,bash]
+----
+sudo btrfs scrub start -B /           # verify all checksums (monthly-ish)
+sudo btrfs scrub status /
+sudo btrfs filesystem usage /         # REAL free-space picture (df lies here)
+sudo btrfs balance start -musage=75 -dusage=50 /   # when chunks fragment
+----
+
+Free-space weirdness (ENOSPC despite df showing GBs): run balance with usage filters above.
+
+== Send/receive backups
+
+[source,bash]
+----
+sudo btrfs send /snapshots/root-2026-08-01 | \
+  sudo btrfs receive /mnt/backup-pool/
+# incremental: send -p parent-snap ...
+----
+
+Pairs beautifully with xref:wiki:backup-strategies.adoc[backup planning].
+
+== RAID notes
+
+Single-device is default; multi-device profiles (raid1 data/metadata) configured via `btrfs balance` conversions — solid for home NAS, read the profile docs before deviating from raid1 defaults.

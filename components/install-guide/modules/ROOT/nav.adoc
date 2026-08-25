@@ -1,0 +1,15 @@
+* xref:index.adoc[Installation Guide]
+* Before You Start
+** xref:requirements.adoc[Requirements]
+** xref:download.adoc[Download & Verify ISO]
+** xref:bootable-usb.adoc[Bootable USB Media]
+** xref:bios-uefi.adoc[Firmware (BIOS/UEFI)]
+* Installing
+** xref:live-environment.adoc[The Live Session]
+** xref:installer-walkthrough.adoc[Calamares Walkthrough]
+** xref:partitioning.adoc[Partitioning Options]
+** xref:encrypted-install.adoc[Encrypted Install]
+** xref:dual-boot-install.adoc[Dual-Boot Install]
+* After
+** xref:post-install.adoc[Post-Install Setup]
+** xref:install-troubleshooting.adoc[Install Troubleshooting]

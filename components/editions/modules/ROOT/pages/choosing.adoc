@@ -1,0 +1,36 @@
+= Choosing Your Edition
+:description: Decision guide across AcreetionOS editions: questions about hardware age, tinkering appetite, sharing patterns and touch needs mapped to the right image.
+:keywords: which linux edition
+
+Five questions, one answer each time.
+
+== Q1 — How old is the hardware?
+
+* *2015+ / 8GB+ RAM* → xref:cinnamon-standard.adoc[Standard]
+* *2010–2014 or 2–4GB RAM* → xref:openbox-lite.adoc[Lightweight] (or standard if you value comfort over speed)
+* *Phone/tablet-class* → xref:mobile.adoc[Mobile], expectations calibrated
+
+== Q2 — Who touches this machine?
+
+* Just you → any edition matches your discipline level
+* Family/shared/lab machine → xref:immutable.adoc[Immutable] earns its keep immediately
+
+== Q3 — Tinkering appetite?
+
+* "Configure once, use forever" → Immutable
+* "I will customize everything eventually" → Standard (or Lightweight as canvas)
+* "I want to help BUILD the mobile story" → Mobile, obviously
+
+== Q4 — Software center of gravity?
+
+* Desktop apps + browser → all editions fine
+* Lots of native packages/dev tooling → Standard/Lightweight (full pacman surface front-and-center)
+* App-store-shaped usage → Immutable + Flatpak sings
+
+== Q5 — Reinstall tolerance?
+
+Editions are separate images; switching later means reinstalling. Undecided between two? Pick the one whose DOWNSIDE annoys you less, not whose upside excites more.
+
+== Still torn?
+
+Default answer: xref:cinnamon-standard.adoc[Standard]. It's the edition the docs, ISO defaults and community assume — diverging is easy later, and the live USB (xref:install-guide:live-environment.adoc[]) lets you audition any edition risk-free before committing.

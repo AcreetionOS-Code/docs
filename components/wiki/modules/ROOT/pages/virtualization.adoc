@@ -1,0 +1,51 @@
+= Virtual Machines on AcreetionOS
+:description: Run AcreetionOS inside VMs and run other systems inside AcreetionOS: QEMU/KVM with virt-manager, VirtualBox, guest additions and nested virtualization.
+:keywords: KVM virt-manager, VirtualBox Arch, virtualization
+
+Two directions matter: *running AcreetionOS elsewhere* (try-before-install, CI) and *running guests on AcreetionOS* (Windows VMs, test boxes).
+
+== Running AcreetionOS as a guest
+
+Works everywhere. Give it 2 vCPU, 4 GB RAM, 25 GB disk, enable 3D acceleration where available. Secure Boot off. ISO instructions: xref:install-guide::bootable-usb.adoc[Installation Guide].
+
+Guest additions:
+
+* *VirtualBox*: `sudo pacman -S virtualbox-guest-utils` then enable `vboxservice.service`.
+* *VMware*: `open-vm-tools` (+ `open-vm-tools-desktop` for clipboard/resolution).
+* *Hyper-V*: enlightened out of the box via hv modules.
+
+== Hosting guests on AcreetionOS — QEMU/KVM (recommended)
+
+Native performance, free, scriptable:
+
+[source,bash]
+----
+sudo pacman -S qemu-full libvirt virt-manager dnsmasq
+sudo systemctl enable --now libvirtd.service
+sudo usermod -aG libvirt $USER      # re-login afterwards
+----
+
+Launch *Virtual Machine Manager*, create a VM, done. Windows 11 guests: add TPM via `swtpm` (virt-manager offers it in the wizard) and UEFI firmware.
+
+Nested virtualization (VM inside VM):
+
+[source,bash]
+----
+cat /sys/module/kvm_intel/parameters/nested   # Y = good (or kvm_amd)
+----
+
+== VirtualBox alternative
+
+[source,bash]
+----
+sudo pacman -S virtualbox virtualbox-host-dkms linux-headers
+sudo vboxreload       # after kernel updates
+----
+
+Kernel-update caveat applies (module rebuild) — another reason KVM wins on rolling releases.
+
+== Sharing folders & USB passthrough
+
+* virt-manager: Add Hardware → Filesystem (virtiofs) or USB host device.
+* VirtualBox: Devices menu → shared folders / USB.
+* Snapshots before risky experiments: built into both; for the host itself use xref:timeshift-snapshots.adoc[Timeshift].

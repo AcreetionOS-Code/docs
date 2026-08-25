@@ -1,0 +1,51 @@
+= mkinitcpio & Initramfs Presets
+:description: Configure early userspace on AcreetionOS: mkinitcpio hooks order, presets, modules and compression, fallback images and rebuild procedures.
+:keywords: mkinitcpio hooks, initramfs rebuild
+
+Initramfs = tiny OS that finds/unlocks your real root. AcreetionOS regenerates it via hooks whenever kernels update (xref:admin-guide:pacman-hooks.adoc[]).
+
+== Presets drive everything
+
+[source,text]
+----
+# /etc/mkinitcpio.d/linux.preset
+ALL_kver="/boot/vmlinuz-linux"
+PRESETS=('default' 'fallback')
+default_image="/boot/initramfs-linux.img"
+fallback_options="-S autodetect"     # fallback = EVERYTHING compiled in
+----
+
+Fallback image is why "kernel updated weirdly" often still boots — autodetect omitted means maximum driver inclusion.
+
+== HOOKS array semantics
+
+[source,text]
+----
+HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems fsck shutdown)
+----
+
+Order = dependency truth:
+
+* `block` before `encrypt`/`lvm2` before `filesystems`
+* `keyboard`+`keymap` REQUIRED before `encrypt` or passphrase layout breaks
+* `kms` early gives native-res splash (Plymouth friendliness)
+
+Changed something? Rebuild ALL presets:
+
+[source,bash]
+----
+sudo mkinitcpio -P
+lsinitcpio --analyze /boot/initramfs-linux.img | less    # audit contents
+----
+
+== MODULES vs autodetect
+
+MODULES=(i915 nvidia nvidia_modeset) force-includes early loading (splash/hybrid graphics). Autodetect handles the rest; conflicts resolve toward explicitness.
+
+== Compression & speed
+
+Default zstd balances size/speed; `COMPRESSION="lz4"` trades ~20% size for faster unpack on slow CPUs. Gzip-era advice obsolete.
+
+== Debugging early-boot failures
+
+Add `break=y` kernel param → drops to initramfs emergency shell pre-root-mount; from there `exit` continues boot attempt. Journal of early phase: `journalctl -b -p warning` post-success shows what nearly went wrong.

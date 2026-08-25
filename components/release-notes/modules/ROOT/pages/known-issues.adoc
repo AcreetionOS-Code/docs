@@ -1,0 +1,35 @@
+= Known Issues & Workarounds
+:description: Open problems on current AcreetionOS builds with workarounds — checked against upstream status so you stop debugging solved problems.
+:keywords: known bugs, workarounds
+
+Living page: entries retire as fixes roll out. Last triaged against current build stream.
+
+== Hardware-class issues
+
+=== NVIDIA hybrid laptops: external display blank on Wayland sessions
+Workaround: use X11 session until upstream modeset fix lands (xref:wiki:nvidia-drivers.adoc[]); external outputs reliable there today.
+
+=== Certain Realtek USB Wi-Fi dongles drop under load
+Module-option tuning usually stabilizes (`rtl8xxxu` family) — pattern documented in xref:wiki:wifi-setup.adoc[]. Firmware updates via `linux-firmware` resolve several variants each cycle.
+
+=== Intel RST-mode laptops see no NVMe in installer
+Firmware switch to AHCI required pre-install — full procedure flagged in xref:install-guide:install-troubleshooting.adoc[] (Windows-side dance included).
+
+== Software-class issues
+
+=== Old cached-keyring machines fail signature checks
+Not a bug — hygiene. Revival sequence in xref:upgrade-notes.adoc[] resolves permanently.
+
+=== Flatpak theme mismatch on some GTK apps
+Flathub runtimes lag theme releases occasionally: `flatpak update` first; stubborn cases take `flatpak override --filesystem=xdg-data/themes` style grants.
+
+=== Plymouth splash flickers on some BIOS+KMS combos
+Cosmetic; quiet-mode hides it. `plymouth.enable=0` kernel param removes entirely if it offends.
+
+== Upstream watchlist
+
+Tracked without local action possible yet: Cinnamon experimental-Wayland gaps (per-monitor fractional scaling edge cases), Mesa regression windows on bleeding kernels for specific GPU gens — both follow upstream fix trains automatically.
+
+== Reporting something new
+
+Before filing: update fully, test fallback kernel, check search. Then bring evidence per xref:contributor:report-bugs.adoc[] — journal excerpts make maintainers move mountains.

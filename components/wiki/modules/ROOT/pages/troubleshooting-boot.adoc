@@ -1,0 +1,67 @@
+= Troubleshooting Boot Problems
+:description: Diagnose AcreetionOS boot failures systematically: firmware, GRUB rescue, initramfs drops, kernel panics and the fastest paths back to desktop.
+:keywords: won't boot, grub rescue, kernel panic, boot repair
+
+Boot failure ≠ reinstall. Work top-down; stop at the level that fixes it.
+
+== Step 0 — What do you actually see?
+
+[cols="1,2"]
+|===
+|Symptom |Likely layer
+
+|Nothing, no logo, fans spin
+|Firmware/disk order (BIOS)
+
+|GRUB rescue> prompt
+|GRUB config/core lost → Step 3
+
+|"AcreetionOS" menu but kernel panics / drops to emergency shell
+|Kernel/initramfs/fstab → Step 4
+
+|Boot loops into recovery automatically
+|Failover worked! Use it → Step 5
+|===
+
+== Step 1 — Firmware checks
+
+Boot menu (F12/F11/Esc) shows your disk but not GRUB? Boot order changed (CMOS reset, Windows update). Re-select the disk; make "ubuntu"/"AcreetionOS" first in UEFI order.
+
+== Step 2 — Live ISO sanity check
+
+Boot the ISO. If the installed system's files look right when mounted manually, the problem is bootloader-level, not disk death.
+
+== Step 3 — Rebuild GRUB (from ISO/recovery)
+
+Use the built-in tooling — xref:recovery-environment.adoc[Recovery Environment → GRUB repair] automates this. Manual equivalent:
+
+[source,bash]
+----
+mount /dev/nvme0n1p2 /mnt && mount /dev/nvme0n1p1 /mnt/boot/efi
+arch-chroot /mnt                     # or chroot per xref:chroot-rescue.adoc[]
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=AcreetionOS
+grub-mkconfig -o /boot/grub/grub.cfg
+exit && reboot
+----
+
+== Step 4 — Emergency shell triage
+
+At the emergency prompt, read the journal *now*, it scrolls away otherwise:
+
+[source,bash]
+----
+journalctl -xb -p err
+systemctl --failed
+----
+
+Classic culprits: fstab UUID typo (`mount -o remount,rw /`, edit /etc/fstab, `systemctl daemon-reload`), full /boot blocking initramfs creation (xref:cleaning-disk-space.adoc[]), failed NVIDIA module build (xref:nvidia-drivers.adoc[]).
+
+== Step 5 — Rollback options ranked
+
+. Recovery Environment → Timeshift restore (fastest, covers system)
+. Previous kernel via GRUB Advanced submenu (xref:kernel-management.adoc[])
+. chroot + targeted package downgrade (xref:chroot-rescue.adoc[])
+
+== Report what happened
+
+Persistent mysteries deserve bug reports with `journalctl -b -1` output attached — xref:contributor/report-bugs.adoc[Reporting Bugs] shows the template maintainers love.

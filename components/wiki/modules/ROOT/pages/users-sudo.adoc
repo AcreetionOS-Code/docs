@@ -1,0 +1,73 @@
+= Users, Groups & Sudo
+:description: Manage users and administrator access on AcreetionOS: add users to wheel, configure sudoers safely, lock accounts and audit who has root powers.
+:keywords: add user linux, sudoers wheel group
+
+Root powers should be deliberate. Here's the full picture on an AcreetionOS system.
+
+== Your current identity
+
+[source,bash]
+----
+whoami ; id ; groups          # who you are + memberships
+sudo whoami                   # tests admin path; expect 'root'
+----
+
+On AcreetionOS the installer puts your user into `wheel`, which sudoers allows to sudo.
+
+== Add another user
+
+[source,bash]
+----
+sudo useradd -m -G wheel,audio,video -s /bin/bash alice
+sudo passwd alice             # set initial password
+----
+
+`-m` creates /home/alice; group list matches common desktop needs. Give admin rights simply by keeping `wheel` in her groups.
+
+== Sudo configuration (done right)
+
+Edit policy with the safe editor, never a raw text editor:
+
+[source,bash]
+----
+sudo visudo
+----
+
+Shipped-relevant lines look like:
+
+[source,ini]
+----
+%wheel ALL=(ALL:ALL) ALL          # password required (default)
+# %wheel NOPASSWD: ALL            # leave commented unless you know why
+----
+
+Per-user command subsets go in `/etc/sudoers.d/`:
+
+[source,bash]
+----
+echo "alice ALL=(root) NOPASSWD: /usr/bin/timeshift" | \
+  sudo tee /etc/sudoers.d/alice-timeshift
+sudo chmod 440 /etc/sudoers.d/alice-timeshift
+visudo -cf /etc/sudoers.d/alice-timeshift   # validate syntax!
+----
+
+WARNING: A typo in sudoers can lock everyone out. Always edit via `visudo`/validate with `-cf`.
+
+== Disable / re-enable accounts
+
+[source,bash]
+----
+sudo usermod -L bob           # lock password auth
+sudo usermod -U bob           # unlock
+sudo passwd -l bob            # alternative lock
+getent passwd | cut -d: -f1   # enumerate users
+----
+
+== Delete a user (and their files)
+
+[source,bash]
+----
+sudo userdel -r alice         # -r removes /home/alice
+----
+
+Snapshot first per xref:timeshift-snapshots.adoc[Timeshift] — account deletion is instant and thorough.

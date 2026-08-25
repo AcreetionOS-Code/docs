@@ -1,0 +1,40 @@
+= Installing AcreetionOS
+:description: Complete guide to installing AcreetionOS: download, bootable USB, firmware settings, Calamares installer walkthrough, encryption and dual-boot.
+:keywords: AcreetionOS installation, install Arch-based distro
+
+Welcome aboard. This guide covers every step from empty USB stick to logged-in desktop.
+
+== The path at a glance
+
+. xref:requirements.adoc[Check requirements] — 2 minutes
+. xref:download.adoc[Download & verify] the ISO — 10 minutes of waiting
+. xref:bootable-usb.adoc[Write it to USB] — 5 minutes
+. xref:bios-uefi.adoc[Prepare firmware] if needed — usually nothing
+. Boot the xref:live-environment.adoc[live session], try everything
+. Run the xref:installer-walkthrough.adoc[installer] — ~10 minutes
+. Reboot into your new system → xref:post-install.adoc[final touches]
+
+== Special situations
+
+[cols="2,2"]
+|===
+|Situation |Read first
+
+|Laptop with important data
+|xref:partitioning.adoc[manual partitioning]
+
+|Want full-disk encryption
+|xref:encrypted-install.adoc[]
+
+|Keeping Windows around
+|xref:dual-boot-install.adoc[]
+
+|Installer misbehaves on your hardware
+|xref:install-troubleshooting.adoc[]
+|===
+
+== Time & risk budget
+
+Installation itself erases only what you tell it to erase. Guided "Erase disk" wipes the chosen drive completely; *Manual* mode lets you carve space precisely — read xref:partitioning.adoc[partitioning] before choosing manual with existing data.
+
+Snapshot-worthy moment comes later — after install, per xref:wiki:post-installation.adoc[first steps].

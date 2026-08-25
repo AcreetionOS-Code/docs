@@ -1,0 +1,49 @@
+= Partitioning Options Explained
+:description: Plan AcreetionOS disk layouts: recommended UEFI/BIOS schemes, sizes for EFI/root/swap, manual partitioning in Calamares and btrfs choice.
+:keywords: linux partition scheme, efi partition size
+
+== Recommended layouts
+
+=== UEFI (any PC since ~2012)
+
+[cols="1,1,3"]
+|===
+|Partition |Size |Role
+
+|nvme0n1p1 |512 MiB |EFI System Partition, FAT32, mount `/boot/efi`, boot flag
+
+|nvme0n1p2 |rest minus swap |Root `/` ext4 (or btrfs), your call
+
+|(optional) p3 |4–32 GB |swap, or skip for zram
+|===
+
+=== Legacy BIOS
+
+Same minus EFI entry; partition table becomes msdos; root flagged bootable.
+
+== Size guidance
+
+* EFI: 512 MiB covers multiple kernels + fallback initramfs forever.
+* Root: 40+ GB comfortable for years of pacman history; 25 GB workable with cache hygiene (xref:wiki:cleaning-disk-space.adoc[]).
+* Swap: hibernation wants ≥ RAM; otherwise zram wins (xref:wiki:performance-tuning.adoc[]).
+* Leave ~10 GB unpartitioned if you want the ACRECOVERY partition later (it's optional — xref:wiki:recovery-environment.adoc[]).
+
+== Filesystem choice
+
+* **ext4** — boring excellence, default, zero surprises. Choose unless you have an opinion.
+* **btrfs** — instant snapshots via Timeshift BTRFS mode, transparent compression (`compress=zstd`). Slightly more concepts; guide: xref:admin-guide:btrfs.adoc[].
+
+== Manual mode mechanics (Calamares)
+
+. Select free space → Create: set size, filesystem, mount point per table above.
+. Existing ESP? Set its mount point `/boot/efi` and DO NOT format.
+. Existing Linux swap reused as-is; existing NTFS just left alone (Windows!).
+. Re-check summary screen before Apply.
+
+== Dual-boot placement notes
+
+Windows already owns the ESP — reuse it (don't format!). Details woven through xref:dual-boot-install.adoc[].
+
+== Changing your mind later
+
+Partitions grow/shrink via GParted from live media; snapshots don't protect partition tables, so xref:wiki:backup-strategies.adoc[backup] anything precious before surgery.

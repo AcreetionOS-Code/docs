@@ -1,0 +1,66 @@
+= Swap Strategy: Zram, Swapfiles & Partitions
+:description: Configure memory pressure handling on AcreetionOS: zram-generator tuning, swapfile creation rules per filesystem, swappiness values and hibernation interplay.
+:keywords: zram config, swapfile btrfs, swappiness
+
+Modern guidance: zram for speed, swapfile/partition only when hibernation demands it.
+
+== Zram (recommended default)
+
+[source,ini]
+----
+# /etc/systemd/zram-generator.conf
+[zram0]
+zram-size = min(ram, 16384)        # cap 16G regardless of huge RAM
+compression-algorithm = zstd
+swap-priority = 100
+----
+
+[source,bash]
+----
+sudo systemctl daemon-reload && sudo systemctl start systemd-zram-setup@zram0
+zramctl && swapon --show           # verify
+----
+
+Kernel then compresses cold pages instead of hitting disk — latency drops by orders of magnitude.
+
+== Swappiness for zram world
+
+Higher is CORRECT with zram (we WANT reclaim-to-compress):
+
+[source,bash]
+----
+echo 'vm.swappiness=180' | sudo tee /etc/sysctl.d/90-zram.conf
+sysctl vm.page-cluster=0           # avoid oversized reads from compressed store
+----
+
+(Yes — opposite of the ancient "set it to 10" forum wisdom; that predates zram.)
+
+== Swapfile when hibernation required
+
+ext4 root:
+
+[source,bash]
+----
+sudo fallocate -l $(grep MemTotal /proc/meminfo | awk '{print $2}')k /swapfile \
+  || sudo dd if=/dev/zero of=/swapfile bs=1M count=16384 status=progress
+sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile
+printf '/swapfile none swap defaults 0 0\n' | sudo tee -a /etc/fstab
+----
+
+btrfs root extra steps: NOCOW file + no-compression + fs-uuid resume offset:
+
+[source,bash]
+----
+sudo btrfs filesystem mkswapfile --size 16g /swap/swapfile   # does it all
+resume=UUID=<root-uuid> resume_offset=$(sudo btrfs inspect-internal map-swapfile -r /swap)
+----
+
+Wire `resume=` into cmdline + initramfs `resume` hook (xref:bootloader-grub.adoc[], xref:mkinitcpio.adoc[]), then TEST a full hibernate cycle before relying on it.
+
+== Diagnosing memory pressure honestly
+
+[source,bash]
+----
+swapon --show ; free -h ; vmstat 2
+psi=/proc/pressure/memory : watch some avg300 lines   # kernel's own verdict
+----

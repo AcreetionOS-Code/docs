@@ -1,0 +1,72 @@
+= systemd Units & Services
+:description: Manage services on AcreetionOS with systemctl: enable/disable semantics, writing custom units, overrides with drop-ins, and failed-unit triage.
+:keywords: systemctl guide, create systemd service
+
+== Core verbs
+
+[source,bash]
+----
+systemctl status <unit>            # is it alive? why not?
+sudo systemctl start|stop|restart|reload <unit>
+sudo systemctl enable|disable <unit>          # boot-time wiring (symlinks)
+systemctl list-units --failed                 # what's unhappy
+systemctl --user ...                          # per-user managers too
+----
+
+`enable` ≠ `start`: enable = at boot; start = now. Often you want both: `enable --now`.
+
+== Unit anatomy (custom service)
+
+/etc/systemd/system/myapp.service:
+
+[source,ini]
+----
+[Unit]
+Description=My background app
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/myapp --config /etc/myapp.conf
+Restart=on-failure
+RestartSec=5
+User=myapp
+# hardening worth copying into everything:
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
+----
+
+[source,bash]
+----
+sudo systemctl daemon-reload && sudo systemctl enable --now myapp
+journalctl -u myapp -f                      # live logs
+----
+
+== Drop-in overrides (don't edit shipped units)
+
+[source,bash]
+----
+sudo systemctl edit sshd
+# opens editor on override.conf — add lines like:
+[Service]
+MemoryMax=512M
+----
+
+Survives package updates; inspect effective unit via `systemctl cat sshd`.
+
+== Triage flow for failed units
+
+. `systemctl status <u>` → exit code + last log lines
+. `journalctl -u <u> -b --no-pager | tail -50`
+. Common exits: 203 = ExecStart path/perm wrong; 1 = app config error
+. Dependency view: `systemctl list-dependencies <u>`
+
+== Targets cheat
+
+* Default boot target: `systemctl get-default` / `set-default multi-user.target`
+* Equivalent of old runlevel 3 vs 5: isolate targets (`sudo systemctl isolate graphical.target`)

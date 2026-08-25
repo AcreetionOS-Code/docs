@@ -1,0 +1,69 @@
+= systemd Timers (the Modern Cron)
+:description: Schedule tasks on AcreetionOS with systemd timers instead of cron: calendar vs monotonic events, Persistent catch-up, and a complete worked example.
+:keywords: systemd timer example, cron alternative
+
+Timers pair with .service units — better logging (journal), dependency awareness, missed-run catch-up.
+
+== Worked example: nightly backup at 03:00
+
+/etc/systemd/system/backup.service:
+
+[source,ini]
+----
+[Unit]
+Description=Nightly data backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backup.sh
+Nice=10
+IOSchedulingClass=idle
+----
+
+/etc/systemd/system/backup.timer:
+
+[source,ini]
+----
+[Unit]
+Description=Run backup nightly
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+Persistent=true
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target
+----
+
+[source,bash]
+----
+sudo systemctl daemon-reload
+sudo systemctl enable --now backup.timer
+systemctl list-timers                       # verify scheduling + next run
+----
+
+== OnCalendar syntax that matters
+
+[source,text]
+----
+*-*-* 03:00:00        daily 3am
+Sun *-*-1..7 12:00    first Sunday monthly noon ("1..7" days of month)
+Mon..Fri *-*-* 09..17/2:00   weekdays, every 2h from 9-17
+----
+
+Test expressions: `systemd-analyze calendar "Sun *-*-1..7 12:00"` prints next runs.
+
+== Monotonic variant
+
+`OnBootSec=15min`, `OnUnitActiveSec=1w` — relative to boot/last-run; ideal when absolute time doesn't matter (trim jobs etc.).
+
+== Persistent=true explained
+
+Machine off at scheduled time? Runs immediately after next boot. Cron's classic weakness, solved.
+
+== Migration notes from cron
+
+* User crontabs → `systemctl --user` timers + `loginctl enable-linger user` to run while logged out.
+* Environment differs from interactive shell — use absolute paths; debug via journal like any service.
+* Existing crons keep working (`cronie` available) — migrate opportunistically.

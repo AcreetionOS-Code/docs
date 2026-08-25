@@ -1,0 +1,48 @@
+= System Requirements
+:description: Minimum and recommended hardware requirements for running AcreetionOS, including notes for old PCs, laptops and virtual machines.
+:keywords: AcreetionOS requirements, lightweight Linux specs
+
+AcreetionOS stays lean for a Cinnamon distribution, so modest hardware goes far.
+
+[cols="1,2,2"]
+|===
+|Resource |Minimum |Comfortable
+
+|CPU
+|64-bit Intel/AMD, ~2010+
+|Any dual-core 2 GHz+
+
+|RAM
+|2 GB (usable)
+|4–8 GB
+
+|Storage
+|20 GB
+|40+ GB SSD
+
+|Firmware
+|Legacy BIOS *or* UEFI
+|UEFI with GPT
+
+|Display
+|1024×768
+|1920×1080
+|===
+
+== Notes by machine type
+
+=== Older desktops & laptops
+
+Cinnamon runs well on 15-year-old hardware. If it still crawls, try the lightweight Openbox edition — comparison in xref:editions/cinnamon-standard.adoc[Editions]. For very constrained machines, zram helps a lot: xref:performance-tuning.adoc[Performance Tuning].
+
+=== Modern rigs
+
+Nothing to configure. NVIDIA owners should read xref:nvidia-drivers.adoc[NVIDIA Drivers] since the default driver is the open-source stack.
+
+=== Virtual machines
+
+Works out of the box in QEMU/KVM, VirtualBox and VMware. For best results give the VM 2+ cores and enable 3D acceleration; guest-additions pointers are in xref:virtualization.adoc[Virtual Machines].
+
+=== Secure Boot
+
+Secure Boot must be disabled (or enrolled manually) to boot the ISO. See xref:install-guide::bios-uefi.adoc[Firmware Settings].

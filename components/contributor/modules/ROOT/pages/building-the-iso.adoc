@@ -1,0 +1,64 @@
+= Building the AcreetionOS ISO
+:description: Build your own AcreetionOS ISO from source on an Arch-based system: dependencies, build.sh workflow, output verification and testing loops.
+:keywords: build arch iso, archiso tutorial
+
+Reproduce the official image or fork it — the builder is ordinary tooling.
+
+== Prerequisites
+
+* Arch-family host (AcreetionOS itself ideal; x86_64)
+* ~20 GB free disk, some patience for package downloads
+* Root-capable account
+
+[source,bash]
+----
+sudo pacman -S --needed git base-devel archiso grub squashfs-tools
+git clone https://github.com/AcreetionOS-Code/acreetionos.git
+cd acreetionos
+----
+
+== The build loop
+
+[source,bash]
+----
+./build.sh                    # orchestrates everything; read it first — it's short
+# outputs land per script convention (work/out style dir)
+ls -lh out/*.iso
+sha256sum out/*.iso           # compare against your own build log
+----
+
+What happens inside: packages resolve from repo-main per `packages.x86_64` → airootfs overlay applied → squashfs (XZ) compression → ISO hybrid with GRUB/SYSLINUX + recovery entries → optional build-info stamping (`generate-build-info.sh`).
+
+== Customizing safely
+
+[cols="2,3"]
+|===
+|Want to change |Touch
+
+|Package set
+|packages.x86_64 (commented sections guide placement)
+
+|Live defaults/services
+|airootfs/ overlay paths mirror target system layout
+
+|Bootloader branding/menus
+|grub/, syslinux/
+
+|Install-time behavior
+|installer/calamares config + postinstall hooks
+|===
+
+Keep Changes.md entries coming with PRs — that log IS institutional memory.
+
+== Testing your artifact
+
+. VM boot first (xref:wiki:virtualization.adoc[]) — UEFI AND BIOS profiles both
+. Installer run to completion in VM before touching real media
+. USB write test via xref:install-guide:bootable-usb.adoc[] patterns
+. Recovery Environment entry boots? (easy to break during airootfs edits)
+
+== Common build failures
+
+* Stale host keyring → update host fully first (rolling discipline)
+* Disk exhaustion mid-squashfs → the 20 GB guidance exists
+* Package conflict surprises → your packages.x86_64 edit vs repo state; resolve versions explicitly

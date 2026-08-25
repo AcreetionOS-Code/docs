@@ -1,0 +1,47 @@
+= Firmware Settings: BIOS & UEFI
+:description: Prepare PC firmware for installing AcreetionOS: disable Secure Boot, boot menu keys by vendor, AHCI mode, fast startup conflicts.
+:keywords: secure boot disable, uefi boot menu
+
+== Getting into the right place
+
+Spam the vendor key during power-on:
+
+[cols="2,2"]
+|===
+|Vendor |Keys
+
+|Most laptops (Dell/Lenovo/HP)
+|F12 / F9 / Esc for one-shot boot menu; F2/F10/Del for setup
+
+|Motherboards
+|Del or F2 for setup; F8/F11 boot menu
+
+|VMs
+|Esc during splash (VirtualBox/QEMU)
+|===
+
+== One-time: boot the USB
+
+One-shot boot menu → pick your USB stick (UEFI entry preferred on modern machines — matches how you'll install).
+
+== Settings worth checking once
+
+* **Secure Boot** → Disabled (Arch-family standard; can be re-established later with custom keys).
+* **SATA mode** → AHCI, not "Intel RST/RAID" — Linux drivers target AHCI; switching later means reinstalling Windows too, so decide NOW on dual-boots.
+* **Fast Boot** (firmware flavor) → Off, so USB init completes.
+* **TPM** → leave alone unless BitLocker complains (then suspend BitLocker per xref:dual-boot-install.adoc[]).
+* **Boot order** — set disk-first afterwards so GRUB owns boot.
+
+== Legacy BIOS machines
+
+Everything above minus Secure Boot. Installer will use msdos partition tables automatically; keep single-disk installs simple this way.
+
+== After install
+
+If firmware boots straight to old OS: reorder entries — either in setup, or from Linux:
+
+[source,bash]
+----
+sudo efibootmgr -v                  # list
+sudo efibootmgr -o 0003,0001        # put AcreetionOS first
+----

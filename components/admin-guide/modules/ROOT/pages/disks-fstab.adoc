@@ -1,0 +1,62 @@
+= Disks, Mounts & fstab Discipline
+:description: Manage storage on AcreetionOS: lsblk/blkid identification, correct fstab entries with UUIDs, mount namespaces for users, and safe fstab validation.
+:keywords: fstab example, mount disk linux
+
+== Identify before touching
+
+[source,bash]
+----
+lsblk -f                      # tree + filesystems + UUIDs
+sudo blkid                    # same data raw
+df -hT                        # what's mounted now
+----
+
+Names (sda/sdb) shuffle between boots; **UUIDs/LABELs don't** — fstab uses them.
+
+== fstab anatomy
+
+[source,text]
+----
+UUID=7d3c...  /          ext4   defaults,noatime       0 1
+UUID=A1B2-... /boot/efi  vfat   defaults,umask=0077    0 2
+LABEL=data    /srv/data  ext4   defaults,nofail        0 2
+tmpfs         /tmp       tmpfs  rw,noatime,size=4G     0 0
+//nas/share   /mnt/nas   cifs   credentials=/etc/cred,uid=1000,_netdev,nofail  0 0
+----
+
+Field meanings: what · where · type · options · dump · fsck pass. Key options worth knowing:
+
+* `noatime` — skip read-timestamp writes (SSD kindness)
+* `nofail` — boot continues if device absent (external/USB!)
+* `_netdev` — wait for network (NFS/CIFS)
+* `x-systemd.device-timeout=5` — fail fast instead of hanging boot
+
+== Test WITHOUT rebooting (the pro move)
+
+[source,bash]
+----
+sudo findmnt --verify --verbose     # syntax + logic check
+sudo systemctl daemon-reload
+sudo mount -a -v                    # actually mounts everything new
+----
+
+fstab typos that pass this test are rare; reboots to fix them unnecessary.
+
+== Adding a new disk end-to-end
+
+[source,bash]
+----
+sudo parted /dev/sdb mklabel gpt mkpart primary ext4 1MiB 100%
+sudo mkfs.ext4 -L data /dev/sdb1
+sudo systemd-repart --dry-run=no 2>/dev/null || true   # optional modern helper
+printf 'LABEL=data /srv/data ext4 defaults,noatime,nofail 0 2\n' | sudo tee -a /etc/fstab
+sudo mkdir -p /srv/data && sudo mount -a
+----
+
+== Swapfile on btrfs/ext4
+
+See xref:swap-zram.adoc[] — swapfiles need careful handling on CoW filesystems.
+
+== Emergency: bad fstab at boot
+
+Emergency shell offers you a writable root after password: edit `/etc/fstab`, remove offender, `systemctl reboot`. Prevention: the `--verify` habit above.

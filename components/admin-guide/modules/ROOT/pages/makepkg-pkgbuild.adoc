@@ -1,0 +1,67 @@
+= makepkg & Writing PKGBUILDs
+:description: Build your own packages on AcreetionOS with makepkg: PKGBUILD anatomy, checksum generation, signing your repo, and devtool workflows.
+:keywords: pkgbuild tutorial, makepkg usage
+
+Packaging turns "some script I run" into "software the system manages" — upgrades, removal, dependencies, all consistent.
+
+== Environment setup
+
+[source,bash]
+----
+sudo pacman -S --needed base-devel git
+useradd-style tip: build as NORMAL user, never root
+mkdir -p ~/build && cd ~/build
+----
+
+== Minimal PKGBUILD anatomy
+
+[source,bash]
+----
+pkgname=hello-acreetion
+pkgver=1.0
+pkgrel=1
+pkgdesc='Greeting demo package'
+arch=('x86_64')
+license=('MIT')
+depends=('glibc')
+source=("https://example.com/files/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('SKIP')            # replace via updpkgsums
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make
+}
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}
+----
+
+Build & inspect:
+
+[source,bash]
+----
+updpkgcompletesums 2>/dev/null || updpkgsums
+makepkg -si                   # build, then install with dependency resolution
+tar tf hello-acreetion-1.0-1-x86_64.pkg.tar.zst | less    # audit contents
+namcap PKGBUILD               # lint warnings
+----
+
+== Iteration speed tools
+
+* `makepkg -Cf` clean rebuild
+* `makedeb`-style testing: keep `pkgrel` bumping on repackaging same version
+* Split packages, git sources (`source=git+...#tag=v2`), and check() blocks — see `man PKGBUILD`, genuinely well-written
+
+== Publishing privately
+
+[source,bash]
+----
+repo-add /srv/myrepo/myrepo.db.tar.gz ./hello-acreetion-*.pkg.tar.zst
+----
+
+Then wire [myorg] per xref:acreetion-repos.adoc[]. For signed publishing: create/maintain a dedicated key in the keyring chain rather than TrustAll shortcuts.
+
+== Reading others' recipes
+
+The AUR is a university: `yay -G <pkg>` downloads any recipe locally for study (xref:wiki:aur-guide.adoc[]).

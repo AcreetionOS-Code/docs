@@ -1,0 +1,57 @@
+= AcreetionOS Repository Architecture
+:description: Inside the AcreetionOS package infrastructure: repo-main layout, SigLevel and keyring management, personal repo, and safe extension patterns for administrators.
+:keywords: pacman repo server, siglevel keyring
+
+== Topology
+
+[source,text]
+----
+https://iso.acreetionos.org/
+├── repo-main/$arch      ← curated set (core-ish + desktop + apps)
+└── personal/            ← maintainer extras / staging
+----
+
+Configured via /etc/pacman.conf; inspect effective values anytime with `pacman-conf`.
+
+== Database mechanics
+
+Each repo = `{name}.db` (package index) + `{name}.files` (file search index). Clients sync with `-Sy`; hence the partial-upgrade prohibition: databases newer than installed world = inconsistent expectations.
+
+[source,bash]
+----
+pacman -Fy                    # refresh file db
+pacman -F mkinitcpio          # which package ships this file?
+pacman -Sp linux              # exact URL pacman would fetch
+----
+
+== Signing & trust
+
+Packages carry detached signatures verified against the shipped keyring:
+
+* Keyring package updates propagate new/trusted keys through normal upgrades.
+* Manual surgery rarely needed; if ever: `sudo pacman-key --refresh-keys`, worst case re-install the acreetion keyring package per xref:wiki:repositories-and-mirrors.adoc[].
+
+Check what you trust:
+
+[source,bash]
+----
+pacman-key --list-keys | grep -i acreetion
+grep -E 'SigLevel' /etc/pacman.conf
+----
+
+== Adding private repos (the sanctioned way)
+
+Keep curation intact by ADDING alongside, never replacing:
+
+[source,ini]
+----
+[myorg]
+Server = https://packages.myorg.example/$arch
+SigLevel = Required TrustedOnly    # hold third parties to full standards
+----
+
+Order matters: later entries win conflicts; put ours first, yours after.
+
+== Mirroring for labs/offline sites
+
+`rsync` the tree nightly internally, point clients' Server lines at the mirror — same signatures, same guarantees. Air-gapped: ship db+trees on media, verify before import.

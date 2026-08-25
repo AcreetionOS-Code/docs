@@ -1,0 +1,46 @@
+= AcreetionOS System Philosophy
+:description: How AcreetionOS builds on Arch: curated repo-main repository, managed keyring, opinionated defaults and where it intentionally differs from vanilla Arch.
+:keywords: Arch-based design decisions
+
+Understanding the model prevents fighting it.
+
+== Composition
+
+Vanilla Arch provides the toolchain and ecosystem. AcreetionOS layers:
+
+. **Curated repo-main** — a tested package set served from iso.acreetionos.org
+. **Opinionated defaults** — Cinnamon, PipeWire, NetworkManager, Timeshift, Recovery Environment
+. **Managed keyring** — signature trust handled coherently for you
+
+== What stays pure Arch behavior
+
+pacman semantics, PKGBUILD/AUR workflows, systemd units, mkinitcpio, GRUB conventions, upstream package contents. Skills transfer both directions.
+
+== Where we deliberately differ
+
+[cols="2,3"]
+|===
+|Area |AcreetionOS stance
+
+|Repositories
+|Single pinned server over mirrorlists — consistency beats geolocation (xref:acreetion-repos.adoc[])
+
+|Keyring
+|Shipped + auto-updated via repo packages; no manual pacman-key rituals expected
+
+|Snapshots/recovery
+|Pre-configured, not DIY (Timeshift + Recovery Environment + ACRECOVERY)
+
+|Installer
+|Calamares graphical flow instead of pacstrap scripting
+|===
+
+== Upgrade philosophy
+
+Stay close to upstream Arch releases so security fixes arrive fast; curate at the *repository composition* layer rather than patching packages heavily. When upstream breaks interfaces, expect brief churn and a changelog note rather than long-lived forks.
+
+== Practical consequences
+
+* Don't add Arch mirrors (xref:wiki:repositories-and-mirrors.adoc[]) — you'd bypass curation.
+* Do file issues against our repos when a package misbehaves — curation means we can act.
+* Expect wiki/Arch-wiki knowledge to mostly apply; these docs flag divergences as they appear.

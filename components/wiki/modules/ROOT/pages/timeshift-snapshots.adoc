@@ -1,0 +1,58 @@
+= Timeshift Snapshots on AcreetionOS
+:description: AcreetionOS pre-configures Timeshift RSYNC snapshots — learn to create, browse and restore system snapshots to undo bad updates safely.
+:keywords: Timeshift, Linux snapshots, rollback updates
+
+AcreetionOS configures Timeshift during installation so that every machine has a parachute. Snapshots capture the *system* (/, excluding your personal files by design) so you can roll back updates, experiments or breakage in minutes.
+
+== Check your setup
+
+[source,bash]
+----
+sudo timeshift --list          # existing snapshots
+cat /etc/timeshift/timeshift.json 2>/dev/null | grep -E 'mode|device'
+----
+
+Default mode is **RSYNC** with weekly+daily schedules. Keep at least ~15 GB free for snapshot storage.
+
+== Create a snapshot manually
+
+[source,bash]
+----
+sudo timeshift --create --comments "before trying KDE themes"
+----
+
+Habit worth building: snapshot before big changes — updates, driver swaps, desktop experiments.
+
+== Restore
+
+=== From within a working system
+
+[source,bash]
+----
+sudo timeshift --restore      # pick snapshot, confirm, reboot when asked
+----
+
+=== When the system won't boot
+
+Boot the AcreetionOS ISO → open the xref:recovery-environment.adoc[Recovery Environment] → choose *Timeshift restore*. It auto-mounts and restores the right device.
+
+== What snapshots do NOT cover
+
+* `/home` (your documents) is excluded by default — that's what xref:backup-strategies.adoc[Backups] are for.
+* Other partitions/disks.
+* GRUB itself (reinstallable via Recovery Environment).
+
+== Disk space management
+
+RSYNC snapshots hard-link unchanged files — they're cheap. Still:
+
+[source,bash]
+----
+sudo timeshift --delete --snapshot '2026-08-01_10-00-01'   # prune old ones
+----
+
+Or let the schedule's automatic pruning handle it (default keeps 5 daily / weekly set).
+
+== Btrfs users
+
+If you installed onto btrfs, switch Timeshift mode to **BTRFS** for instant copy-on-write snapshots — see xref:admin-guide::btrfs.adoc[Administration → Btrfs].

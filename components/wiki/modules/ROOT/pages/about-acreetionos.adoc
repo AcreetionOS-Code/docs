@@ -1,0 +1,49 @@
+= About AcreetionOS
+:description: What AcreetionOS is: an Arch-based, Cinnamon-flavored distribution with its own repositories, recovery environment, and curated stability.
+:keywords: about AcreetionOS, Arch-based distro, Cinnamon Linux
+
+AcreetionOS combines the freshness of Arch Linux with the polish people expect from a daily-driver operating system.
+
+== The idea
+
+Most Arch-based distros make you choose: bleeding edge or stability, control or convenience. AcreetionOS refuses the trade-off:
+
+* *Rolling Arch core* — always-current kernel and packages.
+* *Curated repositories* — packages pass through AcreetionOS's own repos (`repo-main`) at `https://iso.acreetionos.org/repo-main/`, so the keyring and package set stay consistent.
+* *Sensible defaults* — Cinnamon, PipeWire audio, NetworkManager, GRUB with os-prober, Plymouth boot splash.
+
+== What's inside
+
+[cols="2,3"]
+|===
+|Component |Choice
+
+|Desktop
+|Cinnamon (Muffin/Nemo stack)
+
+|Installer
+|Calamares graphical installer
+
+|Audio
+|PipeWire
+
+|Networking
+|NetworkManager (+ nmtui)
+
+|Snapshots
+|Timeshift (RSYNC mode), pre-configured on install
+
+|Recovery
+|AcreetionOS Recovery Environment TUI + optional ACRECOVERY partition
+
+|Bootloader
+|GRUB with dual-boot detection (BIOS & UEFI)
+|===
+
+== Editions
+
+Beyond the standard edition there is an immutable variant and lighter/mobile spins. See the xref:editions/index.adoc[Editions overview] to compare them side by side.
+
+== The name
+
+Acreetion is creation — spelled the way it sounds when you say it fast. The project builds an OS it wants to use, then shares it.

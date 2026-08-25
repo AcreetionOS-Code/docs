@@ -1,0 +1,50 @@
+= Hardware Requirements for Installation
+:description: What hardware AcreetionOS needs to install and run comfortably: CPU, RAM, storage, UEFI/BIOS support and peripheral notes.
+:keywords: minimum requirements linux
+
+[cols="1,2,2"]
+|===
+|Component |Minimum |Recommended
+
+|CPU
+|x86_64, SSE4.2 (~2010+)
+|Dual-core 2 GHz+
+
+|RAM
+|2 GB
+|4 GB+ (8 GB comfy)
+
+|Disk
+|20 GB free
+|40 GB+ SSD/NVMe
+
+|USB media
+|4 GB stick
+|8 GB fast (USB3)
+
+|Firmware
+|BIOS legacy *or* UEFI
+|UEFI + GPT
+
+|Network
+|Optional during install
+|Wi-Fi/Ethernet for updates
+|===
+
+== Firmware notes
+
+* **UEFI machines**: disable Secure Boot for installation (re-enableable later with custom keys). See xref:bios-uefi.adoc[].
+* **Legacy BIOS**: fully supported; installer uses MBR/msdos labeling there.
+
+== GPU reality
+
+* Intel/AMD: open-source stack included, zero setup.
+* NVIDIA: live desktop runs on Nouveau; proprietary driver is a post-install task (xref:wiki:nvidia-drivers.adoc[]).
+
+== Peripherals that "just work"
+
+Standard keyboards/mice, most Wi-Fi (linux-firmware included), USB hubs, webcams (UVC), audio via PipeWire. Exotic RAID/fake-RAID laptop modes should be switched to AHCI in firmware first — see xref:bios-uefi.adoc[].
+
+== Virtual machines
+
+Welcome: 2 vCPU / 4 GB / 25 GB minimums, details in xref:wiki:virtualization.adoc[Virtual Machines].

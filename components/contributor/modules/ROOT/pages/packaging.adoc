@@ -1,0 +1,51 @@
+= Packaging Guidelines
+:description: How to add and maintain packages for AcreetionOS repositories: PKGBUILD standards, dependency policy, review criteria and Changes.md requirements.
+:keywords: packaging guidelines, pkgbuild standards
+
+Packages are promises to every user. These rules keep them keepable.
+
+== Admission criteria
+
+Before proposing a package:
+
+1. *Gap, not duplication* — not satisfiable by existing repo-main content
+2. *Maintainer reality* — someone (you?) commits to tracking upstream
+3. *License sane* — redistributable, documented
+4. *Builds clean* — namcap-silent-ish, reproducible recipe (xref:admin-guide:makepkg-pkgbuild.adoc[])
+
+== Recipe standards
+
+[source,bash]
+----
+# required fields complete & accurate:
+pkgname/pkgver/pkgrel/pkgdesc/arch/license/url
+depends=()        # REAL deps only — no "kitchen sink" copying
+optdepends=()     # with descriptive comments per entry
+source=()         # pinned URLs/tags, no moving targets
+sha256sums=()     # generated via updpkgsums, never SKIP for releases
+check()           # include when upstream has tests; skip with comment when not
+----
+
+Style points reviewers enforce:
+
+* No curl-pipe-bash in build()
+* install=() .install scripts only when hooks genuinely needed (prefer xref:admin-guide:pacman-hooks.adoc[] files)
+* Backup arrays (/etc files) declared properly so user configs survive upgrades
+* Split packages over monoliths when upstream naturally separates
+
+== Dependency policy
+
+* Prefer linking against repo-main libraries — new vendored deps need justification paragraph
+* Python/Node/etc.: system-stack versions, not bundled copies
+* Security-relevant pinning (CVE fixes backported) noted in pkgdesc or accompanying issue link
+
+== The Changes.md covenant
+
+Every accepted package change lands with a numbered Changes.md entry: what, why, impact-on-ISO-size. Non-negotiable — future triage depends on it (xref:repo-layout.adoc[] explains the file's role).
+
+== Submission flow
+
+. Build locally against current repo-main
+. PR against flagship repo (package list) OR dedicated packaging branch for new recipes
+. CI/reviewer builds in clean chroot — failures return with logs
+. Merge → next repo-main publish cycle carries it
