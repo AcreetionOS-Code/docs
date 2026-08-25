@@ -15,7 +15,7 @@ Configured via /etc/pacman.conf; inspect effective values anytime with `pacman-c
 
 == Database mechanics
 
-Each repo = `{name}.db` (package index) + `{name}.files` (file search index). Clients sync with `-Sy`; hence the partial-upgrade prohibition: databases newer than installed world = inconsistent expectations.
+Each repo = `+{name}.db+` (package index) + `+{name}.files+` (file search index). Clients sync with `-Sy`; hence the partial-upgrade prohibition: databases newer than installed world = inconsistent expectations.
 
 [source,bash]
 ----
