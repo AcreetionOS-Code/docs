@@ -1,0 +1,49 @@
+= Package Management on AcreetionOS
+:description: How software management works in AcreetionOS: pacman, the AcreetionOS repository, AUR helpers and Flatpak, all explained for daily use.
+:keywords: AcreetionOS packages, pacman guide, Arch package manager
+
+AcreetionOS gives you three ways to install software. They stack cleanly.
+
+[cols="1,2,2"]
+|===
+|Layer |What it is |When you use it
+
+|pacman + AcreetionOS repos
+|The native package manager with the curated repo-main server
+|Everyday software, system packages
+
+|AUR (via yay)
+|The huge Arch User Repository of community build scripts
+|Anything not in the main repo
+
+|Flatpak
+|Sandboxed graphical apps from Flathub
+|Latest versions of GUI apps, sandboxing
+|===
+
+== The golden rule
+
+On Arch-family systems, *never mix partial upgrades*. Update everything together:
+
+[source,bash]
+----
+sudo pacman -Syu
+----
+
+== What makes AcreetionOS special here
+
+Stock Arch pulls straight from Arch mirrors. AcreetionOS points pacman at its own `repo-main` repository so that:
+
+* The keyring is managed for you — no signature errors after long absences.
+* Package combinations are tested as a set.
+
+IMPORTANT: Do not re-add vanilla Arch repositories to `/etc/pacman.conf`. Mixing them back breaks the AcreetionOS keyring. See xref:repositories-and-mirrors.adoc[Repositories & Mirrors].
+
+If a package exists in both layers, prefer the order: **pacman → AUR → Flatpak**. Native packages integrate best with Cinnamon.
+
+== Learn more
+
+* Command reference: xref:pacman-cheatsheet.adoc[Pacman Cheat Sheet]
+* Unlocking 100,000+ community packages: xref:aur-guide.adoc[AUR & yay Guide]
+* Sandboxed apps: xref:flatpak.adoc[Flatpak & Sandbox Apps]
+* Housekeeping: xref:cleaning-disk-space.adoc[Freeing Disk Space]

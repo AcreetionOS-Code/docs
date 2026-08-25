@@ -25,7 +25,7 @@ net.core.default_qdisc = fq          # fair queueing...
 net.ipv4.tcp_congestion_control = bbr    # ...+BBR: snappier real-world TCP
 ----
 
-Server-flavored additions: somaxconn raise, tcp_fastopen, fewer SYN retries — adjust per role, measure per xref:performance-tuning.adoc[] philosophy.
+Server-flavored additions: somaxconn raise, tcp_fastopen, fewer SYN retries — adjust per role, measure per xref:wiki::performance-tuning.adoc[performance philosophy].
 
 == Things NOT to cargo-cult
 

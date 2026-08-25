@@ -1,0 +1,34 @@
+= Welcome to the AcreetionOS Wiki
+:description: The official AcreetionOS wiki — guides for installing, customizing and troubleshooting the user-friendly Arch-based Linux distribution with the Cinnamon desktop.
+:keywords: AcreetionOS, Arch Linux, Cinnamon, Linux wiki, beginner Linux
+
+Welcome! This is the official knowledge base for https://acreetionos.org[AcreetionOS], a rolling-release Linux distribution built on the rock-solid Arch base and tuned for real-world usability out of the box.
+
+== Why you'll like AcreetionOS
+
+* **Arch power, none of the pain** — a curated Arch-based system that installs in minutes with a graphical installer.
+* **Cinnamon desktop** — familiar layout, fast workflow, no learning curve.
+* **Recovery built in** — a Windows-RE-style recovery environment and automatic Timeshift snapshots from day one.
+* **Your own repos** — AcreetionOS ships its own signed repositories so updates are tested before they reach you.
+
+== Where to go next
+
+[cols="1,1"]
+|===
+|New to Linux? |Already know your way around?
+
+|xref:getting-started.adoc[Getting Started] walks you through download to desktop.
+|Jump straight into xref:package-management.adoc[Package Management] or the xref:pacman-cheatsheet.adoc[Pacman Cheat Sheet].
+
+|Need help after installing?
+|See xref:post-installation.adoc[First Steps After Install].
+
+|Something broke?
+|The xref:recovery-environment.adoc[Recovery Environment] guide has saved more than one weekend.
+|===
+
+== Quick links
+
+* *Download*: https://acreetionos.org/install.html[Get the ISO]
+* *Main site*: https://acreetionos.org[acreetionos.org]
+* *Contribute*: xref:contributor::index.adoc[Contributing Guide]
